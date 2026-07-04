@@ -6,7 +6,7 @@ interface Service {
   title: string;
   description: string;
   image: string;
-  icon: ReactNode;
+  icon: string;
 }
 
 // --- Data for the Service Cards ---
@@ -104,7 +104,7 @@ const OmSaiLogisticsPage: React.FC = () => {
           {services.map((service: Service, index: number) => (
             <div
               key={index}
-              className="group relative h-80 overflow-hidden rounded-sm border-b-4 border-blue-900 shadow-lg cursor-pointer"
+              className="group relative h-80 overflow-hidden rounded-sm border-b-4 border-blue-900 shadow-2xl shadow-lime-100 cursor-pointer"
             >
               {/* Pre-hover layer: image + dark overlay + big bottom-center title */}
               <div
@@ -120,10 +120,10 @@ const OmSaiLogisticsPage: React.FC = () => {
               </div>
 
               {/* Hover layer: existing card design */}
-              <div className="absolute inset-0 bg-lime-50 flex flex-col items-center justify-center text-center p-6 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                <div className="mb-2">
-                  {service.icon}
-                </div>
+              <div className="absolute inset-0 bg-stone-200 flex flex-col items-center justify-center text-center p-6 opacity-0 group-hover:opacity-100  transition-opacity duration-500">
+                <img src={service.icon} className="mb-2"/>
+                  
+               
                 <h3 className="text-lg md:text-xl font-bold text-blue-900 whitespace-pre-line leading-tight mb-4 uppercase">
                   {service.title}
                 </h3>

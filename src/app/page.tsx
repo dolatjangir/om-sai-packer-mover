@@ -1,10 +1,11 @@
 "use client"
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 
 import OmSaiLogisticsPage from '../components/services';
 import HeroWithFilter from '@/components/hero';
 import Navbar from '@/components/navbar';
+import { Heart, ShieldCheck } from 'lucide-react';
 
 const FEATURES = [
   {
@@ -37,13 +38,71 @@ const FEATURES = [
   },
 ];
 
+interface Mover {
+  name: string;
+  years: number;
+  rating: number;
+  reviews: number;
+  tags: string[];
+  price: number;
+  image:string;
+  subtitle:string;
+  status:string;
+  verified: boolean;
+}
 
+const movers: Mover[] = [
+  { name: "Summit Packers Co.", years: 12, rating: 4.9, reviews: 842, tags: ["Residential", "Long-distance"], price: 1189, verified: true, image:"/first.webp",subtitle:"this is a good mover packer in jaipur",status:"" },
+  { name: "BlueLine Movers", years: 8, rating: 4.8, reviews: 613, tags: ["Office", "Storage"], price: 2179, verified: true, image:"/img1.avif",subtitle:"this is a good mover packer in jaipur",status:"cancelled" },
+  { name: "LimeCrate Relocations", years: 6, rating: 4.7, reviews: 401, tags: ["Piano", "Fragile items"], price: 3495, verified: false, image:"/second.webp",subtitle:"this is a good mover packer in jaipur",status:"pending" },
+  { name: "Anchor Moving Group", years: 15, rating: 5.0, reviews: 1204, tags: ["Residential", "Office"], price: 2199, verified: true, image:"/third.webp",subtitle:"this is a good mover packer in jaipur",status:"tommorow" },
+  { name: "Swift Pack & Ship", years: 4, rating: 4.6, reviews: 288, tags: ["Long-distance", "Storage"], price: 1174, verified: false, image:"/four.avif",subtitle:"this is a good mover packer in jaipur",status:"" },
+  { name: "Golden State Haulers", years: 10, rating: 4.8, reviews: 567, tags: ["Residential", "Fragile items"], price: 894, verified: true, image:"/family-worker-img.png",subtitle:"this is a good mover packer in jaipur",status:"work is done" },
+  { name: "Metro Pack Pros", years: 7, rating: 4.7, reviews: 349, tags: ["Office", "Long-distance"], price: 1899, verified: false, image:"/img3.webp",subtitle:"this is a good mover packer in jaipur",status:"packing is start" },
+  { name: "Evergreen Movers", years: 9, rating: 4.9, reviews: 721, tags: ["Residential", "Storage"], price: 2492, verified: true, image:"/img2.avif",subtitle:"this is a good mover packer in jaipur",status:"moving is in 15 mints" },
+];
 export default function HeroSection() {
+    const CARD_WIDTH = 264;
+    const CARD_GAP = 20;
+    const VISIBLE = 4;
+    const STEP = CARD_WIDTH + CARD_GAP;
+    const N = movers.length;
+    const track: Mover[] = [...movers, ...movers.slice(0, VISIBLE)];
+  const [service, setService] = useState<string>("truck");
+  const resetTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
+    const [index, setIndex] = useState<number>(0);
+      const [smooth, setSmooth] = useState<boolean>(true);
+      
+    useEffect(() => {
+        if (index >= N) {
+          resetTimeout.current = setTimeout(() => {
+            setSmooth(false);
+            setIndex(0);
+          }, 1800);
+        }
+        return () => {
+          if (resetTimeout.current) clearTimeout(resetTimeout.current);
+        };
+      }, [index, N]);
+      useEffect(() => {
+    const timer = setInterval(() => {
+      setIndex((prev:any) => prev + 2);
+    }, 2000);
+    return () => clearInterval(timer);
+  }, []);
+  
+  useEffect(() => {
+    if (!smooth) {
+      const raf = requestAnimationFrame(() => setSmooth(true));
+      return () => cancelAnimationFrame(raf);
+    }
+  }, [smooth]);
+
   return (
     <>
     <Navbar/>
     <HeroWithFilter/>
- <section className="relative w-full bg-white overflow-hidden py-16 md:py-24 px-6 md:px-12 font-sans">
+ <section className="relative w-full bg-[#F7F8F5] overflow-hidden py-10 px-6 md:px-12 font-sans">
  
       {/* Faint diagonal brand accent, top-right — echoes the hero ribbon without competing with it */}
       <div className="absolute -top-24 -right-24 w-96 h-96 bg-linear-[115deg,transparent_45%,#005bb5_45%,#005bb5_48%,#84cc16_48%,#84cc16_51%,transparent_51%] opacity-[0.08] pointer-events-none" />
@@ -121,6 +180,86 @@ export default function HeroSection() {
  
       </div>
     </section>
+      {/* ===================== PACKERS & MOVERS — AUTO-SCROLL LISTING ===================== */}
+      <section className="px-6 pb-24 pt-4" style={{ background: "#F7F8F5" }}>
+        <div className="max-w-7xl mx-auto">
+          <div className="mb-8">
+            <p className="text-xs font-bold uppercase tracking-widest text-blue-700 mb-1">
+              Vetted and verified
+            </p>
+            <h2 className="italic font-black uppercase tracking-tight text-gray-900 text-2xl md:text-3xl">
+            <span className="text-lime-600">Packers &amp; movers</span> <span className="text-blue-900">   you can trust</span> 
+            </h2>
+          </div>
+
+          <div className="relative" style={{ overflow: "hidden" }}>
+            <div
+              className="flex"
+              style={{
+                gap: `${CARD_GAP}px`,
+                transform: `translateX(-${index * STEP}px)`,
+                transition: smooth ? "transform 0.45s cubic-bezier(0.4,0,0.2,1)" : "none",
+              }}
+            >
+ {track.map((mover, i) => (
+  <div
+    key={`${mover.name}-${i}`}
+    className=" rounded-xl   transition-shadow duration-300 shrink-0 overflow-hidden"
+    style={{ width: `${CARD_WIDTH}px` }}
+  >
+    {/* Image Section */}
+    <div className="relative w-full" style={{ height: "130px" }}>
+      <img
+        src={mover.image || "/placeholder-mover.jpg"}
+        alt={mover.name}
+        className="w-full h-full object-cover"
+      />
+
+      {/* Dark gradient overlay at bottom for text readability */}
+      <div
+        className="absolute bottom-0 left-0 right-0 h-16"
+        style={{
+          background: "linear-gradient(to top, rgba(0,0,0,0.7), transparent)",
+        }}
+      />
+
+      {/* RERA Badge - top left */}
+      {mover.verified && (
+        <span className="absolute top-3 left-3 flex items-center gap-1 text-[11px] font-bold text-white bg-black/40 backdrop-blur-sm px-2.5 py-1 rounded-full">
+          <ShieldCheck className="w-3.5 h-3.5 text-lime-400" />
+          RERA
+        </span>
+      )}
+
+      {/* Heart / Wishlist icon - top right */}
+      <button className="absolute top-3 right-3 w-7 h-7 rounded-full bg-white/90 flex items-center justify-center hover:bg-white transition-colors">
+        <Heart className="w-3.5 h-3.5 text-gray-700" />
+      </button>
+
+      {/* Status text - bottom of image */}
+      <p className="absolute bottom-2.5 left-3 text-white text-xs font-semibold">
+        {mover.status || "Ready To Move"}
+      </p>
+    </div>
+
+    {/* Info Section */}
+    <div className="p-1">
+      <h3 className="font-bold text-gray-900 text-base pt-2 leading-snug">
+        {mover.name}
+      </h3>
+      <p className="text-xs text-gray-500 font-medium mt-1 leading-snug">
+        {mover.subtitle}
+      </p>
+      <p className="text-sm font-bold text-gray-900 mt-1">
+        ₹ {mover.price}
+      </p>
+    </div>
+  </div>
+))}
+            </div>
+          </div>
+        </div>
+      </section>
     <OmSaiLogisticsPage/>
   
     </>

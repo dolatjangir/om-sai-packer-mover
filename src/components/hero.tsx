@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { MapPin, Calendar, Truck, ArrowRight, Star, ShieldCheck, Package, Phone, PhoneCall, User } from "lucide-react";
+import { MapPin, Calendar, Truck, ArrowRight, Star, ShieldCheck, Package, Phone, PhoneCall, User, Heart } from "lucide-react";
 import Image from "next/image";
 
 interface Route {
@@ -12,16 +12,13 @@ interface Route {
   image:string
 }
 
-interface Mover {
-  name: string;
-  years: number;
-  rating: number;
-  reviews: number;
-  tags: string[];
-  price: number;
-  verified: boolean;
-}
 
+interface ServiceItem {
+  id: number;
+  title: string;
+  description: string;
+  icon: React.ReactNode;
+}
 interface ServiceType {
   id: string;
   label: string;
@@ -34,6 +31,59 @@ const serviceTypes: ServiceType[] = [
   { id: "packer", label: "Mover & Packer", image: "https://images.unsplash.com/photo-1600518464441-9154a4dea21b?auto=format&fit=crop&q=80&w=200" },
 ];
 
+
+const services: ServiceItem[] = [
+    {
+      id: 1,
+      title: "Household Relocation",
+      description: "Specialized packing for fragile items.",
+      icon: (
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-12 h-12 text-emerald-500">
+          <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+          <polyline points="9 22 9 12 15 12 15 22"/>
+        </svg>
+      )
+    },
+    {
+      id: 2,
+      title: "Corporate Moves",
+      description: "Minimal downtime, IT asset handling.",
+      icon: (
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-12 h-12 text-blue-600">
+          <rect x="16" y="16" width="6" height="6" rx="1"/>
+          <rect x="2" y="16" width="6" height="6" rx="1"/>
+          <rect x="9" y="2" width="6" height="6" rx="1"/>
+          <path d="M12 8v8"/>
+          <path d="M12 12H5v4"/>
+          <path d="M12 12h7v4"/>
+        </svg>
+      )
+    },
+    {
+      id: 3,
+      title: "Vehicle Transport",
+      description: "Open and enclosed car carriers.",
+      icon: (
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-12 h-12 text-emerald-500">
+          <path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9A3.7 3.7 0 0 0 2 12v4c0 .6.4 1 1 1h2"/>
+          <circle cx="7" cy="17" r="2"/>
+          <circle cx="17" cy="17" r="2"/>
+        </svg>
+      )
+    },
+    {
+      id: 4,
+      title: "Secure Warehousing",
+      description: "Long & short-term storage solutions.",
+      icon: (
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-12 h-12 text-emerald-500">
+          <path d="M3 21V10l9-6 9 6v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+          <path d="M9 21V12h6v9"/>
+        </svg>
+      )
+    }
+  ];
+
 const routes: Route[] = [
   { from: "New York, NY", to: "Miami, FL", distance: "1,280 mi", duration: "3–5 days", price: 1899, popular: true,image:"/img1.avif" },
   { from: "Los Angeles, CA", to: "Austin, TX", distance: "1,375 mi", duration: "3–5 days", price: 1749, popular: false,image:"/img2.avif" },
@@ -43,63 +93,26 @@ const routes: Route[] = [
   { from: "Dallas, TX", to: "Phoenix, AZ", distance: "887 mi", duration: "2–3 days", price: 1199, popular: false,image:"/img6.webp" },
 ];
 
-const movers: Mover[] = [
-  { name: "Summit Packers Co.", years: 12, rating: 4.9, reviews: 842, tags: ["Residential", "Long-distance"], price: 89, verified: true },
-  { name: "BlueLine Movers", years: 8, rating: 4.8, reviews: 613, tags: ["Office", "Storage"], price: 79, verified: true },
-  { name: "LimeCrate Relocations", years: 6, rating: 4.7, reviews: 401, tags: ["Piano", "Fragile items"], price: 95, verified: false },
-  { name: "Anchor Moving Group", years: 15, rating: 5.0, reviews: 1204, tags: ["Residential", "Office"], price: 99, verified: true },
-  { name: "Swift Pack & Ship", years: 4, rating: 4.6, reviews: 288, tags: ["Long-distance", "Storage"], price: 74, verified: false },
-  { name: "Golden State Haulers", years: 10, rating: 4.8, reviews: 567, tags: ["Residential", "Fragile items"], price: 84, verified: true },
-  { name: "Metro Pack Pros", years: 7, rating: 4.7, reviews: 349, tags: ["Office", "Long-distance"], price: 89, verified: false },
-  { name: "Evergreen Movers", years: 9, rating: 4.9, reviews: 721, tags: ["Residential", "Storage"], price: 92, verified: true },
-];
+
 
 export default function HeroWithFilter() {
   // ---- Auto-scrolling movers carousel: advances by 2 cards every 0.5s ----
-  const CARD_WIDTH = 264;
-  const CARD_GAP = 20;
-  const VISIBLE = 4;
-  const STEP = CARD_WIDTH + CARD_GAP;
-  const N = movers.length;
-  const track: Mover[] = [...movers, ...movers.slice(0, VISIBLE)];
 
-  const [index, setIndex] = useState<number>(0);
+
+
   const [smooth, setSmooth] = useState<boolean>(true);
-  const [service, setService] = useState<string>("truck");
-  const resetTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setIndex((prev) => prev + 2);
-    }, 2000);
-    return () => clearInterval(timer);
-  }, []);
 
-  useEffect(() => {
-    if (index >= N) {
-      resetTimeout.current = setTimeout(() => {
-        setSmooth(false);
-        setIndex(0);
-      }, 1800);
-    }
-    return () => {
-      if (resetTimeout.current) clearTimeout(resetTimeout.current);
-    };
-  }, [index, N]);
+  
+  
 
-  useEffect(() => {
-    if (!smooth) {
-      const raf = requestAnimationFrame(() => setSmooth(true));
-      return () => cancelAnimationFrame(raf);
-    }
-  }, [smooth]);
 
   return (
     <div style={{ fontFamily: "sans-serif" }}>
       {/* ===================== HERO — HALF SCREEN ===================== */}
       <section
         className="relative w-full overflow-hidden text-white select-none antialiased"
-        style={{ height: "50vh", minHeight: "420px" }}
+        style={{ height: "50vh", minHeight: "480px" }}
       >
         <div className="absolute inset-0 w-full h-full">
           {/* Left piece */}
@@ -171,23 +184,7 @@ export default function HeroWithFilter() {
           }}
         />
 
-        {/* NAV */}
-        {/* <header
-          className="absolute top-0 left-0 right-0 flex items-center justify-between px-6 py-3 md:px-12"
-          style={{ zIndex: 30, background: "linear-gradient(to bottom, rgba(0,0,0,0.5), transparent)" }}
-        >
-          <div className="flex items-center space-x-1 cursor-pointer">
-            <span className="text-2xl font-black tracking-tighter text-white">O</span>
-            <span className="text-2xl font-black tracking-tighter text-lime-500">S</span>
-          </div>
-
-          <nav className="hidden md:flex items-center space-x-8 font-semibold text-sm tracking-wide text-white">
-            <a href="#process" className="hover:text-lime-400 transition-colors duration-300">Process</a>
-            <a href="#locations" className="hover:text-lime-400 transition-colors duration-300">Locations</a>
-            <a href="#fleet" className="hover:text-lime-400 transition-colors duration-300">Fleet</a>
-            <a href="#contact" className="hover:text-lime-400 transition-colors duration-300">Contact</a>
-          </nav>
-        </header> */}
+       
 
         {/* HERO CONTENT */}
         <div className="absolute inset-0 z-20 flex flex-col items-center justify-center px-4 text-center">
@@ -204,12 +201,42 @@ export default function HeroWithFilter() {
           </h1>
 
           <p
-            className="hero-fade-in hero-delay-1 mt-4 text-sm md:text-base font-medium max-w-md"
+            className="hero-fade-in hero-delay-1 mt-2 text-sm md:text-base font-medium max-w-md"
             style={{ color: "rgba(255,255,255,0.85)" }}
           >
-            Relocate anywhere in the US, stress-free.
+            Relocate anywhere in the Jaipur, stress-free.
           </p>
+          {/*  */}
+             <div className="w-full max-w-7xl mx-auto p-3  min-height-screen flex items-center justify-center">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 w-full">
+        {services.map((service) => (
+          <div 
+            key={service.id} 
+            className="flex items-center gap-2 bg-stone-100 border border-gray-200 rounded-xl p-3 shadow-sm transition-shadow hover:shadow-md"
+          >
+            {/* Icon Container */}
+            <div className="flex-shrink-0 flex items-center justify-center w-10 h-10">
+              {service.icon}
+            </div>
+
+            {/* Content Container */}
+            <div className="flex flex-col">
+              <span className="text-[10px] uppercase tracking-wider text-gray-400 font-medium mb-0.5">
+                Service Pillar
+              </span>
+              <h3 className="text-base font-bold text-gray-900 leading-tight ">
+                {service.title}
+              </h3>
+              <p className="text-sm text-gray-600 leading-snug">
+                {service.description}
+              </p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
         </div>
+     
       </section>
 
       {/* ===================== OVERLAPPING FILTER BAR ===================== */}
@@ -219,9 +246,9 @@ export default function HeroWithFilter() {
         style={{ zIndex: 40 }}
       >
         <div
-          className="mx-auto max-w-5xl bg-white rounded-2xl shadow-2xl px-5 py-5 md:px-8 md:py-6"
+          className="mx-auto max-w-5xl bg-stone-100 rounded-2xl shadow-2xl px-5 py-5 md:px-8 md:py-6"
           style={{
-            marginTop: "-56px",
+            marginTop: "-110px",
             border: "1px solid rgba(0,0,0,0.06)",
           }}
         >
@@ -350,8 +377,8 @@ export default function HeroWithFilter() {
       </div>
 
       {/* ===================== POPULAR ROUTES LISTING ===================== */}
-   <section className="px-6 pb-24" style={{ background: "#F7F8F5" }}>
-  <div className="max-w-7xl mx-auto">
+   <section className="px-6 pb-4" style={{ background: "#F7F8F5" }}>
+  <div className="max-w-6xl mx-auto">
     <div className="flex items-end justify-between flex-wrap gap-3 mb-8">
       <div>
         <p className="text-xs font-bold uppercase tracking-widest text-blue-700 mb-1">
@@ -443,93 +470,7 @@ export default function HeroWithFilter() {
   </div>
 </section>
 
-      {/* ===================== PACKERS & MOVERS — AUTO-SCROLL LISTING ===================== */}
-      <section className="px-6 pb-24 pt-4" style={{ background: "#F7F8F5" }}>
-        <div className="max-w-7xl mx-auto">
-          <div className="mb-8">
-            <p className="text-xs font-bold uppercase tracking-widest text-blue-700 mb-1">
-              Vetted and verified
-            </p>
-            <h2 className="italic font-black uppercase tracking-tight text-gray-900 text-2xl md:text-3xl">
-            <span className="text-lime-600">Packers &amp; movers</span> <span className="text-blue-900">   you can trust</span> 
-            </h2>
-          </div>
-
-          <div className="relative" style={{ overflow: "hidden" }}>
-            <div
-              className="flex"
-              style={{
-                gap: `${CARD_GAP}px`,
-                transform: `translateX(-${index * STEP}px)`,
-                transition: smooth ? "transform 0.45s cubic-bezier(0.4,0,0.2,1)" : "none",
-              }}
-            >
-              {track.map((mover, i) => (
-                <div
-                  key={`${mover.name}-${i}`}
-                  className="bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-lg transition-shadow duration-300 shrink-0"
-                  style={{ width: `${CARD_WIDTH}px` }}
-                >
-                  <div className="p-5">
-                    <div className="flex items-start justify-between gap-2">
-                      <div
-                        className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0"
-                        style={{ background: "rgba(0,91,181,0.1)" }}
-                      >
-                        <Package className="w-5 h-5 text-blue-700" />
-                      </div>
-                      {mover.verified && (
-                        <span className="flex items-center gap-1 text-[10px] font-extrabold uppercase tracking-wide text-lime-700 bg-lime-50 px-2 py-1 rounded-full">
-                          <ShieldCheck className="w-3 h-3" />
-                          Verified
-                        </span>
-                      )}
-                    </div>
-
-                    <h3 className="mt-3 font-bold text-gray-900 text-base leading-snug">
-                      {mover.name}
-                    </h3>
-                    <p className="text-xs text-gray-500 font-medium mt-0.5">
-                      {mover.years} years in business
-                    </p>
-
-                    <div className="flex items-center gap-1 mt-2">
-                      <Star className="w-3.5 h-3.5 text-lime-600 fill-lime-500" />
-                      <span className="text-xs font-bold text-gray-800">{mover.rating}</span>
-                      <span className="text-xs text-gray-400">({mover.reviews})</span>
-                    </div>
-
-                    <div className="flex flex-wrap gap-1.5 mt-3">
-                      {mover.tags.map((tag) => (
-                        <span
-                          key={tag}
-                          className="text-[10px] font-semibold text-blue-700 bg-blue-50 px-2 py-1 rounded-full"
-                        >
-                          {tag}
-                        </span>
-                      ))}
-                    </div>
-
-                    <div className="flex items-center justify-between mt-4 pt-3 border-t border-gray-100">
-                      <div>
-                        <p className="text-[10px] uppercase tracking-wide text-gray-400 font-bold">
-                          From
-                        </p>
-                        <p className="text-lg font-black text-gray-900">
-                          ${mover.price}<span className="text-xs font-semibold text-gray-400">/hr</span>
-                        </p>
-                      </div>
-                      <button className="bg-lime-500 hover:bg-lime-400 text-black text-xs font-extrabold uppercase tracking-wide px-3.5 py-2 rounded-full transition-colors duration-300 cursor-pointer">
-                        View
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
+    
 
       <style>{`
         .hero-fade-in {
