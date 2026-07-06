@@ -1,3 +1,4 @@
+"use client"
 import { useEffect, useState } from "react";
 import {
   MapPin,
@@ -125,8 +126,11 @@ export default function Navbar() {
         <div className="max-w-7xl mx-auto px-6 md:px-12">
           <div className="flex items-center justify-between h-16 md:h-20">
             {/* Logo */}
-            <div className="flex items-center space-x-1 cursor-pointer">
+            <div className={`${scrolled ? "flex" : "hidden"} items-center space-x-1 cursor-pointer`}>
               <img src="/omsai-logo.png" className="w-60"/>
+            </div>
+              <div className={`${scrolled ? "hidden" : "flex"} items-center space-x-1 cursor-pointer`}>
+              <img src="/omsai-logo-white.png" className="w-60"/>
             </div>
 
             {/* Desktop nav with mega menus */}

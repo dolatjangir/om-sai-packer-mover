@@ -2,8 +2,8 @@
 import React, { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 
-import OmSaiLogisticsPage from '../components/services';
-import HeroWithFilter from '@/components/hero';
+import OmSaiLogisticsPage from '../components/homePage/services';
+import HeroWithFilter from '@/components/homePage/hero';
 import Navbar from '@/components/navbar';
 import { Heart, ShieldCheck } from 'lucide-react';
 
@@ -100,7 +100,7 @@ export default function HeroSection() {
 
   return (
     <>
-    <Navbar/>
+   
     <HeroWithFilter/>
  <section className="relative w-full bg-[#F7F8F5] overflow-hidden py-10 px-6 md:px-12 font-sans">
  
