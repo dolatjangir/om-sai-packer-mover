@@ -47,8 +47,13 @@ export default function GetAQuotePage() {
     
 
       {/* HERO BANNER SECTION */}
-      <section className="relative overflow-hidden bg-radial from-[var(--blue-50)] via-white to-white py-12 md:pb-16 md:pt-32 border-b border-[var(--gray-100)]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="relative overflow-hidden  py-12 md:pb-16 md:pt-32 border-b border-[var(--gray-100)]">
+         <img
+    src="/get-a-quote-hero-bg-img.png"
+    className="absolute right-0 top-0 h-full w-auto object-contain pointer-events-none select-none "
+    alt=""
+  />
+        <div className="relative  max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
             
             {/* Left Content */}
@@ -56,7 +61,7 @@ export default function GetAQuotePage() {
               {/* <div className="text-sm font-medium text-[var(--gray-500)] flex items-center gap-2">
                 Home <span className="text-xs">›</span> <span className="text-[var(--gray-900)] font-semibold">Get a Quote</span>
               </div> */}
-              <h1 className="text-4xl md:text-5xl font-black text-[var(--blue-950)] leading-tight">
+              <h1 className="text-4xl md:text-5xl font-black text-[var(--blue-950)] italic leading-tight">
                 Get a Quote <br />
                 <span className="text-[var(--lime-600)]">Fast. Free. No Obligation.</span>
               </h1>
@@ -106,7 +111,7 @@ export default function GetAQuotePage() {
             </div>
 
             {/* Right Asset Representation */}
-            <div className="lg:col-span-5 hidden lg:block relative">
+            {/* <div className="lg:col-span-5 hidden lg:block relative">
               <div className="w-full h-72 bg-gradient-to-tr from-[var(--blue-100)] to-emerald-50 rounded-2xl relative shadow-inner p-6 flex items-center justify-center border border-dashed border-[var(--gray-300)]">
                 <div className="text-center space-y-2">
                   <FileText className="h-16 w-16 text-[var(--blue-600)] mx-auto opacity-80" />
@@ -114,7 +119,7 @@ export default function GetAQuotePage() {
                   <p className="text-sm text-[var(--gray-500)] font-medium">Clipboard & Moving Boxes Illustration</p>
                 </div>
               </div>
-            </div>
+            </div> */}
 
           </div>
         </div>
@@ -362,7 +367,7 @@ export default function GetAQuotePage() {
           <div className="lg:col-span-4 space-y-6">
             
             {/* Step Guides Widget */}
-            <div className="bg-white border border-[var(--gray-200)] rounded-xl p-6 shadow-xs space-y-6">
+            <div className="bg-(--blue-50) border border-[var(--gray-200)] rounded-xl p-6 shadow-xs space-y-6">
               <h3 className="font-extrabold text-lg text-[var(--blue-950)] border-b border-[var(--gray-100)] pb-2">
                 Get Your Quote in <span className="text-[var(--lime-600)]">3 Easy Steps</span>
               </h3>
@@ -401,7 +406,7 @@ export default function GetAQuotePage() {
             </div>
 
             {/* Why Choose Us Widget */}
-            <div className="bg-white border border-[var(--gray-200)] rounded-xl p-6 shadow-xs">
+            <div className="bg-(--blue-50) border border-[var(--gray-200)] rounded-xl p-6 shadow-xs">
               <h3 className="font-extrabold text-lg text-[var(--blue-950)] border-b border-[var(--gray-100)] pb-3 mb-4">
                 Why Get a Quote from Us?
               </h3>
@@ -423,7 +428,7 @@ export default function GetAQuotePage() {
             </div>
 
             {/* Emergency Hotline Assistance Widget */}
-            <div className="bg-white border border-[var(--gray-200)] rounded-xl p-6 shadow-xs text-center space-y-4">
+            <div className="bg-(--blue-50) border border-[var(--gray-200)] rounded-xl p-6 shadow-xs text-center space-y-4">
               <h3 className="font-extrabold text-base text-[var(--blue-950)]">Need Immediate Assistance?</h3>
               <p className="text-xs text-[var(--gray-500)] leading-snug">
                 Call us now for instant support and quick booking.
@@ -445,13 +450,12 @@ export default function GetAQuotePage() {
       </main>
 
       {/* LOWER CALL TO ACTION BANNER SECTION */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-12">
-        <div className="bg-radial from-[var(--blue-50)] to-white border border-[var(--gray-200)] rounded-2xl p-6 md:p-8 flex flex-col md:flex-row items-center justify-between gap-6">
-          <div className="flex items-center gap-4">
-            <div className="hidden sm:block p-4 bg-white shadow-xs border border-[var(--gray-100)] rounded-xl text-center">
-              <Truck className="h-10 w-10 text-[var(--blue-800)]" />
-            </div>
-            <div>
+      <section className=" max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-12">
+        <div className="relative overflow-visible bg-radial from-[var(--blue-50)] to-white border border-[var(--gray-200)] rounded-2xl p-6 md:p-8 flex flex-col md:flex-row items-center justify-between gap-6">
+          <img src="/get-a-quote-page-botom-img.png" className=" absolute -top-0  sm:-top-7 sm:-left-2 h-40 w-auto" />
+          <div className=" flex items-center gap-4">
+           
+            <div className=" pt-30 sm:pl-50 sm:pt-0">
               <h3 className="text-xl md:text-2xl font-black text-[var(--blue-950)]">
                 Moving Soon? <span className="text-[var(--lime-600)]">Let Us Take Care of Everything!</span>
               </h3>

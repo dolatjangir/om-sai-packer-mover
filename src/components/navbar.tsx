@@ -17,6 +17,7 @@ import {
   Award,
   MessageCircle,
 } from "lucide-react";
+import Link from "next/link";
 
 interface NavItem {
   label: string;
@@ -63,10 +64,10 @@ const navResources = [
 ];
 
 const navCompany = [
-  { title: "About Us", desc: "Our story, mission, and values.", icon: Users },
-  { title: "Careers", desc: "Join our growing moving crew.", icon: Briefcase },
-  { title: "Why Choose Us", desc: "What sets our service apart.", icon: Award },
-  { title: "Contact Us", desc: "Talk to our relocation specialists.", icon: MessageCircle },
+  { title: "About Us", desc: "Our story, mission, and values.", icon: Users,href:"/company/about-us" },
+  { title: "Careers", desc: "Join our growing moving crew.", icon: Briefcase,href:"/" },
+  { title: "Why Choose Us", desc: "What sets our service apart.", icon: Award,href:"/company/why-choose-us" },
+  { title: "Contact Us", desc: "Talk to our relocation specialists.", icon: MessageCircle,href:"/company/contact-us" },
 ];
 
 const greetings = [
@@ -262,7 +263,7 @@ export default function Navbar() {
                       {navCompany.map((c) => {
                         const Icon = c.icon;
                         return (
-                          <a key={c.title} href="#" className="flex gap-2.5 p-2.5 rounded-xl hover:bg-gray-50 transition-colors">
+                          <Link key={c.title} href={c.href} className="flex gap-2.5 p-2.5 rounded-xl hover:bg-gray-50 transition-colors">
                             <div className="w-8 h-8 rounded-lg flex items-center justify-center shrink-0" style={{ background: "rgba(132,204,22,0.15)" }}>
                               <Icon className="w-4 h-4" style={{ color: "#3f6212" }} />
                             </div>
@@ -270,7 +271,7 @@ export default function Navbar() {
                               <p className="text-sm font-bold text-gray-900">{c.title}</p>
                               <p className="text-xs text-gray-500 mt-0.5 leading-snug">{c.desc}</p>
                             </div>
-                          </a>
+                          </Link>
                         );
                       })}
                     </div>
