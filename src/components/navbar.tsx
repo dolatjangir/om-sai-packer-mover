@@ -31,16 +31,16 @@ const navItems: NavItem[] = [
   { label: "Fleet", menu: "fleet" },
   { label: "Resources", menu: "resources" },
   { label: "Company", menu: "company" },
-  { label: "Pricing", menu: null, href: "#pricing" },
+  { label: "Pricing", menu: null, href: "/pricing" },
 ];
 
 const navServices = [
-  { title: "Residential Moving", desc: "Full home relocation, packed and protected." },
-  { title: "Office Relocation", desc: "Minimize downtime with scheduled corporate moves." },
-  { title: "Storage Solutions", desc: "Short and long-term secure storage units." },
-  { title: "Long-Distance Moves", desc: "Coast-to-coast moves with real-time tracking." },
-  { title: "Packing Services", desc: "Professional packing with premium materials." },
-  { title: "Vehicle Shipping", desc: "Safe transport for cars, bikes, and boats." },
+  { title: "Residential Moving", desc: "Full home relocation, packed and protected.",href:"/services/residental-moving" },
+  { title: "Office Relocation", desc: "Minimize downtime with scheduled corporate moves.",href:"/services/storage-solutions" },
+  { title: "Storage Solutions", desc: "Short and long-term secure storage units.",href:"/services/storage-solutions" },
+  { title: "Long-Distance Moves", desc: "Coast-to-coast moves with real-time tracking.",href:"/services/residental-moving" },
+  { title: "Packing Services", desc: "Professional packing with premium materials.",href:"/services/residental-moving" },
+  { title: "Vehicle Shipping", desc: "Safe transport for cars, bikes, and boats.",href:"/services/residental-moving" },
 ];
 
 const navLocationGroups: { region: string; cities: string[] }[] = [
@@ -65,7 +65,7 @@ const navResources = [
 
 const navCompany = [
   { title: "About Us", desc: "Our story, mission, and values.", icon: Users,href:"/company/about-us" },
-  { title: "Careers", desc: "Join our growing moving crew.", icon: Briefcase,href:"/" },
+  { title: "Careers", desc: "Join our growing moving crew.", icon: Briefcase,href:"/company/careers" },
   { title: "Why Choose Us", desc: "What sets our service apart.", icon: Award,href:"/company/why-choose-us" },
   { title: "Contact Us", desc: "Talk to our relocation specialists.", icon: MessageCircle,href:"/company/contact-us" },
 ];
@@ -161,7 +161,7 @@ export default function Navbar() {
                     <div className="absolute top-full left-1/2 -translate-x-1/2 mt-3 bg-white rounded-2xl shadow-2xl p-5 flex gap-5" style={{ width: 680 }}>
                       <div className="grid grid-cols-2 gap-2 flex-1">
                         {navServices.map((s) => (
-                          <a key={s.title} href="#" className="flex gap-3 p-3 rounded-xl hover:bg-gray-50 transition-colors">
+                          <Link key={s.title} href={s.href} className="flex gap-3 p-3 rounded-xl hover:bg-gray-50 transition-colors">
                             <div
                               className="w-9 h-9 rounded-lg flex items-center justify-center shrink-0"
                               style={{ background: "rgba(132,204,22,0.15)" }}
@@ -172,7 +172,7 @@ export default function Navbar() {
                               <p className="text-sm font-bold text-gray-900">{s.title}</p>
                               <p className="text-xs text-gray-500 mt-0.5 leading-snug">{s.desc}</p>
                             </div>
-                          </a>
+                          </Link>
                         ))}
                       </div>
                       <div
