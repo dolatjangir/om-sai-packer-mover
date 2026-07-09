@@ -47,13 +47,21 @@ export default function GetAQuotePage() {
     
 
       {/* HERO BANNER SECTION */}
-      <section className="relative overflow-hidden  py-12 md:pb-16 md:pt-32 border-b border-[var(--gray-100)]">
+      <section className="relative overflow-hidden h-[100vh] md:h-[90vh]   md:pb-16 pt-38 ">
          <img
     src="/get-a-quote-hero-bg-img.png"
-    className="absolute right-0 top-0 h-full w-auto object-contain pointer-events-none select-none "
+    className="hidden md:block absolute inset-0 w-full h-full "
     alt=""
   />
-        <div className="relative  max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <img
+    src="/get-a-quote-hero-bg-img-phn.png"
+    className="block md:hidden absolute inset-0 w-full h-full z-0"
+    alt=""
+  />
+  {/* <div className="block md:hidden absolute inset-0 bg-white/20 z-10" /> */}
+
+
+        <div className="relative  max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 z-20">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
             
             {/* Left Content */}

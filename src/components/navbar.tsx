@@ -127,12 +127,12 @@ export default function Navbar() {
         <div className="max-w-7xl mx-auto px-6 md:px-12">
           <div className="flex items-center justify-between h-16 md:h-20">
             {/* Logo */}
-            <div className={`${scrolled ? "flex" : "hidden"} items-center space-x-1 cursor-pointer`}>
+            <div className="flex items-center space-x-1 cursor-pointer">
               <img src="/omsai-logo.png" className="w-60"/>
             </div>
-              <div className={`${scrolled ? "hidden" : "flex"} items-center space-x-1 cursor-pointer`}>
+              {/* <div className={`${scrolled ? "hidden" : "flex"} items-center space-x-1 cursor-pointer`}>
               <img src="/omsai-logo-white.png" className="w-60"/>
-            </div>
+            </div> */}
 
             {/* Desktop nav with mega menus */}
             <nav className="hidden lg:flex items-center gap-1">
@@ -145,7 +145,7 @@ export default function Navbar() {
                 >
                   <a
                     href={item.href ?? "#"}
-                    className={`flex items-center gap-1 px-4 py-2 text-sm font-semibold ${scrolled ? "text-blue-900" : "text-white"} hover:text-lime-300 transition-colors cursor-pointer`}
+                    className={`flex items-center gap-1 px-4 py-2 text-sm font-semibold text-blue-900  hover:text-lime-300 transition-colors cursor-pointer`}
                   >
                     {item.label}
                     {item.menu && (
@@ -284,7 +284,7 @@ export default function Navbar() {
             <div className="hidden lg:flex items-center gap-5">
               <a href="tel:+18005551234" className="flex items-center gap-2 text-sm font-semibold text-white">
                 <Phone className="w-4 h-4" style={{ color: "#84cc16" }} />
-                <span className={`${scrolled ? "text-blue-900" : "text-white"}`}>
+                <span className="text-blue-900">
                 +91 9694666677
  </span>
               </a>
