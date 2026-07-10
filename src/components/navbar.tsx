@@ -36,11 +36,11 @@ const navItems: NavItem[] = [
 
 const navServices = [
   { title: "Residential Moving", desc: "Full home relocation, packed and protected.",href:"/services/residental-moving" },
-  { title: "Office Relocation", desc: "Minimize downtime with scheduled corporate moves.",href:"/services/storage-solutions" },
+  { title: "Office Relocation", desc: "Minimize downtime with scheduled corporate moves.",href:"/services/office-relocation" },
   { title: "Storage Solutions", desc: "Short and long-term secure storage units.",href:"/services/storage-solutions" },
-  { title: "Long-Distance Moves", desc: "Coast-to-coast moves with real-time tracking.",href:"/services/residental-moving" },
-  { title: "Packing Services", desc: "Professional packing with premium materials.",href:"/services/residental-moving" },
-  { title: "Vehicle Shipping", desc: "Safe transport for cars, bikes, and boats.",href:"/services/residental-moving" },
+  { title: "Long-Distance Moves", desc: "Coast-to-coast moves with real-time tracking.",href:"/services/long-distance-moves" },
+  { title: "Packing Services", desc: "Professional packing with premium materials.",href:"/services/packing-services" },
+  { title: "Vehicle Shipping", desc: "Safe transport for cars, bikes, and boats.",href:"/services/vehicle-shipping" },
 ];
 
 const navLocationGroups: { region: string; cities: string[] }[] = [

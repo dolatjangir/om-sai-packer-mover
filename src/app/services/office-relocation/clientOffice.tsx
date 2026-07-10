@@ -6,50 +6,44 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import {
   Phone,
   Shield,
-  Clock,
-  Banknote,
-  ChevronRight,
-  Home,
-  Building2,
-  Building,
-  Fence,
-  MapPin,
-  Package,
-  Truck,
-  Car,
-  ClipboardList,
   Calendar,
-  Box,
-  Warehouse,
-  Star,
-  Headphones,
+  Clock,
   Users,
-  ShieldCheck,
-  MapPinned,
-  FileCheck,
- 
-  Mail,
+  MapPin,
+  Headphones,
+  Star,
   CheckCircle2,
   ArrowRight,
-  LucideIcon,
+  Home,
+  Truck,
+  ClipboardList,
+  Package,
+  Wrench,
+  Monitor,
+  Sparkles,
+  FileCheck,
+  Box,
+  Car,
+  ShieldCheck,
+  Tag,
+  FileText,
+  ChevronRight,
+ 
+  Mail,
+  Building,
+  Check,
 } from "lucide-react";
 import { FaFacebook, FaInstagram, FaLinkedin, FaTwitter } from "react-icons/fa";
 import StatsBar from "@/components/statsBar";
-type HomeType = {
-  icon: LucideIcon;
-  title: string;
-  subtitle: string;
-};
 gsap.registerPlugin(ScrollTrigger);
 
-export default function ResidentialMoving() {
+export default function OfficeRelocation() {
   const heroRef = useRef<HTMLDivElement>(null);
-  const perfectRef = useRef<HTMLDivElement>(null);
-  const servicesRef = useRef<HTMLDivElement>(null);
+  const solutionsRef = useRef<HTMLDivElement>(null);
   const processRef = useRef<HTMLDivElement>(null);
-
+  const whyRef = useRef<HTMLDivElement>(null);
   const ctaRef = useRef<HTMLDivElement>(null);
-
+  const statsRef = useRef<HTMLDivElement>(null);
   const footerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -72,35 +66,52 @@ export default function ResidentialMoving() {
           { opacity: 1, y: 0, duration: 0.6, delay: 0.4, ease: "power2.out" }
         );
         gsap.fromTo(
-          ".hero-feature-pill",
+          ".hero-text",
+          { opacity: 0, y: 20 },
+          { opacity: 1, y: 0, duration: 0.6, delay: 0.5, ease: "power2.out" }
+        );
+        gsap.fromTo(
+          ".hero-badge",
           { opacity: 0, y: 15 },
           {
             opacity: 1,
             y: 0,
             duration: 0.4,
             stagger: 0.08,
-            delay: 0.5,
+            delay: 0.6,
             ease: "power2.out",
           }
         );
         gsap.fromTo(
           ".hero-cta",
           { opacity: 0, y: 20 },
-          { opacity: 1, y: 0, duration: 0.6, delay: 0.8, ease: "power2.out" }
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.5,
+            stagger: 0.1,
+            delay: 0.8,
+            ease: "power2.out",
+          }
         );
         gsap.fromTo(
           ".hero-image",
           { opacity: 0, x: 50 },
           { opacity: 1, x: 0, duration: 1, delay: 0.3, ease: "power2.out" }
         );
-
-        // Perfect For
         gsap.fromTo(
-          ".perfect-header",
+          ".hero-card",
+          { opacity: 0, scale: 0.8 },
+          { opacity: 1, scale: 1, duration: 0.6, delay: 0.9, ease: "back.out(1.7)" }
+        );
+
+        // Solutions
+        gsap.fromTo(
+          ".solutions-header",
           { opacity: 0, y: 20 },
           {
             scrollTrigger: {
-              trigger: perfectRef.current,
+              trigger: solutionsRef.current,
               start: "top 85%",
               toggleActions: "play none none reverse",
             },
@@ -111,44 +122,11 @@ export default function ResidentialMoving() {
           }
         );
         gsap.fromTo(
-          ".perfect-card",
-          { opacity: 0, y: 30 },
-          {
-            scrollTrigger: {
-              trigger: perfectRef.current,
-              start: "top 80%",
-              toggleActions: "play none none reverse",
-            },
-            opacity: 1,
-            y: 0,
-            duration: 0.5,
-            stagger: 0.1,
-            ease: "power2.out",
-          }
-        );
-
-        // Services
-        gsap.fromTo(
-          ".services-header",
-          { opacity: 0, y: 20 },
-          {
-            scrollTrigger: {
-              trigger: servicesRef.current,
-              start: "top 85%",
-              toggleActions: "play none none reverse",
-            },
-            opacity: 1,
-            y: 0,
-            duration: 0.6,
-            ease: "power2.out",
-          }
-        );
-        gsap.fromTo(
-          ".service-card",
+          ".solution-card",
           { opacity: 0, y: 40 },
           {
             scrollTrigger: {
-              trigger: servicesRef.current,
+              trigger: solutionsRef.current,
               start: "top 75%",
               toggleActions: "play none none reverse",
             },
@@ -188,12 +166,43 @@ export default function ResidentialMoving() {
             opacity: 1,
             y: 0,
             duration: 0.5,
-            stagger: 0.12,
+            stagger: 0.1,
             ease: "power2.out",
           }
         );
 
-      
+        // Why
+        gsap.fromTo(
+          ".why-header",
+          { opacity: 0, y: 20 },
+          {
+            scrollTrigger: {
+              trigger: whyRef.current,
+              start: "top 85%",
+              toggleActions: "play none none reverse",
+            },
+            opacity: 1,
+            y: 0,
+            duration: 0.6,
+            ease: "power2.out",
+          }
+        );
+        gsap.fromTo(
+          ".why-card",
+          { opacity: 0, y: 30 },
+          {
+            scrollTrigger: {
+              trigger: whyRef.current,
+              start: "top 80%",
+              toggleActions: "play none none reverse",
+            },
+            opacity: 1,
+            y: 0,
+            duration: 0.5,
+            stagger: 0.08,
+            ease: "power2.out",
+          }
+        );
 
         // CTA
         gsap.fromTo(
@@ -202,12 +211,30 @@ export default function ResidentialMoving() {
           {
             scrollTrigger: {
               trigger: ctaRef.current,
-              start: "top 85%",
+              start: "top 90%",
               toggleActions: "play none none reverse",
             },
             opacity: 1,
             y: 0,
             duration: 0.8,
+            ease: "power2.out",
+          }
+        );
+
+        // Stats
+        gsap.fromTo(
+          ".stat-item",
+          { opacity: 0, y: 20 },
+          {
+            scrollTrigger: {
+              trigger: statsRef.current,
+              start: "top 90%",
+              toggleActions: "play none none reverse",
+            },
+            opacity: 1,
+            y: 0,
+            duration: 0.5,
+            stagger: 0.08,
             ease: "power2.out",
           }
         );
@@ -239,44 +266,42 @@ export default function ResidentialMoving() {
     return () => clearTimeout(timer);
   }, []);
 
-  const homeTypes: HomeType[] = [
-    { icon: Building2, title: "1 BHK / 2 BHK", subtitle: "Apartments" },
-    { icon: Home, title: "Villas &", subtitle: "Independent Homes" },
-    { icon: Building, title: "High-Rise", subtitle: "Apartments" },
-    { icon: Fence, title: "Gated Communities", subtitle: "& Townships" },
-    { icon: MapPin, title: "Local &", subtitle: "Inter-City Moves" },
-  ];
-
-  const services = [
+  const solutions = [
+    {
+      icon: Calendar,
+      title: "Pre-Move Planning",
+      desc: "Detailed assessment & customized moving plan for your office.",
+      imgLabel: "Planning clipboard",
+    },
     {
       icon: Package,
-      title: "Packing & Unpacking",
-      desc: "High-quality packing materials and expert packing to keep your items safe.",
+      title: "Packing & Labeling",
+      desc: "Safe packing of office equipment, documents and furniture.",
       imgLabel: "Packing boxes",
     },
     {
-      icon: Truck,
-      title: "Loading & Unloading",
-      desc: "Trained professionals for careful loading and unloading.",
-      imgLabel: "Loading truck",
+      icon: Wrench,
+      title: "Dismantling & Handling",
+      desc: "Expert dismantling of workstations, cabins and office furniture.",
+      imgLabel: "Dismantling furniture",
     },
     {
-      icon: Car,
-      title: "Safe Transportation",
-      desc: "Well-maintained vehicles ensure your belongings reach safely.",
+      icon: Truck,
+      title: "Transportation",
+      desc: "Well-maintained vehicles for safe and timely transport.",
       imgLabel: "Moving truck",
     },
     {
-      icon: Warehouse,
+      icon: Monitor,
       title: "Unpacking & Setup",
-      desc: "We unpack and help set up your home as per your convenience.",
-      imgLabel: "Unpacking setup",
+      desc: "Unpacking and setting up your office at the new location.",
+      imgLabel: "Setting up office",
     },
     {
-      icon: Shield,
-      title: "Care for Special Items",
-      desc: "Special care for fragile, valuable and bulky items like TVs, mirrors, antiques, etc.",
-      imgLabel: "Special items",
+      icon: Sparkles,
+      title: "Clean-Up Support",
+      desc: "We leave your old or new office clean and ready to use.",
+      imgLabel: "Clean office",
     },
   ];
 
@@ -284,64 +309,81 @@ export default function ResidentialMoving() {
     {
       num: "1",
       icon: ClipboardList,
-      title: "Request a Quote",
-      desc: "Share your move details you get a free estimate.",
+      title: "Survey & Assessment",
+      desc: "We understand your requirements and plan every detail.",
     },
     {
       num: "2",
-      icon: Calendar,
-      title: "Plan Your Move",
-      desc: "We plan, schedule and assign the right team.",
+      icon: FileText,
+      title: "Plan & Schedule",
+      desc: "We create a customized plan and schedule the move.",
     },
     {
       num: "3",
       icon: Box,
-      title: "Pack & Load",
-      desc: "We pack your items and load them safely.",
+      title: "Packing & Preparation",
+      desc: "We pack, label and prepare every item for safe moving.",
     },
     {
       num: "4",
-      icon: Truck,
-      title: "Transport",
-      desc: "Your belongings are transported securely.",
+      icon: Car,
+      title: "Transport & Move",
+      desc: "Safe loading, transportation and timely delivery to your new office.",
     },
     {
       num: "5",
-      icon: Home,
-      title: "Unload & Settle",
-      desc: "We unload, unpack and help you settle in.",
+      icon: Monitor,
+      title: "Setup & Installation",
+      desc: "We unpack, reassemble and set up your office as per your layout.",
+    },
+    {
+      num: "6",
+      icon: CheckCircle2,
+      title: "Final Check",
+      desc: "We ensure everything is in place for a smooth start.",
     },
   ];
 
-  const whyChoose = [
+  const whyTrust = [
     {
       icon: Users,
-      title: "Experienced & Verified Staff",
-      desc: "Trained professionals you can trust.",
-    },
-    {
-      icon: Package,
-      title: "Premium Packing Materials",
-      desc: "Strong boxes, bubble wrap, and more.",
-    },
-    {
-      icon: Clock,
-      title: "Timely & Reliable Service",
-      desc: "We value your time and commitments.",
+      title: "Experienced Professionals",
+      desc: "Trained team with years of relocation expertise",
     },
     {
       icon: FileCheck,
-      title: "Transparent Pricing",
-      desc: "No hidden charges, no last-minute surprises.",
+      title: "End-to-End Service",
+      desc: "We handle everything from start to finish",
     },
     {
-      icon: MapPinned,
+      icon: ShieldCheck,
+      title: "Secure Transport",
+      desc: "GPS-enabled vehicles & safe handling",
+    },
+    {
+      icon: Calendar,
+      title: "Flexible Scheduling",
+      desc: "Move over weekends or after office hours",
+    },
+    {
+      icon: Shield,
+      title: "Insurance Coverage",
+      desc: "Comprehensive insurance for complete peace of mind",
+    },
+    {
+      icon: MapPin,
       title: "Pan India Presence",
-      desc: "Service available in 200+ cities.",
+      desc: "Office relocation services across 200+ cities",
     },
   ];
 
- 
+  const stats = [
+    { icon: Users, value: "10,000+", label: "Happy Customers" },
+    { icon: MapPin, value: "200+", label: "Cities Covered" },
+    { icon: ShieldCheck, value: "99%", label: "On-Time Delivery" },
+    { icon: Star, value: "4.8/5", label: "Customer Rating" },
+    { icon: Headphones, value: "24/7", label: "Support Available" },
+  ];
 
   return (
     <div className="min-h-screen bg-white font-sans overflow-x-hidden">
@@ -364,40 +406,40 @@ export default function ResidentialMoving() {
                   Services
                 </span>
                 <ChevronRight className="w-3 h-3 text-(--blue-300)" />
-                <span className="text-white font-medium">Residential Moving</span>
+                <span className="text-white font-medium">Office Relocation</span>
               </nav>
 
-              <h1 className="hero-title text-3xl sm:text-4xl lg:text-5xl font-bold text-white leading-tight mb-4">
-                Residential Moving
+              <h1 className="hero-title text-3xl sm:text-4xl lg:text-5xl font-bold text-white leading-tight mb-3">
+                Office Relocation
               </h1>
-              <h2 className="hero-title text-2xl sm:text-3xl lg:text-4xl font-bold text-(--lime-400) leading-tight mb-6">
-                Made Easy, Stress-Free
+              <h2 className="hero-subtitle text-2xl sm:text-3xl lg:text-4xl font-bold text-(--lime-400) leading-tight mb-6">
+                Move Your Business Forward
               </h2>
 
-              <p className="hero-subtitle text-(--blue-200) text-sm lg:text-base leading-relaxed max-w-md mb-8">
-                Moving to a new home? We make your residential move safe, smooth
-                and hassle-free. From careful packing to on-time delivery, we
-                handle everything with care.
+              <p className="hero-text text-(--blue-200) text-sm lg:text-base leading-relaxed max-w-md mb-8">
+                We make your office relocation smooth, efficient and stress-free
+                with minimal downtime. From packing to setup, we handle everything
+                so you can focus on what matters most – your business.
               </p>
 
-              {/* Feature Pills */}
+              {/* Badges */}
               <div className="flex flex-wrap gap-3 lg:gap-4 mb-8">
                 {[
-                  { icon: Shield, text: "100% Safe", sub: "Your belongings are in safe hands" },
-                  { icon: Clock, text: "On-Time Delivery", sub: "Punctual & reliable moving service" },
-                  { icon: Package, text: "Careful Handling", sub: "We treat your items like our own" },
-                  { icon: Banknote, text: "Affordable Pricing", sub: "Best quality service at fair prices" },
-                ].map((pill, idx) => (
+                  { icon: Calendar, text: "Planned & Organized", sub: "Detailed planning for a seamless move" },
+                  { icon: Shield, text: "Safe & Secure", sub: "Your office assets are in safe hands" },
+                  { icon: Clock, text: "Min. Downtime", sub: "Quick & efficient move to reduce disruption" },
+                  { icon: Users, text: "Expert Team", sub: "Trained professionals for a hassle-free move" },
+                ].map((badge, idx) => (
                   <div
                     key={idx}
-                    className="hero-feature-pill flex items-center gap-2.5 bg-white/10 backdrop-blur-sm rounded-lg px-3 py-2.5 border border-white/10"
+                    className="hero-badge flex items-center gap-2.5 bg-white/10 backdrop-blur-sm rounded-lg px-3 py-2.5 border border-white/10"
                   >
                     <div className="w-8 h-8 bg-(--lime-500) rounded-full flex items-center justify-center flex-shrink-0">
-                      <pill.icon className="w-4 h-4 text-white" />
+                      <badge.icon className="w-4 h-4 text-white" />
                     </div>
                     <div>
-                      <p className="text-white text-xs font-semibold">{pill.text}</p>
-                      <p className="text-(--blue-200) text-[10px] leading-tight">{pill.sub}</p>
+                      <p className="text-white text-xs font-semibold">{badge.text}</p>
+                      <p className="text-(--blue-200) text-[10px] leading-tight">{badge.sub}</p>
                     </div>
                   </div>
                 ))}
@@ -425,14 +467,33 @@ export default function ResidentialMoving() {
             {/* Right Image */}
             <div className="hero-image relative hidden lg:block">
               <div className="relative rounded-2xl overflow-hidden aspect-[4/3]">
-                <div className="absolute inset-0 bg-(--blue-800)/30" />
+                <div className="absolute inset-0 bg-(--blue-800)/20" />
                 <div className="w-full h-full bg-(--gray-200) flex items-center justify-center">
                   <div className="text-center p-8">
-                    <Home className="w-20 h-20 text-(--gray-400) mx-auto mb-3" />
-                    <p className="text-(--gray-500) text-sm">Happy family with boxes</p>
-                    <p className="text-(--gray-400) text-xs mt-1">Replace with actual image</p>
+                    <Users className="w-20 h-20 text-(--gray-400) mx-auto mb-3" />
+                    <p className="text-(--gray-500) text-sm">
+                      Office movers at work
+                    </p>
+                    <p className="text-(--gray-400) text-xs mt-1">
+                      Replace with actual image
+                    </p>
                   </div>
                 </div>
+              </div>
+
+              {/* Seamless Moves Card */}
+              <div className="hero-card absolute -bottom-4 right-4 lg:bottom-4 lg:right-4 bg-(--blue-900) rounded-xl p-4 shadow-xl border border-(--blue-700) max-w-[180px]">
+                <div className="flex items-center gap-2 mb-1">
+                  <div className="w-8 h-8 bg-(--lime-500) rounded-full flex items-center justify-center">
+                    <Building className="w-4 h-4 text-white" />
+                  </div>
+                </div>
+                <p className="text-white font-bold text-xs leading-tight">
+                  Seamless Moves.
+                </p>
+                <p className="text-(--lime-400) font-bold text-xs leading-tight">
+                  Stronger Business.
+                </p>
               </div>
             </div>
           </div>
@@ -455,65 +516,38 @@ export default function ResidentialMoving() {
         </div>
       </section>
 
-      {/* ===== PERFECT FOR EVERY HOME MOVE ===== */}
-      <section ref={perfectRef} className="py-2 ">
+      {/* ===== COMPLETE OFFICE RELOCATION SOLUTIONS ===== */}
+      <section ref={solutionsRef} className="py-4 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="perfect-header text-center text-2xl sm:text-3xl font-bold text-(--blue-900) mb-6">
-            Perfect For <span className="text-(--lime-500)">Every Home Move</span>
+          <h2 className="solutions-header text-center text-2xl sm:text-3xl font-bold text-(--blue-900) mb-2">
+            Complete Office Relocation <span className="text-(--lime-500)">Solutions</span>
           </h2>
+          <div className="w-12 h-1 bg-(--lime-500) mx-auto mb-4" />
 
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4 lg:gap-6 border-b-2">
-            {homeTypes.map((type, idx, array) => (
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-2">
+            {solutions.map((sol, idx) => (
               <div
                 key={idx}
-                className={`perfect-card flex flex-row items-center justify-center gap-3 ${idx !== array.length-1 ? "border-r-2" : ""} my-2 text-start p-1   transition-all group cursor-pointer`}
-              >
-                <div className="w-12 h-12 bg-(--blue-50) rounded-xl flex  items-center justify-center mb-3 group-hover:bg-(--blue-100) transition-colors">
-                  <type.icon className="w-6 h-6 text-(--blue-900)" />
-                </div>
-                <div>
-                <p className="text-(--blue-900) font-semibold text-sm leading-tight">
-                  {type.title}
-                </p>
-                <p className="text-(--gray-500) text-xs mt-0.5">{type.subtitle}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ===== OUR RESIDENTIAL MOVING SERVICES ===== */}
-      <section ref={servicesRef} className="py-10 ">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="services-header text-center text-2xl sm:text-3xl font-bold text-(--blue-900) mb-8">
-            Our Residential <span className="text-(--lime-500)">Moving Services</span>
-          </h2>
-
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-5 lg:gap-6">
-            {services.map((service, idx) => (
-              <div
-                key={idx}
-                className="service-card bg-(--gray-50) rounded-2xl p-5 border border-(--gray-100) hover:shadow-xl hover:border-(--blue-200) transition-all group"
+                className="solution-card bg-(--gray-50) rounded-2xl p-4 border border-(--gray-100) hover:shadow-xl hover:border-(--blue-200) transition-all group"
               >
                 <div className="flex items-center gap-2.5 mb-4">
                   <div className="w-9 h-9 bg-(--blue-50) rounded-lg flex items-center justify-center">
-                    <service.icon className="w-5 h-5 text-(--blue-900)" />
+                    <sol.icon className="w-6 h-6 text-(--blue-900)" />
                   </div>
-                  <h3 className="text-(--blue-900) font-bold  text-sm leading-tight">
-                    {service.title}
+                  <h3 className="text-(--blue-900) font-bold text-sm leading-tight">
+                    {sol.title}
                   </h3>
                 </div>
 
                 <div className="rounded-xl bg-(--gray-100) aspect-[4/3] flex items-center justify-center mb-4 overflow-hidden">
                   <div className="text-center p-4">
                     <Package className="w-8 h-8 text-(--gray-400) mx-auto mb-1" />
-                    <p className="text-(--gray-400) text-[10px]">{service.imgLabel}</p>
+                    <p className="text-(--gray-400) text-[10px]">{sol.imgLabel}</p>
                   </div>
                 </div>
 
-                <p className="text-(--blue-900) text-sm ">
-                  {service.desc}
+                <p className="text-(--blue-900) text-sm leading-tight">
+                  {sol.desc}
                 </p>
               </div>
             ))}
@@ -521,18 +555,19 @@ export default function ResidentialMoving() {
         </div>
       </section>
 
-      {/* ===== HOW WE MAKE YOUR MOVE EASY ===== */}
-      <section ref={processRef} className="py-10 bg-white">
+      {/* ===== OUR OFFICE RELOCATION PROCESS ===== */}
+      <section ref={processRef} className="py-4 bg-(--gray-50)">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="process-header text-center text-2xl sm:text-3xl font-bold text-(--blue-900) mb-6">
-            How We Make Your <span className="text-(--lime-500)">Move Easy</span>
+          <h2 className="process-header text-center text-2xl sm:text-3xl font-bold text-(--blue-900) mb-2">
+            Our Office Relocation <span className="text-(--lime-500)">Process</span>
           </h2>
+          <div className="w-12 h-1 bg-(--lime-500) mx-auto mb-4" />
 
           <div className="relative">
             {/* Desktop connecting line */}
-            <div className="hidden lg:block absolute top-10 left-[10%] right-[10%] h-0.5 bg-(--gray-200)" />
+            <div className="hidden lg:block absolute top-10 left-[8%] right-[8%] border-t-2 border-dashed border-(--gray-300)" />
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-8 lg:gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-8 lg:gap-4">
               {processSteps.map((step, idx) => (
                 <div
                   key={idx}
@@ -544,16 +579,16 @@ export default function ResidentialMoving() {
                   </div>
 
                   {/* Number Badge */}
-                  <div className="absolute -top-2 left-1/2 -translate-x-1/2 lg:left-auto lg:translate-x-0 lg:static lg:mb-2">
+                  <div className="mb-2">
                     <span className="inline-flex items-center justify-center w-6 h-6 bg-(--lime-500) text-white text-xs font-bold rounded-full">
                       {step.num}
                     </span>
                   </div>
 
-                  <h3 className="text-(--blue-900) font-bold text-sm mb-2 mt-1">
+                  <h3 className="text-(--blue-900) font-bold text-sm mb-2">
                     {step.title}
                   </h3>
-                  <p className="text-(--gray-500) text-xs leading-relaxed max-w-[200px]">
+                  <p className="text-(--gray-500) text-xs leading-relaxed max-w-[180px]">
                     {step.desc}
                   </p>
 
@@ -570,40 +605,62 @@ export default function ResidentialMoving() {
         </div>
       </section>
 
-      {/* ===== WHY CHOOSE omsai? ===== */}
+      {/* ===== WHY BUSINESSES TRUST MOVEEASY? ===== */}
+      <section ref={whyRef} className="py-4 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="why-header text-center text-2xl sm:text-3xl font-bold text-(--blue-900) mb-10 lg:mb-14">
+            Why Businesses Trust <span className="text-(--lime-500)">Om Sai?</span>
+          </h2>
 
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-5 lg:gap-6">
+            {whyTrust.map((item, idx) => (
+              <div
+                key={idx}
+                className="why-card bg-white rounded-xl p-5 lg:p-6 border border-(--gray-100) hover:shadow-lg hover:border-(--blue-200) transition-all text-center group"
+              >
+                <div className="w-12 h-12 bg-(--blue-50) rounded-full flex items-center justify-center mx-auto mb-3 group-hover:bg-(--blue-100) transition-colors">
+                  <item.icon className="w-6 h-6 text-(--blue-900)" />
+                </div>
+                <h3 className="text-(--blue-900) font-bold text-sm mb-2 leading-tight">
+                  {item.title}
+                </h3>
+                <p className="text-(--gray-500) text-xs leading-relaxed">
+                  {item.desc}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
 
       {/* ===== CTA BANNER ===== */}
       <section ref={ctaRef} className="py-4 bg-white px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
           <div className="cta-content bg-(--blue-900) rounded-2xl lg:rounded-3xl p-6 sm:p-8 lg:p-10 relative overflow-hidden">
-            {/* Decorative */}
-            <div className="absolute top-0 left-0 w-32 h-32 bg-(--lime-500)/10 rounded-full -translate-x-1/2 -translate-y-1/2" />
-            <div className="absolute bottom-0 right-0 w-24 h-24 bg-(--lime-500)/10 rounded-full translate-x-1/2 translate-y-1/2" />
-
-            <div className="relative z-10 flex flex-col lg:flex-row items-center justify-between gap-6 lg:gap-8">
-              {/* Left - Image placeholder */}
-              <div className="hidden lg:block w-48 h-32 bg-(--blue-800)/50 rounded-xl flex items-center justify-center flex-shrink-0">
+            <div className="relative z-10 flex flex-col lg:flex-row items-center justify-between gap-6">
+              {/* Left Image */}
+              <div className="hidden lg:block w-40 h-32 bg-(--blue-800)/50 rounded-xl flex items-center justify-center flex-shrink-0">
                 <div className="text-center">
-                  <Package className="w-10 h-10 text-(--blue-300) mx-auto mb-1" />
-                  <p className="text-(--blue-300) text-[10px]">Boxes & clock</p>
+                  <Monitor className="w-10 h-10 text-(--blue-300) mx-auto mb-1" />
+                  <p className="text-(--blue-300) text-[10px]">Office setup</p>
                 </div>
               </div>
 
               {/* Center Content */}
               <div className="flex-1 text-center lg:text-left">
                 <h3 className="text-white font-bold text-xl lg:text-2xl mb-2">
-                  Ready for a <span className="text-(--lime-400)">Smooth Home Move?</span>
+                  Planning to <span className="text-(--lime-400)">Relocate Your Office?</span>
                 </h3>
                 <p className="text-(--blue-200) text-sm mb-5">
-                  Let our experts handle your move with care and professionalism.
+                  Let us handle your move while you focus on growing your business.
                 </p>
 
                 <div className="flex flex-wrap items-center justify-center lg:justify-start gap-4 lg:gap-6">
                   {[
-                    { icon: CheckCircle2, text: "Free Survey Available" },
                     { icon: CheckCircle2, text: "No Hidden Charges" },
-                    { icon: CheckCircle2, text: "100% Customer Satisfaction" },
+                    { icon: Clock, text: "On-Time Delivery" },
+                    { icon: Shield, text: "100% Safe & Secure" },
+                    { icon: Headphones, text: "24/7 Support" },
                   ].map((check, idx) => (
                     <div key={idx} className="flex items-center gap-1.5">
                       <check.icon className="w-4 h-4 text-(--lime-400)" />
@@ -636,9 +693,9 @@ export default function ResidentialMoving() {
       </section>
 
       {/* ===== STATS BAR ===== */}
-    <StatsBar/>
+     <StatsBar/>
 
-   
+    
     </div>
   );
 }
