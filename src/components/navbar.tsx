@@ -50,17 +50,17 @@ const navLocationGroups: { region: string; cities: string[] }[] = [
 ];
 
 const navFleet = [
-  { title: "Cargo Van", desc: "Best for studios and small apartments." },
-  { title: "Box Truck", desc: "Mid-size moves, 2–3 bedroom homes." },
-  { title: "Bike Courier", desc: "Fast local drop-offs and small parcels." },
-  { title: "18-Wheeler", desc: "Full-house and long-distance freight." },
+  { title: "Cargo Van", desc: "Best for studios and small apartments.", href: "/fleet/cargo-van" },
+  { title: "Box Truck", desc: "Mid-size moves, 2–3 bedroom homes.", href: "/fleet/box-truck"  },
+  { title: "Bike Courier", desc: "Fast local drop-offs and small parcels.", href: "/fleet/bike-courier"  },
+  { title: "Packer & Mover", desc: "Full-house and long-distance freight.", href: "/fleet/packer-mover"  },
 ];
 
 const navResources = [
-  { title: "Blog", desc: "Moving tips, city guides, and how-tos.", icon: BookOpen },
-  { title: "FAQs", desc: "Answers to common moving questions.", icon: HelpCircle },
-  { title: "Customer Reviews", desc: "Real stories from real customers.", icon: Star },
-  { title: "Moving Checklist", desc: "A free printable planning guide.", icon: FileText },
+  { title: "Blog", desc: "Moving tips, city guides, and how-tos.", icon: BookOpen,href:"/resources/blogs" },
+  { title: "FAQs", desc: "Answers to common moving questions.", icon: HelpCircle,href:"/resources/faq" },
+  { title: "Customer Reviews", desc: "Real stories from real customers.", icon: Star,href:"/resources/customer-reviews" },
+  { title: "Moving Checklist", desc: "A free printable planning guide.", icon: FileText,href:"/resources/moving-checklist" },
 ];
 
 const navCompany = [
@@ -143,7 +143,7 @@ export default function Navbar() {
                   onMouseEnter={() => item.menu && setOpenMenu(item.menu)}
                   onMouseLeave={() => setOpenMenu(null)}
                 >
-                  <a
+                  <Link
                     href={item.href ?? "#"}
                     className={`flex items-center gap-1 px-4 py-2 text-sm font-semibold text-blue-900  hover:text-lime-300 transition-colors cursor-pointer`}
                   >
@@ -154,7 +154,7 @@ export default function Navbar() {
                         style={{ transform: openMenu === item.menu ? "rotate(180deg)" : "none" }}
                       />
                     )}
-                  </a>
+                  </Link>
 
                   {/* Services mega menu with promo panel */}
                   {item.menu === "services" && openMenu === "services" && (
@@ -200,21 +200,21 @@ export default function Navbar() {
                   {/* Locations mega menu grouped by region */}
                   {item.menu === "locations" && openMenu === "locations" && (
                     <div className="absolute top-full left-1/2 -translate-x-1/2 mt-3 bg-white rounded-2xl shadow-2xl p-5 flex gap-6" style={{ width: 480 }}>
-                      {navLocationGroups.map((group) => (
+                      {navLocationGroups.map((group:any) => (
                         <div key={group.region} className="flex-1">
                           <p className="text-[10px] font-extrabold uppercase tracking-wider text-lime-700 mb-2">
                             {group.region}
                           </p>
                           <div className="flex flex-col gap-1">
-                            {group.cities.map((city) => (
-                              <a
+                            {group.cities.map((city:any) => (
+                              <Link
                                 key={city}
                                 href="#"
                                 className="flex items-center gap-2 text-sm font-semibold text-gray-700 hover:text-blue-700 py-1.5 transition-colors"
                               >
                                 <MapPin className="w-3.5 h-3.5 text-lime-600 shrink-0" />
                                 {city}
-                              </a>
+                              </Link>
                             ))}
                           </div>
                         </div>
@@ -226,13 +226,13 @@ export default function Navbar() {
                   {item.menu === "fleet" && openMenu === "fleet" && (
                     <div className="absolute top-full left-1/2 -translate-x-1/2 mt-3 w-80 bg-white rounded-2xl shadow-2xl p-3">
                       {navFleet.map((f) => (
-                        <a key={f.title} href="#" className="flex items-start gap-3 px-3 py-2.5 rounded-lg hover:bg-gray-50 transition-colors">
+                        <Link key={f.title} href={f.href} className="flex items-start gap-3 px-3 py-2.5 rounded-lg hover:bg-gray-50 transition-colors">
                           <Truck className="w-4 h-4 text-blue-600 shrink-0 mt-0.5" />
                           <div>
                             <p className="text-sm font-bold text-gray-900">{f.title}</p>
                             <p className="text-xs text-gray-500 mt-0.5">{f.desc}</p>
                           </div>
-                        </a>
+                        </Link>
                       ))}
                     </div>
                   )}
@@ -243,7 +243,7 @@ export default function Navbar() {
                       {navResources.map((r) => {
                         const Icon = r.icon;
                         return (
-                          <a key={r.title} href="#" className="flex gap-2.5 p-2.5 rounded-xl hover:bg-gray-50 transition-colors">
+                          <Link key={r.title} href={r.href} className="flex gap-2.5 p-2.5 rounded-xl hover:bg-gray-50 transition-colors">
                             <div className="w-8 h-8 rounded-lg flex items-center justify-center shrink-0" style={{ background: "rgba(0,91,181,0.1)" }}>
                               <Icon className="w-4 h-4 text-blue-700" />
                             </div>
@@ -251,7 +251,7 @@ export default function Navbar() {
                               <p className="text-sm font-bold text-gray-900">{r.title}</p>
                               <p className="text-xs text-gray-500 mt-0.5 leading-snug">{r.desc}</p>
                             </div>
-                          </a>
+                          </Link>
                         );
                       })}
                     </div>
@@ -308,13 +308,13 @@ export default function Navbar() {
           <div className="lg:hidden px-6 pb-6 max-h-[70vh] overflow-y-auto" style={{ background: scrolled ? "#005bb5" : "rgba(0,91,181,0.95)" }}>
             <div className="flex flex-col gap-1 pt-2">
               {navItems.map((item) => (
-                <a
+                <Link
                   key={item.label}
                   href={item.href ?? "#"}
                   className="text-white font-semibold text-sm py-3 border-b border-white/10"
                 >
                   {item.label}
-                </a>
+                </Link>
               ))}
               <a href="tel:+18005551234" className="flex items-center gap-2 text-white font-semibold text-sm py-3">
                 <Phone className="w-4 h-4" style={{ color: "#84cc16" }} />
