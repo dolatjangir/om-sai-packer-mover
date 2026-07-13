@@ -230,7 +230,7 @@ export default function PackerMoverPage() {
     <Wrench className="w-6 h-6 text-(--blue-600) mb-1" />
     <h4 className="text-(--gray-900) text-sm font-bold">Furniture Dismantle</h4>
     <p className="text-(--gray-500) text-xs mb-3">Dismantling & reassembling</p>
-    <div className="w-full aspect-[4/3] rounded-xl overflow-hidden relative">
+    <div className="w-full aspect-4/3 rounded-xl overflow-hidden relative">
       <img
         src="https://images.unsplash.com/photo-1600585154526-8d8c0b5c0b0c?w=300&h=225&fit=crop"
         alt="Furniture Dismantle"
