@@ -6,6 +6,7 @@ import OmSaiLogisticsPage from '../components/homePage/services';
 import HeroWithFilter from '@/components/homePage/hero';
 import Navbar from '@/components/navbar';
 import { Heart, ShieldCheck } from 'lucide-react';
+import Link from 'next/link';
 
 const FEATURES = [
   {
@@ -147,9 +148,9 @@ export default function HeroSection() {
             ))}
           </div>
  
-          <button className="self-start bg-lime-500 hover:bg-lime-400 text-black font-extrabold text-sm md:text-base px-7 py-3 rounded-full uppercase tracking-wider shadow-[0_8px_20px_rgba(132,204,22,0.35)] hover:shadow-[0_10px_25px_rgba(132,204,22,0.55)] transform hover:-translate-y-0.5 transition-all duration-300 ease-out cursor-pointer">
+         <Link href="/get-a-quote"> <button  className="self-start bg-lime-500 hover:bg-lime-400 text-black font-extrabold text-sm md:text-base px-7 py-3 rounded-full uppercase tracking-wider shadow-[0_8px_20px_rgba(132,204,22,0.35)] hover:shadow-[0_10px_25px_rgba(132,204,22,0.55)] transform hover:-translate-y-0.5 transition-all duration-300 ease-out cursor-pointer">
             Get Free Quote
-          </button>
+          </button></Link>
         </div>
  
         {/* RIGHT: Truck image */}

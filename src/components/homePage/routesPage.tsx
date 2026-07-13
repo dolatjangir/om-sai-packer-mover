@@ -2,6 +2,7 @@
 
 import { ArrowRight, MapPin, Truck } from "lucide-react"
 import Image from "next/image"
+import Link from "next/link";
 
 interface Route {
   from: string;
@@ -107,9 +108,10 @@ export default function RoutesPage() {
                   ${route.price}
                 </p>
               </div>
-              <button className="bg-blue-700 hover:bg-blue-800 text-white text-xs font-extrabold uppercase tracking-wide px-4 py-2.5 rounded-full transition-colors duration-300 cursor-pointer">
+              <Link href="/get-a-quote"><button className="bg-blue-700 hover:bg-blue-800 text-white text-xs font-extrabold uppercase tracking-wide px-4 py-2.5 rounded-full transition-colors duration-300 cursor-pointer">
                 Get quote
               </button>
+              </Link>
             </div>
           </div>
         </div>
