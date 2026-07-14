@@ -1,0 +1,362 @@
+// Prisma Schema for Om Sai Packers & Movers
+// Prisma version: 6.19.3
+
+generator client {
+  provider = "prisma-client-js"
+  previewFeatures = ["fullTextSearch", "fullTextIndex"]
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+  relationMode = "prisma"
+}
+
+// ==================== ENUMS ====================
+
+enum UserRole {
+  USER
+  ADMIN
+  DRIVER
+}
+
+enum UserStatus {
+  ACTIVE
+  INACTIVE
+  SUSPENDED
+}
+
+enum BookingStatus {
+  PENDING
+  CONFIRMED
+  PICKED_UP
+  IN_TRANSIT
+  DELIVERED
+  CANCELLED
+  COMPLETED
+}
+
+enum ServiceType {
+  LOCAL_MOVING
+  INTERCITY_MOVING
+  OFFICE_MOVING
+  VEHICLE_TRANSPORT
+  WAREHOUSE_STORAGE
+  PACKING_ONLY
+}
+
+enum PaymentStatus {
+  PENDING
+  PARTIAL
+  PAID
+  REFUNDED
+  FAILED
+}
+
+enum PaymentMethod {
+  CASH
+  CARD
+  UPI
+  NET_BANKING
+  WALLET
+}
+
+enum LeadStatus {
+  NEW
+  CONTACTED
+  QUOTED
+  CONVERTED
+  LOST
+}
+
+enum LeadSource {
+  WEBSITE
+  GOOGLE
+  REFERRAL
+  SOCIAL_MEDIA
+  WALK_IN
+  PHONE
+}
+
+enum NotificationType {
+  INFO
+  SUCCESS
+  WARNING
+  ERROR
+}
+
+// ==================== NEXTAUTH MODELS ====================
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+  @@index([userId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+// ==================== USER MODEL ====================
+
+model User {
+  id            String     @id @default(cuid())
+  name          String?
+  email         String     @unique
+  emailVerified DateTime?
+  image         String?    @db.Text
+  password      String?    @db.Text
+  role          UserRole   @default(USER)
+  status        UserStatus @default(ACTIVE)
+  phone         String?
+  address       String?    @db.Text
+  city          String?
+  state         String?
+  pincode       String?
+  createdAt     DateTime   @default(now())
+  updatedAt     DateTime   @updatedAt
+
+  accounts  Account[]
+  sessions  Session[]
+
+  bookingsAsCustomer Booking[]      @relation("CustomerBookings")
+  bookingsAsAdmin    Booking[]      @relation("AdminBookings")
+  bookingsAsDriver   Booking[]      @relation("DriverBookings")
+  leadsAsAssigned    Lead[]         @relation("AssignedLeads")
+  reviews            Review[]
+  notifications      Notification[]
+  payments           Payment[]
+
+  @@index([email])
+  @@index([role])
+  @@index([status])
+}
+
+// ==================== BOOKING MODEL ====================
+
+model Booking {
+  id              String        @id @default(cuid())
+  bookingNumber   String        @unique
+  customerId      String
+  adminId         String?
+  driverId        String?
+
+  serviceType     ServiceType
+  status          BookingStatus @default(PENDING)
+
+  fromAddress     String        @db.Text
+  fromCity        String
+  fromState       String
+  fromPincode     String
+  toAddress       String        @db.Text
+  toCity          String
+  toState         String
+  toPincode       String
+  distance        Float?
+
+  itemCount       Int           @default(0)
+  inventory       Json?
+
+  movingDate      DateTime
+  preferredTime   String?
+
+  estimatedAmount Decimal?        @db.Decimal(10, 2)
+  finalAmount     Decimal?        @db.Decimal(10, 2)
+  discountAmount  Decimal?        @default(0) @db.Decimal(10, 2)
+  taxAmount       Decimal?        @default(0) @db.Decimal(10, 2)
+
+  paymentStatus   PaymentStatus   @default(PENDING)
+
+  trackingCode    String?         @unique
+  currentLocation String?
+
+  customerNotes   String?         @db.Text
+  adminNotes      String?         @db.Text
+
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
+  completedAt     DateTime?
+
+  customer        User            @relation("CustomerBookings", fields: [customerId], references: [id])
+  admin           User?           @relation("AdminBookings", fields: [adminId], references: [id])
+  driver          User?           @relation("DriverBookings", fields: [driverId], references: [id])
+
+  trackingUpdates TrackingUpdate[]
+  payments        Payment[]
+  reviews         Review[]
+
+  @@index([customerId])
+  @@index([status])
+  @@index([bookingNumber])
+  @@index([movingDate])
+  @@index([driverId])
+  @@index([createdAt])
+}
+
+model TrackingUpdate {
+  id          String   @id @default(cuid())
+  bookingId   String
+  status      BookingStatus
+  location    String?
+  description String   @db.Text
+  latitude    Float?
+  longitude   Float?
+  timestamp   DateTime @default(now())
+
+  booking     Booking  @relation(fields: [bookingId], references: [id], onDelete: Cascade)
+
+  @@index([bookingId])
+  @@index([timestamp])
+  @@index([status])
+}
+
+// ==================== PAYMENT MODEL ====================
+
+model Payment {
+  id            String        @id @default(cuid())
+  bookingId     String
+  userId        String
+  amount        Decimal       @db.Decimal(10, 2)
+  method        PaymentMethod
+  status        PaymentStatus @default(PENDING)
+  transactionId String?       @unique
+  paidAt        DateTime      @default(now())
+
+  booking       Booking       @relation(fields: [bookingId], references: [id], onDelete: Cascade)
+  user          User          @relation(fields: [userId], references: [id])
+
+  @@index([bookingId])
+  @@index([userId])
+  @@index([status])
+  @@index([transactionId])
+}
+
+// ==================== LEAD MODEL ====================
+
+model Lead {
+  id          String     @id @default(cuid())
+  name        String
+  email       String
+  phone       String
+  source      LeadSource @default(WEBSITE)
+  serviceType ServiceType?
+  fromCity    String?
+  toCity      String?
+  fromAddress String?    @db.Text
+  toAddress   String?    @db.Text
+  movingDate  DateTime?
+  budget      Decimal?   @db.Decimal(10, 2)
+  message     String?    @db.Text
+  status      LeadStatus @default(NEW)
+  assignedTo  String?
+
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+
+  assignedUser User? @relation("AssignedLeads", fields: [assignedTo], references: [id])
+
+  @@index([status])
+  @@index([assignedTo])
+  @@index([createdAt])
+  @@index([source])
+  @@index([email])
+}
+
+// ==================== REVIEW MODEL ====================
+
+model Review {
+  id        String  @id @default(cuid())
+  bookingId String
+  userId    String
+  rating    Int     @db.SmallInt
+  comment   String? @db.Text
+
+  createdAt DateTime @default(now())
+
+  booking Booking @relation(fields: [bookingId], references: [id], onDelete: Cascade)
+  user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([bookingId, userId])
+  @@index([bookingId])
+  @@index([userId])
+  @@index([rating])
+}
+
+// ==================== NOTIFICATION MODEL ====================
+
+model Notification {
+  id        String           @id @default(cuid())
+  userId    String
+  title     String
+  message   String           @db.Text
+  type      NotificationType @default(INFO)
+  read      Boolean          @default(false)
+  link      String?
+
+  createdAt DateTime         @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([read])
+  @@index([createdAt])
+}
+
+// ==================== SITE SETTINGS ====================
+
+model SiteSetting {
+  id          String   @id @default(cuid())
+  key         String   @unique
+  value       String   @db.Text
+  type        String   @default("STRING")
+  description String?
+  updatedAt   DateTime @updatedAt
+
+  @@index([key])
+}
+
+// ==================== VEHICLE MODEL ====================
+
+model Vehicle {
+  id          String   @id @default(cuid())
+  driverId    String?
+  type        String
+  model       String
+  registrationNumber String @unique
+  capacity    Float?
+  status      String   @default("ACTIVE")
+
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([driverId])
+  @@index([status])
+}

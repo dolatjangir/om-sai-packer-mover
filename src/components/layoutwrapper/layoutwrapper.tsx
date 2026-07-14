@@ -19,9 +19,11 @@ export default function LayoutWrapper({ children }: { children: React.ReactNode 
    
 "/admin-dashboard",
   
-  "/blogs","/blogs/new","/blog/[slug]"];
+  "/blogs","/blogs/new","/blog/[slug]","/user","/admin","/driver"];
   const hideLayout = hideRoutes.includes(pathname) ||
-  pathname.startsWith("/admin-dashboard/");
+ ["/admin-dashboard/", "/user/", "/admin/", "/driver/"].some((route) =>
+    pathname.startsWith(route)
+);
 
   return (
     <>
