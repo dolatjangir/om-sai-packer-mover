@@ -24,6 +24,30 @@ export default auth((req) => {
   const isAdminRoute = adminRoutes.some((route) => nextUrl.pathname.startsWith(route));
   const isDriverRoute = driverRoutes.some((route) => nextUrl.pathname.startsWith(route));
 
+  // for onboarding page
+  const isOnboardingRoute = nextUrl.pathname === "/onboarding/role";
+
+// Handle onboarding route access
+if (isOnboardingRoute) {
+  if (!isLoggedIn) {
+    return NextResponse.redirect(new URL("/login", nextUrl));
+  }
+  const onboardingCompleted = req.auth?.user?.onboardingCompleted ?? true;
+  if (isLoggedIn && onboardingCompleted) {
+    const redirectUrl = userRole === "ADMIN" ? "/admin" : userRole === "DRIVER" ? "/driver" : "/user";
+    return NextResponse.redirect(new URL(redirectUrl, nextUrl));
+  }
+  return NextResponse.next();
+}
+
+// Force onboarding for incomplete users
+if (isLoggedIn) {
+  const onboardingCompleted = req.auth?.user?.onboardingCompleted ?? true;
+  if (!onboardingCompleted) {
+    return NextResponse.redirect(new URL("/onboarding/role", nextUrl));
+  }
+}
+// end onboarding related logic
   if (isApiAuthRoute) return NextResponse.next();
 
   if (isPublicRoute && !isUserRoute && !isAdminRoute && !isDriverRoute) {

@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
+import { signIn } from "next-auth/react";
 
 export default function RegisterPage() {
   const router = useRouter();
@@ -223,7 +224,7 @@ export default function RegisterPage() {
               />
             </div>
           </div></div>
-          <div className="flex gap-0.5"> 
+            <div className="flex gap-0.5"> 
           {/* Email Input */}
           <div className="space-y-1.5 w-[60%]">
             <label className="text-xs font-bold text-blue-950 tracking-wide block">Email Address</label>
@@ -267,7 +268,7 @@ export default function RegisterPage() {
                 <option value="USER">Customer</option>
                 <option value="DRIVER">Driver</option>
               </select>
-              {/* Custom dropdown arrow */}
+             
               <span className="absolute inset-y-0 right-0 flex items-center pr-4 text-slate-400 pointer-events-none">
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
@@ -275,7 +276,7 @@ export default function RegisterPage() {
               </span>
             </div>
           </div>
-          </div>
+         </div>
           {/* Password Input */}
           <div className="space-y-1.5">
             <label className="text-xs font-bold text-blue-950 tracking-wide block">Password</label>
@@ -400,11 +401,11 @@ export default function RegisterPage() {
         {/* OAuth Buttons */}
         <div className="w-full grid grid-cols-2 gap-2">
           <button
-          onClick={() => {
-  localStorage.setItem("pendingRole", formData.role); // "USER" or "DRIVER"
-  window.location.href = "/api/auth/signin/google?callbackUrl=/user";
-}}
-            disabled={isLoading}
+           onClick={() => {
+    signIn("google", { callbackUrl: "/user" });
+  }}
+  disabled={isLoading}
+           
             className="flex items-center justify-center gap-2 py-2.5 px-4 bg-white border border-slate-200 rounded-xl text-xs font-bold text-slate-700 hover:bg-slate-50 transition-colors cursor-pointer disabled:opacity-50"
           >
             <Image src="https://authjs.dev/img/providers/google.svg" alt="Google Logo" width={16} height={16} />

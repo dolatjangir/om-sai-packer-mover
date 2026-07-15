@@ -6,12 +6,14 @@ declare module "next-auth" {
       id: string;
       role: "USER" | "ADMIN" | "DRIVER";
       status: "ACTIVE" | "INACTIVE" | "SUSPENDED";
+       onboardingCompleted?: boolean;
     } & DefaultSession["user"];
   }
 
   interface User {
     role?: "USER" | "ADMIN" | "DRIVER";
     status?: "ACTIVE" | "INACTIVE" | "SUSPENDED";
+    onboardingCompleted?: boolean;
   }
 }
 
@@ -20,5 +22,6 @@ declare module "next-auth/jwt" {
     id?: string;
     role?: "USER" | "ADMIN" | "DRIVER";
     status?: "ACTIVE" | "INACTIVE" | "SUSPENDED";
+     onboardingCompleted?: boolean; 
   }
 }

@@ -60,13 +60,16 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       if (account?.provider === "google") {
         const existingUser = await prisma.user.findUnique({
           where: { email: user.email! },
+            select: { role: true, status: true, onboardingCompleted: true }
         });
         if (existingUser) {
           user.role = existingUser.role;
           user.status = existingUser.status;
+           user.onboardingCompleted = existingUser.onboardingCompleted;
         } else {
           user.role = "USER";
           user.status = "ACTIVE";
+           user.onboardingCompleted = false;
         }
       }
       return true;
@@ -76,17 +79,19 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         token.id = user.id;
         token.role = user.role;
         token.status = user.status;
+         token.onboardingCompleted = user.onboardingCompleted;
       }
        // If Google OAuth, ensure we have the latest role
       if (account?.provider === "google" && token.email) {
         const dbUser = await prisma.user.findUnique({
           where: { email: token.email },
-          select: { id: true, role: true, status: true },
+           select: { id: true, role: true, status: true, onboardingCompleted: true },
         });
         if (dbUser) {
           token.id = dbUser.id;
           token.role = dbUser.role;
           token.status = dbUser.status;
+          token.onboardingCompleted = dbUser.onboardingCompleted;
         }
       }
       return token;
@@ -96,6 +101,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         session.user.id = token.id as string;
         session.user.role = token.role as "USER" | "ADMIN" | "DRIVER";
         session.user.status = token.status as "ACTIVE" | "INACTIVE" | "SUSPENDED";
+        session.user.onboardingCompleted = token.onboardingCompleted as boolean;
       }
       return session;
     },

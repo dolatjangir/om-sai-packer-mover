@@ -47,6 +47,7 @@ export async function POST(req: NextRequest) {
         password: hashedPassword,
         role: role,
         status: "ACTIVE",
+         onboardingCompleted: true,
       },
       select: {
         id: true,
