@@ -88,22 +88,31 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       }
       return true;
     },
- async jwt({ token, user, account, trigger }) {
-  // On initial sign-in (OAuth or Credentials), fetch fresh DB data
-  if (user && account?.provider === "google") {
-    const dbUser = await prisma.user.findUnique({
-      where: { email: token.email! },
-      select: { id: true, role: true, status: true, onboardingCompleted: true },
-    });
-    if (dbUser) {
-      token.id = dbUser.id;
-      token.role = dbUser.role;
-      token.status = dbUser.status;
-      token.onboardingCompleted = dbUser.onboardingCompleted;
+async jwt({ token, user, account, trigger }) {
+  // CASE 1: Initial sign-in (OAuth or Credentials)
+  if (user) {
+    // For Google OAuth, fetch fresh DB data because PrismaAdapter created the user
+    if (account?.provider === "google") {
+      const dbUser = await prisma.user.findUnique({
+        where: { email: user.email! }, // <-- use user.email, not token.email
+        select: { id: true, role: true, status: true, onboardingCompleted: true },
+      });
+      if (dbUser) {
+        token.id = dbUser.id;
+        token.role = dbUser.role; // null for new Google users
+        token.status = dbUser.status;
+        token.onboardingCompleted = dbUser.onboardingCompleted; // false
+      }
+    } else {
+      // Credentials login
+      token.id = user.id as string;
+      token.role = (user as any).role;
+      token.status = (user as any).status;
+      token.onboardingCompleted = (user as any).onboardingCompleted ?? true;
     }
   }
 
-  // On session.update() (after onboarding PATCH)
+  // CASE 2: Session update (after onboarding PATCH calls await update())
   if (trigger === "update" && token.email) {
     const dbUser = await prisma.user.findUnique({
       where: { email: token.email },
@@ -117,25 +126,23 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     }
   }
 
-  // For credentials login (initial sign-in)
-  if (user && account?.provider !== "google") {
-    token.id = user.id as string;
-    token.role = (user as any).role;
-    token.status = (user as any).status;
-    token.onboardingCompleted = (user as any).onboardingCompleted ?? true;
+  // CASE 3: Subsequent requests (token already has data) — ensure defaults
+  if (token.onboardingCompleted === undefined) {
+    token.onboardingCompleted = false;
   }
 
   return token;
 },
-    async session({ session, token }) {
-      if (token) {
-        session.user.id = token.id as string;
-        session.user.role = token.role as "USER" | "ADMIN" | "DRIVER"  | null;
-        session.user.status = token.status as "ACTIVE" | "INACTIVE" | "SUSPENDED";
-        session.user.onboardingCompleted = token.onboardingCompleted === true;
-      }
-      return session;
-    },
+  async session({ session, token }) {
+  if (token) {
+    session.user.id = token.id as string;
+    session.user.role = token.role as "USER" | "ADMIN" | "DRIVER" | null;
+    session.user.status = token.status as "ACTIVE" | "INACTIVE" | "SUSPENDED";
+    // CRITICAL: Convert undefined/null to false
+    session.user.onboardingCompleted = token.onboardingCompleted === true;
+  }
+  return session;
+},
 
   },
   events: {

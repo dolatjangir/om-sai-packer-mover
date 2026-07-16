@@ -8,6 +8,15 @@ export default auth((req) => {
   const userStatus = req.auth?.user?.status;
   const onboardingCompleted = req.auth?.user?.onboardingCompleted;
 
+    // DEBUG: Add this temporarily to see what's happening
+  if (isLoggedIn && nextUrl.pathname !== "/api/auth/session") {
+    console.log("MIDDLEWARE DEBUG:", {
+      path: nextUrl.pathname,
+      role: userRole,
+      onboardingCompleted: onboardingCompleted,
+      type: typeof onboardingCompleted,
+    });
+  }
   // 1. Allow all NextAuth API routes (signin, callback, session, etc.)
   if (nextUrl.pathname.startsWith("/api/auth")) {
     return NextResponse.next();
