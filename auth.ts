@@ -16,6 +16,19 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     signIn: "/login",
     error: "/login",
   },
+ 
+  cookies: {
+    pkceCodeVerifier: {
+      name: "next-auth.pkce.code_verifier",
+      options: {
+        httpOnly: true,
+        sameSite: "lax",
+        path: "/",
+        secure: process.env.NODE_ENV === "production", // false on localhost
+      },
+    },
+  },
+  
   providers: [
     Google({
       clientId: process.env.GOOGLE_CLIENT_ID!,
@@ -55,6 +68,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       },
     }),
   ],
+  
   callbacks: {
     async signIn({ user, account }) {
       if (account?.provider === "google") {
@@ -74,64 +88,55 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       }
       return true;
     },
-    async jwt({ token, user,account ,trigger   }) {
-      if (user) {
-        token.id = user.id;
-        token.role = user.role;
-        token.status = user.status;
-         token.onboardingCompleted = user.onboardingCompleted;
-      }
-        //  refreshes token after onboarding API updates DB
-  if (trigger === "update" && token.email) {
+ async jwt({ token, user, account, trigger }) {
+  // On initial sign-in (OAuth or Credentials), fetch fresh DB data
+  if (user && account?.provider === "google") {
     const dbUser = await prisma.user.findUnique({
-      where: { email: token.email },
-      select: { id: true, role: true, status: true, onboardingCompleted: true }
+      where: { email: token.email! },
+      select: { id: true, role: true, status: true, onboardingCompleted: true },
     });
     if (dbUser) {
       token.id = dbUser.id;
-      token.role = dbUser.role;               // can be null
+      token.role = dbUser.role;
       token.status = dbUser.status;
       token.onboardingCompleted = dbUser.onboardingCompleted;
     }
   }
-       // If Google OAuth, ensure we have the latest role
-      if (account?.provider === "google" && token.email) {
-        const dbUser = await prisma.user.findUnique({
-          where: { email: token.email },
-           select: { id: true, role: true, status: true, onboardingCompleted: true },
-        });
-        if (dbUser) {
-          token.id = dbUser.id;
-          token.role = dbUser.role;
-          token.status = dbUser.status;
-          token.onboardingCompleted = dbUser.onboardingCompleted;
-        }
-      }
-      return token;
-    },
+
+  // On session.update() (after onboarding PATCH)
+  if (trigger === "update" && token.email) {
+    const dbUser = await prisma.user.findUnique({
+      where: { email: token.email },
+      select: { id: true, role: true, status: true, onboardingCompleted: true },
+    });
+    if (dbUser) {
+      token.id = dbUser.id;
+      token.role = dbUser.role;
+      token.status = dbUser.status;
+      token.onboardingCompleted = dbUser.onboardingCompleted;
+    }
+  }
+
+  // For credentials login (initial sign-in)
+  if (user && account?.provider !== "google") {
+    token.id = user.id as string;
+    token.role = (user as any).role;
+    token.status = (user as any).status;
+    token.onboardingCompleted = (user as any).onboardingCompleted ?? true;
+  }
+
+  return token;
+},
     async session({ session, token }) {
       if (token) {
         session.user.id = token.id as string;
         session.user.role = token.role as "USER" | "ADMIN" | "DRIVER"  | null;
         session.user.status = token.status as "ACTIVE" | "INACTIVE" | "SUSPENDED";
-        session.user.onboardingCompleted = token.onboardingCompleted as boolean;
+        session.user.onboardingCompleted = token.onboardingCompleted === true;
       }
       return session;
     },
-  //    async redirect({ url, baseUrl }) {
-  //   // If it's a relative URL, resolve it against baseUrl
-  //   if (url.startsWith("/")) {
-  //     // never let it bounce back to /login
-  //     if (url.includes("/login")) return `${baseUrl}/user`;
-  //     return `${baseUrl}${url}`;
-  //   }
-  //   // If it's already same-origin, allow it (unless it's /login)
-  //   if (new URL(url).origin === baseUrl) {
-  //     if (url.includes("/login")) return `${baseUrl}/user`;
-  //     return url;
-  //   }
-  //   return baseUrl;
-  // },
+
   },
   events: {
     async signIn({ user, account }) {
