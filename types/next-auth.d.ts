@@ -4,14 +4,16 @@ declare module "next-auth" {
   interface Session {
     user: {
       id: string;
-      role: "USER" | "ADMIN" | "DRIVER";
+       name?: string | null;
+        image?: string | null;
+      role: "USER" | "ADMIN" | "DRIVER" | null;
       status: "ACTIVE" | "INACTIVE" | "SUSPENDED";
        onboardingCompleted?: boolean;
-    } & DefaultSession["user"];
+    } ;
   }
 
   interface User {
-    role?: "USER" | "ADMIN" | "DRIVER";
+    role?: "USER" | "ADMIN" | "DRIVER" | null;
     status?: "ACTIVE" | "INACTIVE" | "SUSPENDED";
     onboardingCompleted?: boolean;
   }
@@ -20,7 +22,7 @@ declare module "next-auth" {
 declare module "next-auth/jwt" {
   interface JWT {
     id?: string;
-    role?: "USER" | "ADMIN" | "DRIVER";
+    role?: "USER" | "ADMIN" | "DRIVER"| null;
     status?: "ACTIVE" | "INACTIVE" | "SUSPENDED";
      onboardingCompleted?: boolean; 
   }

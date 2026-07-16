@@ -134,7 +134,7 @@ model User {
   emailVerified DateTime?
   image         String?    @db.Text
   password      String?    @db.Text
-  role          UserRole   @default(USER)
+  role          UserRole?
   status        UserStatus @default(ACTIVE)
   phone         String?
   address       String?    @db.Text

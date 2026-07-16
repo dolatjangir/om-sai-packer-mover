@@ -1,88 +1,94 @@
 import { NextResponse } from "next/server";
 import { auth } from "./auth";
 
-
-const publicRoutes = ["/", "/login", "/register", "/forgot-password", "/reset-password"];
-const authRoutes = ["/login", "/register"];
-const userRoutes = ["/user", "/user/"];
-const adminRoutes = ["/admin", "/admin/"];
-const driverRoutes = ["/driver", "/driver/"];
-const apiAuthPrefix = "/api/auth";
-
 export default auth((req) => {
   const { nextUrl } = req;
   const isLoggedIn = !!req.auth;
   const userRole = req.auth?.user?.role;
   const userStatus = req.auth?.user?.status;
-
-  const isApiAuthRoute = nextUrl.pathname.startsWith(apiAuthPrefix);
-  const isPublicRoute = publicRoutes.some((route) => 
-    nextUrl.pathname === route || nextUrl.pathname.startsWith(route + "/")
-  );
-  const isAuthRoute = authRoutes.includes(nextUrl.pathname);
-  const isUserRoute = userRoutes.some((route) => nextUrl.pathname.startsWith(route));
-  const isAdminRoute = adminRoutes.some((route) => nextUrl.pathname.startsWith(route));
-  const isDriverRoute = driverRoutes.some((route) => nextUrl.pathname.startsWith(route));
-
-  // for onboarding page
-  const isOnboardingRoute = nextUrl.pathname === "/onboarding/role";
-
-// Handle onboarding route access
-if (isOnboardingRoute) {
-  if (!isLoggedIn) {
-    return NextResponse.redirect(new URL("/login", nextUrl));
-  }
   const onboardingCompleted = req.auth?.user?.onboardingCompleted ?? true;
-  if (isLoggedIn && onboardingCompleted) {
-    const redirectUrl = userRole === "ADMIN" ? "/admin" : userRole === "DRIVER" ? "/driver" : "/user";
-    return NextResponse.redirect(new URL(redirectUrl, nextUrl));
-  }
-  return NextResponse.next();
-}
 
-// Force onboarding for incomplete users
-if (isLoggedIn) {
-  const onboardingCompleted = req.auth?.user?.onboardingCompleted ?? true;
-  if (!onboardingCompleted) {
-    return NextResponse.redirect(new URL("/onboarding/role", nextUrl));
-  }
-}
-// end onboarding related logic
-  if (isApiAuthRoute) return NextResponse.next();
-
-  if (isPublicRoute && !isUserRoute && !isAdminRoute && !isDriverRoute) {
-    if (isAuthRoute && isLoggedIn) {
-      const redirectUrl = userRole === "ADMIN" ? "/admin" : userRole === "DRIVER" ? "/driver" : "/user";
-      return NextResponse.redirect(new URL(redirectUrl, nextUrl));
-    }
+  // 1. Allow all NextAuth API routes (signin, callback, session, etc.)
+  if (nextUrl.pathname.startsWith("/api/auth")) {
     return NextResponse.next();
   }
 
-  if (!isLoggedIn && (isUserRoute || isAdminRoute || isDriverRoute)) {
+  // 2. Define route flags (ONLY inside the handler — nextUrl exists here)
+  const isAuthRoute = ["/login", "/register"].includes(nextUrl.pathname);
+  const isOnboardingRoute = nextUrl.pathname === "/onboarding/role";
+  const isProtectedRoute =
+    nextUrl.pathname.startsWith("/user") ||
+    nextUrl.pathname.startsWith("/admin") ||
+    nextUrl.pathname.startsWith("/driver");
+
+  // 3. ONBOARDING ROUTE: handle access rules
+  if (isOnboardingRoute) {
+    if (!isLoggedIn) {
+      return NextResponse.redirect(new URL("/login", nextUrl));
+    }
+    // Already onboarded? Send to their dashboard
+    if (onboardingCompleted && userRole) {
+      const redirectUrl =
+        userRole === "ADMIN" ? "/admin" : userRole === "DRIVER" ? "/driver" : "/user";
+      return NextResponse.redirect(new URL(redirectUrl, nextUrl));
+    }
+    return NextResponse.next(); // Allow access to onboarding
+  }
+
+  // 4. NOT LOGGED IN + trying to access protected area → login
+  if (!isLoggedIn && isProtectedRoute) {
     return NextResponse.redirect(new URL("/login", nextUrl));
   }
 
+  // 5. LOGGED IN but hasn't completed onboarding → FORCE to onboarding
+  // This catches EVERY route (including /login, /register, /, etc.)
+  if (isLoggedIn && (!onboardingCompleted || !userRole)) {
+    return NextResponse.redirect(new URL("/onboarding/role", nextUrl));
+  }
+
+  // 6. LOGGED IN + hits login or register → redirect to their dashboard
+  if (isLoggedIn && isAuthRoute) {
+    const redirectUrl =
+      userRole === "ADMIN" ? "/admin" : userRole === "DRIVER" ? "/driver" : "/user";
+    return NextResponse.redirect(new URL(redirectUrl, nextUrl));
+  }
+
+  // 7. SUSPENDED users
   if (isLoggedIn && userStatus === "SUSPENDED") {
     return NextResponse.redirect(new URL("/login?error=AccountSuspended", nextUrl));
   }
 
-  if (isAdminRoute && userRole !== "ADMIN") {
+  // 8. ROLE-BASED ACCESS CONTROL
+  // Admin routes: only ADMIN
+  if (nextUrl.pathname.startsWith("/admin") && userRole !== "ADMIN") {
     return NextResponse.redirect(new URL("/user", nextUrl));
   }
 
-  if (isDriverRoute && userRole !== "DRIVER" && userRole !== "ADMIN") {
+  // Driver routes: DRIVER or ADMIN
+  if (
+    nextUrl.pathname.startsWith("/driver") &&
+    userRole !== "DRIVER" &&
+    userRole !== "ADMIN"
+  ) {
     return NextResponse.redirect(new URL("/user", nextUrl));
   }
 
-  if (isUserRoute && userRole === "ADMIN" && nextUrl.pathname === "/user") {
-    return NextResponse.redirect(new URL("/admin", nextUrl));
+  // /user root: redirect ADMIN and DRIVER to their own dashboards
+  if (nextUrl.pathname === "/user") {
+    if (userRole === "ADMIN") {
+      return NextResponse.redirect(new URL("/admin", nextUrl));
+    }
+    if (userRole === "DRIVER") {
+      return NextResponse.redirect(new URL("/driver", nextUrl));
+    }
   }
 
+  // 9. Everything else (/, /forgot-password, public pages) → allow
   return NextResponse.next();
 });
 
 export const config = {
   matcher: [
-    "/((?!_next/static|_next/image|favicon.ico|public/|.*\.(?:svg|png|jpg|jpeg|gif|webp)$).*)",
+    "/((?!_next/static|_next/image|favicon.ico|public/|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)",
   ],
 };
