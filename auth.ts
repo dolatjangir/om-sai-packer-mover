@@ -100,6 +100,7 @@ async jwt({ token, user, account, trigger }) {
       });
       if (dbUser) {
         token.id = dbUser.id;
+        token.email = user.email!;
         token.role = dbUser.role; // null for new Google users
         token.status = dbUser.status;
         token.onboardingCompleted = dbUser.onboardingCompleted; // false
@@ -107,14 +108,15 @@ async jwt({ token, user, account, trigger }) {
     } else {
       // Credentials login
       token.id = user.id as string;
+      token.email = user.email as string;
       token.role = (user as any).role;
       token.status = (user as any).status;
       token.onboardingCompleted = (user as any).onboardingCompleted ?? true;
     }
   }
 
-  // CASE 2: Session update (after onboarding PATCH calls await update())
-  if (trigger === "update" && token.email) {
+  // CASE 2: Subsequent requests and session refreshes
+  if (!user && token.email) {
     const dbUser = await prisma.user.findUnique({
       where: { email: token.email },
       select: { id: true, role: true, status: true, onboardingCompleted: true },

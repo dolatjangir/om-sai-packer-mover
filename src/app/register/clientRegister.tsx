@@ -64,31 +64,13 @@ export default function RegisterPage() {
       if (!res.ok) {
         setRegisterError(data.message || "Registration failed");
       } else {
-        // Auto sign-in after successful registration so middleware can redirect
-        const signInResult = await signIn("credentials", {
+        // Redirect to the correct dashboard after sign-in.
+        const callbackUrl = formData.role === "DRIVER" ? "/driver" : "/user";
+        signIn("credentials", {
           email: formData.email,
           password: formData.password,
-          redirect: false,
+          callbackUrl,
         });
-
-        if (signInResult?.error) {
-          // fallback to login page
-          router.push("/login?registered=true");
-        } else {
-          // Fetch session to inspect onboarding/role
-          const sessionRes = await fetch("/api/auth/session");
-          const session = await sessionRes.json();
-
-          // If onboarding not completed, send to onboarding page
-          if (session?.user?.onboardingCompleted === false) {
-            router.push("/onboarding/role");
-          } else {
-            const role = session?.user?.role;
-            if (role === "ADMIN") router.push("/admin");
-            else if (role === "DRIVER") router.push("/driver");
-            else router.push("/user");
-          }
-        }
       }
     } catch {
       setRegisterError("Something went wrong. Please try again.");
@@ -425,8 +407,8 @@ export default function RegisterPage() {
         <div className="w-full grid grid-cols-2 gap-2">
           <button
            onClick={() => {
-    // Let middleware decide post-login redirect (use root so onboarding middleware can run)
-    signIn("google", { callbackUrl: "/" });
+    // Send OAuth users to onboarding so new accounts can finish role setup.
+    signIn("google", { callbackUrl: "/onboarding/role" });
   }}
   disabled={isLoading}
            
@@ -438,8 +420,7 @@ export default function RegisterPage() {
           <button
             onClick={() => {
               setIsLoading(true);
-              // Use root callback so middleware enforces onboarding when needed
-              window.location.href = "/api/auth/signin/azure-ad?callbackUrl=/";
+              window.location.href = "/api/auth/signin/azure-ad?callbackUrl=/onboarding/role";
             }}
             disabled={isLoading}
             className="flex items-center justify-center gap-2 py-2.5 px-4 bg-white border border-slate-200 rounded-xl text-xs font-bold text-slate-700 hover:bg-slate-50 transition-colors cursor-pointer disabled:opacity-50"

@@ -32,11 +32,15 @@ import {
   CheckCircle2,
   ArrowRight,
   LucideIcon,
+  CheckCircle,
+  Award,
+ 
 } from "lucide-react";
 import { FaFacebook, FaInstagram, FaLinkedin, FaTwitter } from "react-icons/fa";
 import StatsBar from "@/components/statsBar";
 import CTASection from "@/components/ctaBanner";
 import ServicesSection from "@/components/cardSection";
+import HeroSection from "@/components/HeroSection";
 type HomeType = {
   icon: LucideIcon;
   title: string;
@@ -524,7 +528,60 @@ export default function ResidentialMoving() {
           </svg>
         </div>
       </section>
+<HeroSection
+        imageUrl="/healthcareimg.png"
+        leftContent={
+          <>
+            <h1 className="text-4xl md:text-5xl font-black text-[var(--blue-950)] italic leading-tight">
+              Get a Quote <br />
+              <span className="text-[var(--lime-600)]">Fast. Free. No Obligation.</span>
+            </h1>
+            <p className="text-[var(--gray-600)] text-base max-w-xl leading-relaxed">
+              Tell us about your moving requirement and we'll provide you with the best possible quote tailored to your needs.
+            </p>
 
+            {/* USP Checklist grid */}
+            <div className="grid grid-cols-2 gap-4 pt-6">
+              <div className="flex items-start gap-3">
+                <div className="p-1.5 bg-[var(--lime-50)] rounded-lg text-[var(--lime-600)] shrink-0">
+                  <CheckCircle className="h-5 w-5" />
+                </div>
+                <div>
+                  <h4 className="font-bold text-sm text-[var(--blue-950)]">100% Free</h4>
+                  <p className="text-xs text-[var(--gray-500)]">No hidden charges</p>
+                </div>
+              </div>
+              <div className="flex items-start gap-3">
+                <div className="p-1.5 bg-[var(--lime-50)] rounded-lg text-[var(--lime-600)] shrink-0">
+                  <Clock className="h-5 w-5" />
+                </div>
+                <div>
+                  <h4 className="font-bold text-sm text-[var(--blue-950)]">Quick Response</h4>
+                  <p className="text-xs text-[var(--gray-500)]">We'll get back in minutes</p>
+                </div>
+              </div>
+              <div className="flex items-start gap-3">
+                <div className="p-1.5 bg-[var(--lime-50)] rounded-lg text-[var(--lime-600)] shrink-0">
+                  <Award className="h-5 w-5" />
+                </div>
+                <div>
+                  <h4 className="font-bold text-sm text-[var(--blue-950)]">Best Prices</h4>
+                  <p className="text-xs text-[var(--gray-500)]">Competitive pricing</p>
+                </div>
+              </div>
+              <div className="flex items-start gap-3">
+                <div className="p-1.5 bg-[var(--lime-50)] rounded-lg text-[var(--lime-600)] shrink-0">
+                  <ShieldCheck className="h-5 w-5" />
+                </div>
+                <div>
+                  <h4 className="font-bold text-sm text-[var(--blue-950)]">Secure & Reliable</h4>
+                  <p className="text-xs text-[var(--gray-500)]">Your info is safe</p>
+                </div>
+              </div>
+            </div>
+          </>
+        }
+      />
       {/* ===== PERFECT FOR EVERY HOME MOVE ===== */}
       <section ref={perfectRef} className="py-2 ">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

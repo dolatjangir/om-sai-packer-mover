@@ -62,7 +62,7 @@ export default function OnboardingRolePage() {
       }
 
       await update();
-      router.push(selectedRole === "DRIVER" ? "/driver" : "/user");
+      router.replace(selectedRole === "DRIVER" ? "/driver" : "/user");
     } catch (err: any) {
       setError(err.message);
     } finally {

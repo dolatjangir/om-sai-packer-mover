@@ -17,7 +17,7 @@ export default function LayoutWrapper({ children }: { children: React.ReactNode 
     "/onboarding",
     "/seo-login",
    
-"/admin-dashboard",
+"/onboarding/role",
   
   "/blogs","/blogs/new","/blog/[slug]","/user","/admin","/driver"];
   const hideLayout = hideRoutes.includes(pathname) ||
