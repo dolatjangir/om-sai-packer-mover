@@ -35,12 +35,82 @@ import {
 } from "lucide-react";
 import { FaFacebook, FaInstagram, FaLinkedin, FaTwitter } from "react-icons/fa";
 import StatsBar from "@/components/statsBar";
+import CTASection from "@/components/ctaBanner";
+import ServicesSection from "@/components/cardSection";
 type HomeType = {
   icon: LucideIcon;
   title: string;
   subtitle: string;
 };
 gsap.registerPlugin(ScrollTrigger);
+export const ctaSections = [
+  {
+    title: "Ready for a",
+    highlight: "Smooth Home Move?",
+    description:
+      "Let our experts handle your move with care and professionalism.",
+    image: "/residential-service-bottom-left.png",
+
+    features: [
+      {
+        icon: CheckCircle2,
+        text: "Free Survey Available",
+      },
+      {
+        icon: CheckCircle2,
+        text: "No Hidden Charges",
+      },
+      {
+        icon: CheckCircle2,
+        text: "100% Customer Satisfaction",
+      },
+    ],
+
+    primaryButton: {
+      text: "Get a Free Quote",
+      href: "#",
+    },
+
+    secondaryButton: {
+      text: "Call 1800 123 4567",
+      href: "tel:18001234567",
+    },
+  },
+
+  {
+    title: "Planning an",
+    highlight: "Office Relocation?",
+    description:
+      "Fast, secure, and hassle-free office shifting services.",
+
+    image: "/office-service-bottom-left.png",
+
+    features: [
+      {
+        icon: CheckCircle2,
+        text: "Professional Team",
+      },
+      {
+        icon: CheckCircle2,
+        text: "Safe Transportation",
+      },
+      {
+        icon: CheckCircle2,
+        text: "On-Time Delivery",
+      },
+    ],
+
+    primaryButton: {
+      text: "Book Now",
+      href: "#",
+    },
+
+    secondaryButton: {
+      text: "Call 1800 123 4567",
+      href: "tel:18001234567",
+    },
+  },
+];
 
 export default function ResidentialMoving() {
   const heroRef = useRef<HTMLDivElement>(null);
@@ -252,31 +322,31 @@ export default function ResidentialMoving() {
       icon: Package,
       title: "Packing & Unpacking",
       desc: "High-quality packing materials and expert packing to keep your items safe.",
-      imgLabel: "Packing boxes",
+      image: "/packing&unpacking.png",
     },
     {
       icon: Truck,
       title: "Loading & Unloading",
       desc: "Trained professionals for careful loading and unloading.",
-      imgLabel: "Loading truck",
+       image: "/Loading&Unloading.png",
     },
     {
       icon: Car,
       title: "Safe Transportation",
       desc: "Well-maintained vehicles ensure your belongings reach safely.",
-      imgLabel: "Moving truck",
+       image: "/truck-transport.png",
     },
     {
       icon: Warehouse,
       title: "Unpacking & Setup",
       desc: "We unpack and help set up your home as per your convenience.",
-      imgLabel: "Unpacking setup",
+       image: "/Unpacking&Setup.png",
     },
     {
       icon: Shield,
       title: "Care for Special Items",
       desc: "Special care for fragile, valuable and bulky items like TVs, mirrors, antiques, etc.",
-      imgLabel: "Special items",
+       image: "/Care-for-Special-Items.png",
     },
   ];
 
@@ -484,43 +554,7 @@ export default function ResidentialMoving() {
       </section>
 
       {/* ===== OUR RESIDENTIAL MOVING SERVICES ===== */}
-      <section ref={servicesRef} className="py-10 ">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="services-header text-center text-2xl sm:text-3xl font-bold text-(--blue-900) mb-8">
-            Our Residential <span className="text-(--lime-500)">Moving Services</span>
-          </h2>
-
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-5 lg:gap-6">
-            {services.map((service, idx) => (
-              <div
-                key={idx}
-                className="service-card bg-(--gray-50) rounded-2xl p-5 border border-(--gray-100) hover:shadow-xl hover:border-(--blue-200) transition-all group"
-              >
-                <div className="flex items-center gap-2.5 mb-4">
-                  <div className="w-9 h-9 bg-(--blue-50) rounded-lg flex items-center justify-center">
-                    <service.icon className="w-5 h-5 text-(--blue-900)" />
-                  </div>
-                  <h3 className="text-(--blue-900) font-bold  text-sm leading-tight">
-                    {service.title}
-                  </h3>
-                </div>
-
-                <div className="rounded-xl bg-(--gray-100) aspect-[4/3] flex items-center justify-center mb-4 overflow-hidden">
-                  <div className="text-center p-4">
-                    <Package className="w-8 h-8 text-(--gray-400) mx-auto mb-1" />
-                    <p className="text-(--gray-400) text-[10px]">{service.imgLabel}</p>
-                  </div>
-                </div>
-
-                <p className="text-(--blue-900) text-sm ">
-                  {service.desc}
-                </p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
+    <ServicesSection services={services}/>
       {/* ===== HOW WE MAKE YOUR MOVE EASY ===== */}
       <section ref={processRef} className="py-10 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -574,66 +608,7 @@ export default function ResidentialMoving() {
 
 
       {/* ===== CTA BANNER ===== */}
-      <section ref={ctaRef} className="py-4 bg-white px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto">
-          <div className="cta-content bg-(--blue-900) rounded-2xl lg:rounded-3xl p-6 sm:p-8 lg:p-10 relative overflow-hidden">
-            {/* Decorative */}
-            <div className="absolute top-0 left-0 w-32 h-32 bg-(--lime-500)/10 rounded-full -translate-x-1/2 -translate-y-1/2" />
-            <div className="absolute bottom-0 right-0 w-24 h-24 bg-(--lime-500)/10 rounded-full translate-x-1/2 translate-y-1/2" />
-
-            <div className="relative z-10 flex flex-col lg:flex-row items-center justify-between gap-6 lg:gap-8">
-              {/* Left - Image placeholder */}
-              <div className="hidden lg:block w-48 h-32 bg-(--blue-800)/50 rounded-xl flex items-center justify-center flex-shrink-0">
-                <div className="text-center">
-                  <Package className="w-10 h-10 text-(--blue-300) mx-auto mb-1" />
-                  <p className="text-(--blue-300) text-[10px]">Boxes & clock</p>
-                </div>
-              </div>
-
-              {/* Center Content */}
-              <div className="flex-1 text-center lg:text-left">
-                <h3 className="text-white font-bold text-xl lg:text-2xl mb-2">
-                  Ready for a <span className="text-(--lime-400)">Smooth Home Move?</span>
-                </h3>
-                <p className="text-(--blue-200) text-sm mb-5">
-                  Let our experts handle your move with care and professionalism.
-                </p>
-
-                <div className="flex flex-wrap items-center justify-center lg:justify-start gap-4 lg:gap-6">
-                  {[
-                    { icon: CheckCircle2, text: "Free Survey Available" },
-                    { icon: CheckCircle2, text: "No Hidden Charges" },
-                    { icon: CheckCircle2, text: "100% Customer Satisfaction" },
-                  ].map((check, idx) => (
-                    <div key={idx} className="flex items-center gap-1.5">
-                      <check.icon className="w-4 h-4 text-(--lime-400)" />
-                      <span className="text-white text-xs font-medium">{check.text}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              {/* Right CTAs */}
-              <div className="flex flex-col sm:flex-row items-center gap-3 flex-shrink-0">
-                <a
-                  href="#"
-                  className="inline-flex items-center gap-2 bg-(--lime-500) hover:bg-(--lime-600) text-white font-semibold px-5 py-3 rounded-full text-sm transition-colors group"
-                >
-                  Get a Free Quote
-                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                </a>
-                <a
-                  href="tel:18001234567"
-                  className="inline-flex items-center gap-2 bg-white/10 hover:bg-white/20 text-white border border-white/20 font-medium px-5 py-3 rounded-full text-sm transition-colors"
-                >
-                  <Phone className="w-4 h-4" />
-                  Call 1800 123 4567
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+     <CTASection {...ctaSections[0]} />;
 
       {/* ===== STATS BAR ===== */}
     <StatsBar/>

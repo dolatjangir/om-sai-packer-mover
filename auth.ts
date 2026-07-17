@@ -140,7 +140,7 @@ async jwt({ token, user, account, trigger }) {
     session.user.status = token.status as "ACTIVE" | "INACTIVE" | "SUSPENDED";
     // CRITICAL: Convert undefined/null to false
     session.user.onboardingCompleted = token.onboardingCompleted === true;
-  }
+  }  
   return session;
 },
 

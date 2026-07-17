@@ -1,65 +1,135 @@
-import { Phone, ArrowRight } from "lucide-react";
+"use client";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { Phone, ArrowRight, CheckCircle2, LucideIcon } from "lucide-react";
+import { useEffect, useRef } from "react";
 
-interface Props {
-  image: string;
-  title1: string;
-  title2: string;
-  description: string;
-  imageClassName?: string; // optional extra tweaks per page
+
+interface CTAFeature {
+  icon: LucideIcon;
+  text: string;
 }
 
-export default function CtaBanner({
-  title1,
-  title2,
+interface CTASectionProps {
+  title: string;
+  highlight: string;
+  description: string;
+  image: string;
+
+  features: CTAFeature[];
+
+  primaryButton: {
+    text: string;
+    href: string;
+  };
+
+  secondaryButton: {
+    text: string;
+    href: string;
+  };
+}
+export default function CTASection({
+  title,
+  highlight,
   description,
   image,
-  imageClassName = "",
-}: Props) {
+  features,
+  primaryButton,
+  secondaryButton,
+}: CTASectionProps) {
+   const ctaRef = useRef<HTMLDivElement>(null);
+    
+      useEffect(() => {
+        const timer = setTimeout(() => {
+          const ctx = gsap.context(() => {
+               
+            // CTA
+            gsap.fromTo(
+              ".cta-content",
+              { opacity: 0, y: 30 },
+              {
+                scrollTrigger: {
+                  trigger: ctaRef.current,
+                  start: "top 85%",
+                  toggleActions: "play none none reverse",
+                },
+                opacity: 1,
+                y: 0,
+                duration: 0.8,
+                ease: "power2.out",
+              }
+            );
+    
+         
+            ScrollTrigger.refresh();
+          });
+    
+          return () => ctx.revert();
+        }, 100);
+    
+        return () => clearTimeout(timer);
+      }, []);
+    
   return (
-    <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-12">
-      <div className="relative overflow-visible bg-radial from-(--blue-900) to-(--blue-900) border border-(--gray-200) rounded-2xl p-6 pt-24 sm:pt-6 flex flex-col md:flex-row items-center md:items-center justify-between gap-6">
-        
-        {/* Image: sits above content on mobile, overlaps to the side on md+ */}
-        <img
-          src={image}
-          alt=""
-          className={`
-            order-first md:order-none
-            w-28 xs:w-32 sm:w-40 md:w-48 lg:w-56
-            h-auto object-contain
-            md:absolute md:-top-6 md:left-0
-            ${imageClassName}
-          `}
-        />
+    <section ref={ctaRef} className="py-4 bg-white px-4 sm:px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto">
+        <div className="bg-(--blue-900) rounded-2xl lg:rounded-3xl p-2 sm:p-4 lg:p-6 relative overflow-hidden">
+          {/* Decorative */}
+          <div className="absolute top-0 left-0 w-32 h-32 bg-(--lime-500)/10 rounded-full -translate-x-1/2 -translate-y-1/2" />
+          <div className="absolute bottom-0 right-0 w-24 h-24 bg-(--lime-500)/10 rounded-full translate-x-1/2 translate-y-1/2" />
 
-        <div className="flex items-center gap-4 text-center md:text-left md:pl-40 lg:pl-52">
-          <div>
-            <h3 className="text-xl md:text-2xl font-black text-[var(--blue-100)]">
-              {title1}{" "}
-              <span className="text-[var(--lime-600)]">{title2}</span>
-            </h3>
-            <p className="text-sm text-[var(--gray-100)] mt-1">
-              {description}
-            </p>
+          <div className="relative z-10 flex flex-col lg:flex-row items-center justify-between gap-6 lg:gap-8">
+            {/* Left Image */}
+            <div className="hidden lg:flex w-56 rounded-xl  items-center justify-center shrink-0">
+              <img src={image} alt={title} />
+            </div>
+
+            {/* Content */}
+            <div className="flex-1 text-center lg:text-left">
+              <h3 className="text-white font-bold text-xl lg:text-2xl mb-2">
+                {title}{" "}
+                <span className="text-(--lime-400)">{highlight}</span>
+              </h3>
+
+              <p className="text-(--blue-200) text-sm mb-5">
+                {description}
+              </p>
+
+              <div className="flex flex-wrap items-center justify-center lg:justify-start gap-4 lg:gap-6">
+                {features.map((feature, idx) => {
+                  const Icon = feature.icon;
+
+                  return (
+                    <div key={idx} className="flex items-center gap-1.5">
+                      <Icon className="w-4 h-4 text-(--lime-400)" />
+                      <span className="text-white text-xs font-medium">
+                        {feature.text}
+                      </span>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* Buttons */}
+            <div className="flex flex-col sm:flex-row items-center gap-3 flex-shrink-0">
+              <a
+                href={primaryButton.href}
+                className="inline-flex items-center gap-2 bg-(--lime-500) hover:bg-(--lime-600) text-white font-semibold px-5 py-3 rounded-full text-sm transition-colors group"
+              >
+                {primaryButton.text}
+                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+              </a>
+
+              <a
+                href={secondaryButton.href}
+                className="inline-flex items-center gap-2 bg-white/10 hover:bg-white/20 text-white border border-white/20 font-medium px-5 py-3 rounded-full text-sm transition-colors"
+              >
+                <Phone className="w-4 h-4" />
+                {secondaryButton.text}
+              </a>
+            </div>
           </div>
-        </div>
-
-        <div className="flex flex-col sm:flex-row items-center gap-3 flex-shrink-0">
-          
-           <a href="#"
-            className="inline-flex items-center gap-2 bg-(--lime-500) hover:bg-(--lime-600) text-white font-semibold px-5 py-3 rounded-full text-sm transition-colors group"
-          >
-            Get a Free Quote
-            <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-          </a>
-
-          
-           <a href="tel:18001234567"
-            className="inline-flex items-center gap-2 bg-white/10 hover:bg-white/20 text-white border border-white/20 font-medium px-5 py-3 rounded-full text-sm transition-colors"
-          >
-            <Phone className="w-4 h-4" />
-            1800 123 4567
-          </a>
         </div>
       </div>
     </section>

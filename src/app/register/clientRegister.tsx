@@ -402,7 +402,8 @@ export default function RegisterPage() {
         <div className="w-full grid grid-cols-2 gap-2">
           <button
            onClick={() => {
-    signIn("google", { callbackUrl: "/user" });
+    // Let middleware decide post-login redirect (use root so onboarding middleware can run)
+    signIn("google", { callbackUrl: "/" });
   }}
   disabled={isLoading}
            
@@ -414,7 +415,8 @@ export default function RegisterPage() {
           <button
             onClick={() => {
               setIsLoading(true);
-              window.location.href = "/api/auth/signin/azure-ad?callbackUrl=/user";
+              // Use root callback so middleware enforces onboarding when needed
+              window.location.href = "/api/auth/signin/azure-ad?callbackUrl=/";
             }}
             disabled={isLoading}
             className="flex items-center justify-center gap-2 py-2.5 px-4 bg-white border border-slate-200 rounded-xl text-xs font-bold text-slate-700 hover:bg-slate-50 transition-colors cursor-pointer disabled:opacity-50"
