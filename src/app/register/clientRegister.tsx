@@ -64,8 +64,31 @@ export default function RegisterPage() {
       if (!res.ok) {
         setRegisterError(data.message || "Registration failed");
       } else {
-        // Redirect to login on success
-        router.push("/login?registered=true");
+        // Auto sign-in after successful registration so middleware can redirect
+        const signInResult = await signIn("credentials", {
+          email: formData.email,
+          password: formData.password,
+          redirect: false,
+        });
+
+        if (signInResult?.error) {
+          // fallback to login page
+          router.push("/login?registered=true");
+        } else {
+          // Fetch session to inspect onboarding/role
+          const sessionRes = await fetch("/api/auth/session");
+          const session = await sessionRes.json();
+
+          // If onboarding not completed, send to onboarding page
+          if (session?.user?.onboardingCompleted === false) {
+            router.push("/onboarding/role");
+          } else {
+            const role = session?.user?.role;
+            if (role === "ADMIN") router.push("/admin");
+            else if (role === "DRIVER") router.push("/driver");
+            else router.push("/user");
+          }
+        }
       }
     } catch {
       setRegisterError("Something went wrong. Please try again.");

@@ -47,7 +47,8 @@ export async function POST(req: NextRequest) {
         password: hashedPassword,
         role: role,
         status: "ACTIVE",
-         onboardingCompleted: true,
+         // New users must complete onboarding (choose role) if not set
+         onboardingCompleted: false,
       },
       select: {
         id: true,
