@@ -124,15 +124,15 @@ export default function Navbar() {
           boxShadow: scrolled ? "0 4px 24px rgba(0,0,0,0.18)" : "none",
         }}
       >
-        <div className="max-w-7xl mx-auto px-6 md:px-12">
+        <div className="max-w-7xl mx-auto px-4 md:px-8">
           <div className="flex items-center justify-between h-16 md:h-20">
             {/* Logo */}
-            <div className="flex items-center space-x-1 cursor-pointer">
+            <div className={`${scrolled ? "flex" : "hidden"} items-center space-x-1 cursor-pointer`}>
               <img src="/omsai-logo.png" className="w-60"/>
             </div>
-              {/* <div className={`${scrolled ? "hidden" : "flex"} items-center space-x-1 cursor-pointer`}>
+              <div className={`${scrolled ? "hidden" : "flex"} items-center space-x-1 cursor-pointer`}>
               <img src="/omsai-logo-white.png" className="w-60"/>
-            </div> */}
+            </div>
 
             {/* Desktop nav with mega menus */}
             <nav className="hidden lg:flex items-center gap-1">
@@ -145,7 +145,7 @@ export default function Navbar() {
                 >
                   <Link
                     href={item.href ?? "#"}
-                    className={`flex items-center gap-1 px-4 py-2 text-sm font-semibold text-blue-900  hover:text-lime-300 transition-colors cursor-pointer`}
+                    className={`flex items-center gap-1 px-4 py-2 text-sm font-semibold ${scrolled ? "text-blue-900" : "text-white"} hover:text-lime-300 transition-colors cursor-pointer`}
                   >
                     {item.label}
                     {item.menu && (
@@ -284,16 +284,17 @@ export default function Navbar() {
             <div className="hidden lg:flex items-center gap-5">
               <a href="tel:+18005551234" className="flex items-center gap-2 text-sm font-semibold text-white">
                 <Phone className="w-4 h-4" style={{ color: "#84cc16" }} />
-                <span className="text-blue-900">
+                <span className={`${scrolled ? 'text-blue-900' : 'text-white'}`}>
                 +91 9694666677
  </span>
               </a>
-              <button
+             <Link href="/get-a-quote"> <button
                 className="text-black text-xs font-extrabold uppercase tracking-wide px-5 py-2.5 rounded-full transition-colors duration-300 cursor-pointer"
                 style={{ background: "#84cc16" }}
               >
                 Get a Quote
               </button>
+              </Link>
             </div>
 
             {/* Mobile toggle */}

@@ -315,19 +315,19 @@ export default function HeroWithFilter() {
                 <Truck className="w-4 h-4 text-gray-500 shrink-0" />
                 <select className="w-full text-sm text-gray-800 outline-none bg-transparent">
                   <option>Studio</option>
-                  <option>1 bedroom</option>
-                  <option>2 bedrooms</option>
-                  <option>3+ bedrooms</option>
+                  <option>1 bhk</option>
+                  <option>2 bhk</option>
+                  <option>3+ bhk</option>
                 </select>
               </div>
             </div>
           </div>
 
-         <Link href="/get-a-quote"> <button className="group  w-full md:w-auto flex items-center justify-center gap-2 bg-lime-500 hover:bg-lime-400 text-black font-extrabold text-sm px-8 py-3 rounded-full uppercase tracking-wider shadow-lg transition-all duration-300 cursor-pointer">
+          <button className="group  w-full md:w-auto flex items-center justify-center gap-2 bg-lime-500 hover:bg-lime-400 text-black font-extrabold text-sm px-8 py-3 rounded-full uppercase tracking-wider shadow-lg transition-all duration-300 cursor-pointer">
             Get my free quote
             <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
           </button>
-          </Link>
+         
         </div>
       </div>
       </div>
