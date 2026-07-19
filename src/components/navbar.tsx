@@ -158,7 +158,7 @@ export default function Navbar() {
 
                   {/* Services mega menu with promo panel */}
                   {item.menu === "services" && openMenu === "services" && (
-                    <div className="absolute top-full left-1/2 -translate-x-1/2 mt-3 bg-white rounded-2xl shadow-2xl p-5 flex gap-5" style={{ width: 680 }}>
+                    <div className="absolute top-full left-1/2 -translate-x-1/2  bg-white rounded-2xl shadow-2xl p-5 flex gap-5" style={{ width: 680 }}>
                       <div className="grid grid-cols-2 gap-2 flex-1">
                         {navServices.map((s) => (
                           <Link key={s.title} href={s.href} className="flex gap-3 p-3 rounded-xl hover:bg-gray-50 transition-colors">
@@ -199,7 +199,7 @@ export default function Navbar() {
 
                   {/* Locations mega menu grouped by region */}
                   {item.menu === "locations" && openMenu === "locations" && (
-                    <div className="absolute top-full left-1/2 -translate-x-1/2 mt-3 bg-white rounded-2xl shadow-2xl p-5 flex gap-6" style={{ width: 480 }}>
+                    <div className="absolute top-full left-1/2 -translate-x-1/2  bg-white rounded-2xl shadow-2xl p-5 flex gap-6" style={{ width: 480 }}>
                       {navLocationGroups.map((group:any) => (
                         <div key={group.region} className="flex-1">
                           <p className="text-[10px] font-extrabold uppercase tracking-wider text-lime-700 mb-2">
@@ -224,7 +224,7 @@ export default function Navbar() {
 
                   {/* Fleet mega menu */}
                   {item.menu === "fleet" && openMenu === "fleet" && (
-                    <div className="absolute top-full left-1/2 -translate-x-1/2 mt-3 w-80 bg-white rounded-2xl shadow-2xl p-3">
+                    <div className="absolute top-full left-1/2 -translate-x-1/2  w-80 bg-white rounded-2xl shadow-2xl p-3">
                       {navFleet.map((f) => (
                         <Link key={f.title} href={f.href} className="flex items-start gap-3 px-3 py-2.5 rounded-lg hover:bg-gray-50 transition-colors">
                           <Truck className="w-4 h-4 text-blue-600 shrink-0 mt-0.5" />
@@ -239,7 +239,7 @@ export default function Navbar() {
 
                   {/* Resources mega menu */}
                   {item.menu === "resources" && openMenu === "resources" && (
-                    <div className="absolute top-full left-1/2 -translate-x-1/2 mt-3 w-96 bg-white rounded-2xl shadow-2xl p-4 grid grid-cols-2 gap-2">
+                    <div className="absolute top-full left-1/2 -translate-x-1/2  w-96 bg-white rounded-2xl shadow-2xl p-4 grid grid-cols-2 gap-2">
                       {navResources.map((r) => {
                         const Icon = r.icon;
                         return (
@@ -259,7 +259,7 @@ export default function Navbar() {
 
                   {/* Company mega menu */}
                   {item.menu === "company" && openMenu === "company" && (
-                    <div className="absolute top-full left-1/2 -translate-x-1/2 mt-3 w-96 bg-white rounded-2xl shadow-2xl p-4 grid grid-cols-2 gap-2">
+                    <div className="absolute top-full left-1/2 -translate-x-1/2  w-96 bg-white rounded-2xl shadow-2xl p-4 grid grid-cols-2 gap-2">
                       {navCompany.map((c) => {
                         const Icon = c.icon;
                         return (
