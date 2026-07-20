@@ -17,6 +17,7 @@ declare module "next-auth" {
     role?: "USER" | "ADMIN" | "DRIVER" | null;
     status?: "ACTIVE" | "INACTIVE" | "SUSPENDED";
     onboardingCompleted?: boolean;
+    image?: string | null;
   }
 }
 
@@ -26,5 +27,6 @@ declare module "next-auth/jwt" {
     role?: "USER" | "ADMIN" | "DRIVER"| null;
     status?: "ACTIVE" | "INACTIVE" | "SUSPENDED";
      onboardingCompleted?: boolean; 
+      picture?: string | null;
   }
 }

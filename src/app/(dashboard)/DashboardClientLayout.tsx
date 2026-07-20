@@ -69,7 +69,7 @@ export default function DashboardClientLayout({
 
       <aside
         className={`
-          fixed lg:static inset-y-0 left-0 z-50 bg-white border-r border-slate-200 
+          fixed lg:static inset-y-0 left-0 z-50 bg-white h-[100dvh]  border-r  border-slate-200 
           transition-all duration-300 ease-in-out flex flex-col
           ${sidebarOpen ? "w-64" : "w-20"}
           ${mobileMenuOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"}
@@ -142,7 +142,7 @@ export default function DashboardClientLayout({
         </div>
       </aside>
 
-      <div className="flex-1 flex flex-col min-w-0">
+      <div className="flex-1 flex flex-col max-h-dvh overflow-y-auto min-w-0">
         <header className="h-16 bg-white border-b border-slate-200 flex items-center justify-between px-4 lg:px-6 sticky top-0 z-30">
           <div className="flex items-center gap-3">
             <button onClick={() => setMobileMenuOpen(true)} className="lg:hidden w-9 h-9 rounded-lg bg-slate-100 flex items-center justify-center hover:bg-slate-200 transition-colors">
@@ -157,12 +157,23 @@ export default function DashboardClientLayout({
                 <span className="text-sm font-semibold text-slate-800">{session?.user?.name || "User"}</span>
                 <span className="text-xs text-slate-500">{session?.user?.email}</span>
               </div>
-              <div className="w-9 h-9 rounded-full bg-gradient-to-br from-[#0E4995] to-[#2F7359] flex items-center justify-center text-white text-sm font-bold">{(session?.user?.name?.[0] || session?.user?.email?.[0] || "U").toUpperCase()}</div>
+             {session?.user?.image ? (
+  <img
+    src={session.user.image}
+    alt={session.user.name || "User"}
+    className="w-9 h-9 rounded-full object-cover"
+    referrerPolicy="no-referrer"
+  />
+) : (
+  <div className="w-9 h-9 rounded-full bg-gradient-to-br from-[#0E4995] to-[#2F7359] flex items-center justify-center text-white text-sm font-bold">
+    {(session?.user?.name?.[0] || session?.user?.email?.[0] || "U").toUpperCase()}
+  </div>
+)}
             </div>
           </div>
         </header>
 
-        <main className="flex-1 p-4 lg:p-6 overflow-y-auto">{children}</main>
+        <main className="flex-1 h-[calc(100dvh-4rem)] p-4 lg:p-6 overflow-y-auto">{children}</main>
       </div>
     </div>
   );

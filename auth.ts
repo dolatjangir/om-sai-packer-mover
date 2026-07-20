@@ -96,7 +96,7 @@ async jwt({ token, user, account, trigger }) {
     if (account?.provider === "google") {
       const dbUser = await prisma.user.findUnique({
         where: { email: user.email! }, // <-- use user.email, not token.email
-        select: { id: true, role: true, status: true, onboardingCompleted: true },
+        select: { id: true, role: true, status: true, onboardingCompleted: true, image: true },
       });
       if (dbUser) {
         token.id = dbUser.id;
@@ -104,6 +104,7 @@ async jwt({ token, user, account, trigger }) {
         token.role = dbUser.role; // null for new Google users
         token.status = dbUser.status;
         token.onboardingCompleted = dbUser.onboardingCompleted; // false
+        token.picture = dbUser.image ?? user.image;
       }
     } else {
       // Credentials login
@@ -112,6 +113,7 @@ async jwt({ token, user, account, trigger }) {
       token.role = (user as any).role;
       token.status = (user as any).status;
       token.onboardingCompleted = (user as any).onboardingCompleted ?? true;
+       token.picture = (user as any).image;
     }
   }
 
@@ -119,13 +121,14 @@ async jwt({ token, user, account, trigger }) {
   if (!user && token.email) {
     const dbUser = await prisma.user.findUnique({
       where: { email: token.email },
-      select: { id: true, role: true, status: true, onboardingCompleted: true },
+      select: { id: true, role: true, status: true, onboardingCompleted: true, image: true },
     });
     if (dbUser) {
       token.id = dbUser.id;
       token.role = dbUser.role;
       token.status = dbUser.status;
       token.onboardingCompleted = dbUser.onboardingCompleted;
+      token.picture = dbUser.image;
     }
   }
 
@@ -143,6 +146,7 @@ async jwt({ token, user, account, trigger }) {
     session.user.status = token.status as "ACTIVE" | "INACTIVE" | "SUSPENDED";
     // CRITICAL: Convert undefined/null to false
     session.user.onboardingCompleted = token.onboardingCompleted === true;
+     session.user.image = token.picture as string | null; 
   }  
   return session;
 },
