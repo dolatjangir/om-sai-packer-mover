@@ -14,7 +14,10 @@ import {
   Users, 
   ShieldCheck, 
   Clock, 
-  Award, 
+  Award,
+  CheckCircle2,
+  AlertCircle,
+  Loader2, 
  
 } from "lucide-react";
 import { FaFacebook, FaInstagram, FaLinkedin, FaTwitter } from "react-icons/fa";
@@ -36,10 +39,69 @@ export default function GetAQuotePage() {
     agreeToTerms: false,
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    console.log("Form submitted: ", formData);
-  };
+ const [isSubmitting, setIsSubmitting] = useState(false);
+const [submitError, setSubmitError] = useState("");
+const [submitSuccess, setSubmitSuccess] = useState(false);
+
+const handleSubmit = async (e: React.FormEvent) => {
+  e.preventDefault();
+  setIsSubmitting(true);
+  setSubmitError("");
+
+  try {
+    const res = await fetch("/api/quotes", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        moveType: formData.moveType,
+        movingDate: formData.movingDate,
+        pickupLocation: formData.pickupLocation,
+        deliveryLocation: formData.deliveryLocation,
+        propertyFrom: formData.propertyFrom,
+        propertyTo: formData.propertyTo,
+        rooms: formData.rooms,
+        approxGoods: formData.approxGoods,
+        fullName: formData.fullName,
+        mobileNumber: formData.mobileNumber,
+        emailAddress: formData.emailAddress,
+        additionalRequirements: formData.additionalRequirements,
+        agreeToTerms: formData.agreeToTerms,
+      }),
+    });
+
+    const data = await res.json();
+
+    if (!res.ok || !data.success) {
+      if (data.errors) {
+        const errorMessages = Object.values(data.errors).flat().join(", ");
+        throw new Error(errorMessages);
+      }
+      throw new Error(data.message || "Failed to submit");
+    }
+
+    setSubmitSuccess(true);
+    // Reset form
+    setFormData({
+      moveType: "",
+      movingDate: "",
+      pickupLocation: "",
+      deliveryLocation: "",
+      propertyFrom: "",
+      propertyTo: "",
+      rooms: "",
+      approxGoods: "",
+      fullName: "",
+      mobileNumber: "",
+      emailAddress: "",
+      additionalRequirements: "",
+      agreeToTerms: false,
+    });
+  } catch (err) {
+    setSubmitError(err instanceof Error ? err.message : "Something went wrong");
+  } finally {
+    setIsSubmitting(false);
+  }
+};
 
   return (
     <div className="min-h-screen bg-white text-[var(--gray-900)] font-sans antialiased">
@@ -145,7 +207,18 @@ export default function GetAQuotePage() {
             <p className="text-sm text-[var(--gray-500)] mb-8">
               Fill in the details below and our moving expert will contact you.
             </p>
+{submitError && (
+  <div className="p-4 bg-red-50 border border-red-200 rounded-xl text-red-700 text-sm font-medium mb-4 flex items-center gap-2">
+    <AlertCircle className="w-4 h-4" /> {submitError}
+  </div>
+)}
 
+{submitSuccess && (
+  <div className="p-4 bg-[var(--lime-50)] border border-[var(--lime-200)] rounded-xl text-[var(--lime-700)] text-sm font-medium mb-4 flex items-center gap-2">
+    <CheckCircle2 className="w-4 h-4" /> 
+    Quote request submitted! Our team will contact you shortly.
+  </div>
+)}
             <form onSubmit={handleSubmit} className="space-y-8">
               
               {/* STEP 1: Moving Details */}
@@ -356,12 +429,21 @@ export default function GetAQuotePage() {
               </div>
 
               {/* Action Trigger Button */}
-              <button 
-                type="submit" 
-                className="w-full bg-[var(--lime-600)] hover:bg-[var(--lime-700)] text-white font-extrabold text-base py-3.5 px-6 rounded-lg shadow-md transition flex items-center justify-center gap-2 cursor-pointer"
-              >
-                Submit Request <ArrowRight className="h-5 w-5 bg-white/20 rounded-full p-0.5" />
-              </button>
+            <button 
+  type="submit" 
+  disabled={isSubmitting}
+  className="w-full bg-[var(--lime-600)] hover:bg-[var(--lime-700)] disabled:opacity-50 disabled:cursor-not-allowed text-white font-extrabold text-base py-3.5 px-6 rounded-lg shadow-md transition flex items-center justify-center gap-2 cursor-pointer"
+>
+  {isSubmitting ? (
+    <>
+      <Loader2 className="h-5 w-5 animate-spin" /> Submitting...
+    </>
+  ) : (
+    <>
+      Submit Request <ArrowRight className="h-5 w-5 bg-white/20 rounded-full p-0.5" />
+    </>
+  )}
+</button>
 
               <div className="text-center pt-2">
                 <p className="text-xs text-[var(--gray-500)] flex items-center justify-center gap-1.5">

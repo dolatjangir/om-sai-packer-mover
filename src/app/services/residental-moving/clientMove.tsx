@@ -40,7 +40,9 @@ import { FaFacebook, FaInstagram, FaLinkedin, FaTwitter } from "react-icons/fa";
 import StatsBar from "@/components/statsBar";
 import CTASection from "@/components/ctaBanner";
 import ServicesSection from "@/components/cardSection";
-import HeroSection from "@/components/HeroSection";
+
+import Link from "next/link";
+import HeroSection from "@/components/services-hero-reusable/heroSection";
 type HomeType = {
   icon: LucideIcon;
   title: string;
@@ -72,7 +74,7 @@ export const ctaSections = [
 
     primaryButton: {
       text: "Get a Free Quote",
-      href: "#",
+      href: "/get-a-quote",
     },
 
     secondaryButton: {
@@ -420,170 +422,21 @@ export default function ResidentialMoving() {
   return (
     <div className="min-h-screen bg-white font-sans overflow-x-hidden">
       {/* ===== HERO SECTION ===== */}
-      <section
-        ref={heroRef}
-        className="relative bg-gradient-to-br from-(--blue-900) to-(--blue-800) overflow-hidden"
-      >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-16 lg:pt-12 lg:pb-24">
-          <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
-            {/* Left Content */}
-            <div className="relative z-10">
-              {/* Breadcrumb */}
-              <nav className="hero-breadcrumb flex items-center gap-2 text-xs mb-6 lg:mb-8">
-                <span className="text-(--blue-200) hover:text-white cursor-pointer transition-colors">
-                  Home
-                </span>
-                <ChevronRight className="w-3 h-3 text-(--blue-300)" />
-                <span className="text-(--blue-200) hover:text-white cursor-pointer transition-colors">
-                  Services
-                </span>
-                <ChevronRight className="w-3 h-3 text-(--blue-300)" />
-                <span className="text-white font-medium">Residential Moving</span>
-              </nav>
-
-              <h1 className="hero-title text-3xl sm:text-4xl lg:text-5xl font-bold text-white leading-tight mb-4">
-                Residential Moving
-              </h1>
-              <h2 className="hero-title text-2xl sm:text-3xl lg:text-4xl font-bold text-(--lime-400) leading-tight mb-6">
-                Made Easy, Stress-Free
-              </h2>
-
-              <p className="hero-subtitle text-(--blue-200) text-sm lg:text-base leading-relaxed max-w-md mb-8">
-                Moving to a new home? We make your residential move safe, smooth
-                and hassle-free. From careful packing to on-time delivery, we
-                handle everything with care.
-              </p>
-
-              {/* Feature Pills */}
-              <div className="flex flex-wrap gap-3 lg:gap-4 mb-8">
-                {[
-                  { icon: Shield, text: "100% Safe", sub: "Your belongings are in safe hands" },
-                  { icon: Clock, text: "On-Time Delivery", sub: "Punctual & reliable moving service" },
-                  { icon: Package, text: "Careful Handling", sub: "We treat your items like our own" },
-                  { icon: Banknote, text: "Affordable Pricing", sub: "Best quality service at fair prices" },
-                ].map((pill, idx) => (
-                  <div
-                    key={idx}
-                    className="hero-feature-pill flex items-center gap-2.5 bg-white/10 backdrop-blur-sm rounded-lg px-3 py-2.5 border border-white/10"
-                  >
-                    <div className="w-8 h-8 bg-(--lime-500) rounded-full flex items-center justify-center flex-shrink-0">
-                      <pill.icon className="w-4 h-4 text-white" />
-                    </div>
-                    <div>
-                      <p className="text-white text-xs font-semibold">{pill.text}</p>
-                      <p className="text-(--blue-200) text-[10px] leading-tight">{pill.sub}</p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-
-              {/* CTAs */}
-              <div className="hero-cta flex flex-wrap items-center gap-4">
-                <a
-                  href="#"
-                  className="inline-flex items-center gap-2 bg-(--lime-500) hover:bg-(--lime-600) text-white font-semibold px-6 py-3 rounded-full text-sm transition-colors group"
-                >
-                  Get a Free Quote
-                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                </a>
-                <a
-                  href="tel:18001234567"
-                  className="inline-flex items-center gap-2 bg-white/10 hover:bg-white/20 text-white border border-white/20 font-medium px-5 py-3 rounded-full text-sm transition-colors"
-                >
-                  <Phone className="w-4 h-4 text-(--lime-400)" />
-                  Call 1800 123 4567
-                </a>
-              </div>
-            </div>
-
-            {/* Right Image */}
-            <div className="hero-image relative hidden lg:block">
-              <div className="relative rounded-2xl overflow-hidden aspect-[4/3]">
-                <div className="absolute inset-0 bg-(--blue-800)/30" />
-                <div className="w-full h-full bg-(--gray-200) flex items-center justify-center">
-                  <div className="text-center p-8">
-                    <Home className="w-20 h-20 text-(--gray-400) mx-auto mb-3" />
-                    <p className="text-(--gray-500) text-sm">Happy family with boxes</p>
-                    <p className="text-(--gray-400) text-xs mt-1">Replace with actual image</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Bottom Wave */}
-        <div className="absolute bottom-0 left-0 right-0">
-          <svg
-            viewBox="0 0 1440 80"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-            className="w-full h-auto"
-            preserveAspectRatio="none"
-          >
-            <path
-              d="M0 80V40C240 80 480 0 720 0C960 0 1200 80 1440 40V80H0Z"
-              fill="white"
-            />
-          </svg>
-        </div>
-      </section>
+ 
 <HeroSection
-        imageUrl="/healthcareimg.png"
-        leftContent={
-          <>
-            <h1 className="text-4xl md:text-5xl font-black text-[var(--blue-950)] italic leading-tight">
-              Get a Quote <br />
-              <span className="text-[var(--lime-600)]">Fast. Free. No Obligation.</span>
-            </h1>
-            <p className="text-[var(--gray-600)] text-base max-w-xl leading-relaxed">
-              Tell us about your moving requirement and we'll provide you with the best possible quote tailored to your needs.
-            </p>
-
-            {/* USP Checklist grid */}
-            <div className="grid grid-cols-2 gap-4 pt-6">
-              <div className="flex items-start gap-3">
-                <div className="p-1.5 bg-[var(--lime-50)] rounded-lg text-[var(--lime-600)] shrink-0">
-                  <CheckCircle className="h-5 w-5" />
-                </div>
-                <div>
-                  <h4 className="font-bold text-sm text-[var(--blue-950)]">100% Free</h4>
-                  <p className="text-xs text-[var(--gray-500)]">No hidden charges</p>
-                </div>
-              </div>
-              <div className="flex items-start gap-3">
-                <div className="p-1.5 bg-[var(--lime-50)] rounded-lg text-[var(--lime-600)] shrink-0">
-                  <Clock className="h-5 w-5" />
-                </div>
-                <div>
-                  <h4 className="font-bold text-sm text-[var(--blue-950)]">Quick Response</h4>
-                  <p className="text-xs text-[var(--gray-500)]">We'll get back in minutes</p>
-                </div>
-              </div>
-              <div className="flex items-start gap-3">
-                <div className="p-1.5 bg-[var(--lime-50)] rounded-lg text-[var(--lime-600)] shrink-0">
-                  <Award className="h-5 w-5" />
-                </div>
-                <div>
-                  <h4 className="font-bold text-sm text-[var(--blue-950)]">Best Prices</h4>
-                  <p className="text-xs text-[var(--gray-500)]">Competitive pricing</p>
-                </div>
-              </div>
-              <div className="flex items-start gap-3">
-                <div className="p-1.5 bg-[var(--lime-50)] rounded-lg text-[var(--lime-600)] shrink-0">
-                  <ShieldCheck className="h-5 w-5" />
-                </div>
-                <div>
-                  <h4 className="font-bold text-sm text-[var(--blue-950)]">Secure & Reliable</h4>
-                  <p className="text-xs text-[var(--gray-500)]">Your info is safe</p>
-                </div>
-              </div>
-            </div>
-          </>
-        }
-      />
+  title="Residential Moving"
+  highlightedTitle="Made Easy, Stress-Free"
+  description="Moving to a new home? We make your residential move safe, smooth and hassle-free. From careful packing to on-time delivery, we handle everything with care."
+  features={[
+    { icon: Shield, text: "100% Safe", sub: "Your belongings are in safe hands" },
+    { icon: Clock, text: "On-Time Delivery", sub: "Punctual & reliable moving service" },
+    { icon: Package, text: "Careful Handling", sub: "We treat your items like our own" },
+    { icon: Banknote, text: "Affordable Pricing", sub: "Best quality service at fair prices" },
+  ]}
+  image={{ src: "/residential-moving-hero-img.png", alt: "hero-family-moving-image" }}
+/>
       {/* ===== PERFECT FOR EVERY HOME MOVE ===== */}
-      <section ref={perfectRef} className="py-2 ">
+      <section ref={perfectRef} className="py-1 ">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="perfect-header text-center text-2xl sm:text-3xl font-bold text-(--blue-900) mb-6">
             Perfect For <span className="text-(--lime-500)">Every Home Move</span>
@@ -611,12 +464,12 @@ export default function ResidentialMoving() {
       </section>
 
       {/* ===== OUR RESIDENTIAL MOVING SERVICES ===== */}
-    <ServicesSection services={services}/>
+    <ServicesSection services={services} title="Our Residential" highlightTitle="Moving Services" />
       {/* ===== HOW WE MAKE YOUR MOVE EASY ===== */}
       <section ref={processRef} className="py-10 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="process-header text-center text-2xl sm:text-3xl font-bold text-(--blue-900) mb-6">
-            How We Make Your <span className="text-(--lime-500)">Move Easy</span>
+            How We Make Your <span className="text-(--lime-500)">Om Sai</span>
           </h2>
 
           <div className="relative">

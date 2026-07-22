@@ -16,7 +16,7 @@ interface CTASectionProps {
   description: string;
   image: string;
 
-  features: CTAFeature[];
+  features?: CTAFeature[];
 
   primaryButton: {
     text: string;
@@ -96,7 +96,7 @@ export default function CTASection({
               </p>
 
               <div className="flex flex-wrap items-center justify-center lg:justify-start gap-4 lg:gap-6">
-                {features.map((feature, idx) => {
+                {features?.map((feature, idx) => {
                   const Icon = feature.icon;
 
                   return (

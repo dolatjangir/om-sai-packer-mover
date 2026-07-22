@@ -34,6 +34,7 @@ const navigationConfig = {
     { name: "Customers", href: "/admin/customers", icon: Users },
     { name: "Drivers", href: "/admin/drivers", icon: Truck },
     { name: "Reports", href: "/admin/reports", icon: BarChart3 },
+     { name: "Leads", href: "/admin/leads", icon: Users },
   ],
   DRIVER: [
     { name: "Dashboard", href: "/driver", icon: LayoutDashboard },

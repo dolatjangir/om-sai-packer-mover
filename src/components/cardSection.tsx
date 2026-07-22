@@ -12,9 +12,14 @@ type Service = {
 
 type ServicesSectionProps = {
   services: Service[];
+  title: string;
+  highlightTitle: string;
 };
 export default function ServicesSection({
   services,
+  title,
+  highlightTitle,
+
 }: ServicesSectionProps) {
     const servicesRef = useRef<HTMLDivElement>(null);
     useEffect(() => {
@@ -72,7 +77,7 @@ export default function ServicesSection({
     <section ref={servicesRef} className="py-10 ">
         <div className="max-w-7xl mx-auto px-2 sm:px-4 lg:px-6">
           <h2 className="services-header text-center text-2xl sm:text-3xl font-bold text-(--blue-900) mb-8">
-            Our Residential <span className="text-(--lime-500)">Moving Services</span>
+          {title} <span className="text-(--lime-500)">{highlightTitle}</span>
           </h2>
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-2 lg:gap-3">

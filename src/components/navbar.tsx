@@ -176,7 +176,7 @@ export default function Navbar() {
                         ))}
                       </div>
                       <div
-                        className="w-52 shrink-0 rounded-xl p-4 flex flex-col justify-between"
+                        className="w-52 shrink-0 rounded-xl p-2 flex flex-col justify-between"
                         style={{ background: "linear-gradient(160deg, #005bb5, #003f7d)" }}
                       >
                         <div>
@@ -187,8 +187,9 @@ export default function Navbar() {
                             Everything you need to plan a stress-free move.
                           </p>
                         </div>
+                        <img src="/free-checklist.png" alt="Free Moving Checklist" className="w-full h-auto rounded-lg" />
                         <button
-                          className="mt-3 text-black text-[11px] font-extrabold uppercase tracking-wide px-3 py-2 rounded-full cursor-pointer"
+                          className="mt-1 text-black text-[11px] font-extrabold uppercase tracking-wide px-3 py-2 rounded-full cursor-pointer"
                           style={{ background: "#84cc16" }}
                         >
                           Download free

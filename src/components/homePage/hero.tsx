@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { MapPin, Calendar, Truck, ArrowRight, Star, ShieldCheck, Package, Phone, PhoneCall, User, Heart } from "lucide-react";
+import { MapPin, Calendar, Truck, ArrowRight, Star, ShieldCheck, Package, Phone, PhoneCall, User, Heart, Loader2, CheckCircle2 } from "lucide-react";
 import Image from "next/image";
 import RoutesPage from "./routesPage";
 import Link from "next/link";
@@ -83,17 +83,72 @@ const services: ServiceItem[] = [
 
 
 export default function HeroWithFilter() {
-  // ---- Auto-scrolling movers carousel: advances by 2 cards every 0.5s ----
+const [quickForm, setQuickForm] = useState({
+  from: "",
+  to: "",
+  phone: "",
+  name: "",
+  date: "",
+  homeSize: "Studio",
+});
 
+const [isSubmitting, setIsSubmitting] = useState(false);
+const [error, setError] = useState("");
+const [success, setSuccess] = useState(false);
 
+const handleQuickSubmit = async () => {
+  // Validation
+  if (!quickForm.from.trim() || !quickForm.to.trim() || !quickForm.phone.trim() || !quickForm.name.trim() || !quickForm.date) {
+    setError("Please fill all required fields");
+    return;
+  }
+  if (quickForm.phone.length !== 10) {
+    setError("Phone must be 10 digits");
+    return;
+  }
 
-  const [smooth, setSmooth] = useState<boolean>(true);
+  setIsSubmitting(true);
+  setError("");
 
+  try {
+    const res = await fetch("/api/quotes", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        moveType: "residential", // default for quick quote
+        movingDate: quickForm.date,
+        pickupLocation: quickForm.from,
+        deliveryLocation: quickForm.to,
+        propertyFrom: quickForm.homeSize,
+        propertyTo: quickForm.homeSize,
+        rooms: quickForm.homeSize,
+        approxGoods: "full",
+        fullName: quickForm.name,
+        mobileNumber: quickForm.phone,
+        emailAddress: "",
+        additionalRequirements: "",
+        agreeToTerms: true,
+      }),
+    });
 
-  
-  
+    const data = await res.json();
 
+    if (!res.ok || !data.success) {
+      throw new Error(data.message || "Failed to submit");
+    }
 
+    setSuccess(true);
+    setQuickForm({ from: "", to: "", phone: "", name: "", date: "", homeSize: "Studio" });
+    
+    // Optional: redirect to full get-a-quote page or show success
+    setTimeout(() => setSuccess(false), 5000);
+    
+  } catch (err) {
+    setError(err instanceof Error ? err.message : "Something went wrong");
+  } finally {
+    setIsSubmitting(false);
+  }
+};
   return (
     <div style={{ fontFamily: "sans-serif" }}>
       {/* ===================== HERO — HALF SCREEN ===================== */}
@@ -247,11 +302,13 @@ export default function HeroWithFilter() {
               </label>
               <div className="flex items-center gap-2 border border-gray-200 rounded-lg px-3 py-2.5 focus-within:border-lime-500 transition-colors">
                 <MapPin className="w-4 h-4 text-blue-600 shrink-0" />
-                <input
-                  type="text"
-                  placeholder="City or ZIP code"
-                  className="w-full text-sm text-gray-800 outline-none placeholder:text-gray-400"
-                />
+               <input
+  type="text"
+  placeholder="City or ZIP code"
+  value={quickForm.from}
+  onChange={(e) => setQuickForm({ ...quickForm, from: e.target.value })}
+  className="w-full text-sm text-gray-800 outline-none placeholder:text-gray-400"
+/>
               </div>
             </div>
 
@@ -261,11 +318,13 @@ export default function HeroWithFilter() {
               </label>
               <div className="flex items-center gap-2 border border-gray-200 rounded-lg px-3 py-2.5 focus-within:border-lime-500 transition-colors">
                 <MapPin className="w-4 h-4 text-lime-600 shrink-0" />
-                <input
-                  type="text"
-                  placeholder="City or ZIP code"
-                  className="w-full text-sm text-gray-800 outline-none placeholder:text-gray-400"
-                />
+               <input
+  type="text"
+  placeholder="City or ZIP code"
+  value={quickForm.to}
+  onChange={(e) => setQuickForm({ ...quickForm, to: e.target.value })}
+  className="w-full text-sm text-gray-800 outline-none placeholder:text-gray-400"
+/>
               </div>
             </div>
    <div className="flex flex-col gap-1.5">
@@ -274,11 +333,13 @@ export default function HeroWithFilter() {
               </label>
               <div className="flex items-center gap-2 border border-gray-200 rounded-lg px-3 py-2.5 focus-within:border-lime-500 transition-colors">
                 <PhoneCall className="w-4 h-4 text-lime-600 shrink-0" />
-                <input
-                  type="text"
-                  placeholder="+91XXXXXXXXXX"
-                  className="w-full text-sm text-gray-800 outline-none placeholder:text-gray-400"
-                />
+              <input
+  type="tel"
+  placeholder="+91XXXXXXXXXX"
+  value={quickForm.phone}
+  onChange={(e) => setQuickForm({ ...quickForm, phone: e.target.value.replace(/\D/g, "").slice(0, 10) })}
+  className="w-full text-sm text-gray-800 outline-none placeholder:text-gray-400"
+/>
               </div>
             </div>
              <div className="flex flex-col gap-1.5">
@@ -287,11 +348,13 @@ export default function HeroWithFilter() {
               </label>
               <div className="flex items-center gap-2 border border-gray-200 rounded-lg px-3 py-2.5 focus-within:border-lime-500 transition-colors">
                 <User className="w-4 h-4 text-lime-600 shrink-0" />
-                <input
-                  type="text"
-                  placeholder="Enter Your Name"
-                  className="w-full text-sm text-gray-800 outline-none placeholder:text-gray-400"
-                />
+               <input
+  type="text"
+  placeholder="Enter Your Name"
+  value={quickForm.name}
+  onChange={(e) => setQuickForm({ ...quickForm, name: e.target.value })}
+  className="w-full text-sm text-gray-800 outline-none placeholder:text-gray-400"
+/>
               </div>
             </div>
             <div className="flex flex-col gap-1.5">
@@ -300,10 +363,12 @@ export default function HeroWithFilter() {
               </label>
               <div className="flex items-center gap-2 border border-gray-200 rounded-lg px-3 py-2.5 focus-within:border-lime-500 transition-colors">
                 <Calendar className="w-4 h-4 text-gray-500 shrink-0" />
-                <input
-                  type="date"
-                  className="w-full text-sm text-gray-800 outline-none bg-transparent"
-                />
+               <input
+  type="date"
+  value={quickForm.date}
+  onChange={(e) => setQuickForm({ ...quickForm, date: e.target.value })}
+  className="w-full text-sm text-gray-800 outline-none bg-transparent"
+/>
               </div>
             </div>
 
@@ -313,20 +378,44 @@ export default function HeroWithFilter() {
               </label>
               <div className="flex items-center gap-2 border border-gray-200 rounded-lg px-3 py-2.5 focus-within:border-lime-500 transition-colors">
                 <Truck className="w-4 h-4 text-gray-500 shrink-0" />
-                <select className="w-full text-sm text-gray-800 outline-none bg-transparent">
-                  <option>Studio</option>
-                  <option>1 bhk</option>
-                  <option>2 bhk</option>
-                  <option>3+ bhk</option>
-                </select>
+               <select
+  value={quickForm.homeSize}
+  onChange={(e) => setQuickForm({ ...quickForm, homeSize: e.target.value })}
+  className="w-full text-sm text-gray-800 outline-none bg-transparent"
+>
+  <option>Studio</option>
+  <option>1 bhk</option>
+  <option>2 bhk</option>
+  <option>3+ bhk</option>
+</select>
               </div>
             </div>
           </div>
+{error && (
+  <p className="text-xs text-red-600 font-medium mt-2">{error}</p>
+)}
 
-          <button className="group  w-full md:w-auto flex items-center justify-center gap-2 bg-lime-500 hover:bg-lime-400 text-black font-extrabold text-sm px-8 py-3 rounded-full uppercase tracking-wider shadow-lg transition-all duration-300 cursor-pointer">
-            Get my free quote
-            <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
-          </button>
+{success && (
+  <p className="text-xs text-[var(--lime-700)] font-medium mt-2 flex items-center gap-1">
+    <CheckCircle2 className="w-3 h-3" /> Quote submitted! We'll call you soon.
+  </p>
+)}
+        <button
+  onClick={handleQuickSubmit}
+  disabled={isSubmitting}
+  className="group w-full md:w-auto flex items-center justify-center gap-2 bg-lime-500 hover:bg-lime-400 disabled:opacity-50 text-black font-extrabold text-sm px-8 py-3 rounded-full uppercase tracking-wider shadow-lg transition-all duration-300 cursor-pointer"
+>
+  {isSubmitting ? (
+    <>
+      <Loader2 className="w-4 h-4 animate-spin" /> Submitting...
+    </>
+  ) : (
+    <>
+      Get my free quote
+      <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
+    </>
+  )}
+</button>
          
         </div>
       </div>

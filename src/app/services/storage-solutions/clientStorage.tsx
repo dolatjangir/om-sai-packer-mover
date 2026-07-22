@@ -31,8 +31,82 @@ import {
   Home,
   Truck,
   CheckCircle2,
+  Banknote,
 } from "lucide-react";
 import StatsBar from "@/components/statsBar";
+import HeroSection from "@/components/services-hero-reusable/heroSection";
+import ServicesSection from "@/components/cardSection";
+import CTASection from "@/components/ctaBanner";
+export const ctaSections = [
+  {
+    title: "Need Extra Space?",
+    highlight: "We've Got You Covered!",
+    description:
+      "Secure, flexible and affordable storage solutions designed for you.",
+    image: "/storage-solution-cta-img.png",
+
+    features: [
+         {
+           icon: CheckCircle2,
+           text: "Free Survey Available",
+         },
+         {
+           icon: CheckCircle2,
+           text: "No Hidden Charges",
+         },
+         {
+           icon: CheckCircle2,
+           text: "100% Customer Satisfaction",
+         },
+       ],
+       
+
+    primaryButton: {
+      text: "Get a Free Quote",
+      href: "/get-a-quote",
+    },
+
+    secondaryButton: {
+      text: "Call 1800 123 4567",
+      href: "tel:18001234567",
+    },
+  },
+
+  {
+    title: "Planning an",
+    highlight: "Office Relocation?",
+    description:
+      "Fast, secure, and hassle-free office shifting services.",
+
+    image: "/office-service-bottom-left.png",
+
+    features: [
+      {
+        icon: CheckCircle2,
+        text: "Professional Team",
+      },
+      {
+        icon: CheckCircle2,
+        text: "Safe Transportation",
+      },
+      {
+        icon: CheckCircle2,
+        text: "On-Time Delivery",
+      },
+    ],
+
+    primaryButton: {
+      text: "Book Now",
+      href: "#",
+    },
+
+    secondaryButton: {
+      text: "Call 1800 123 4567",
+      href: "tel:18001234567",
+    },
+  },
+];
+
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -258,31 +332,31 @@ export default function StorageSolutions() {
       icon: Calendar,
       title: "Short-Term Storage",
       desc: "Ideal for temporary storage during your move, renovation or travel.",
-      imgLabel: "Boxes with clock",
+       image: "/shorttrum-storage.png",
     },
     {
       icon: Clock,
       title: "Long-Term Storage",
       desc: "Perfect for storing items you don't need right now, for months or years.",
-      imgLabel: "Warehouse corridor",
+      image: "/longtrum-storage.png",
     },
     {
       icon: Building,
       title: "Business Storage",
       desc: "Secure space for office equipment, documents, inventory & more.",
-      imgLabel: "Office inventory",
+       image: "/bussiness-storage.png",
     },
     {
       icon: GraduationCap,
       title: "Student Storage",
       desc: "Safe & affordable storage option for students during holidays or relocation.",
-      imgLabel: "Student with boxes",
+    image: "/student-storage.png",
     },
     {
       icon: Car,
       title: "Vehicle Storage",
       desc: "Safe storage for your car, bike or other vehicles with complete care.",
-      imgLabel: "Car and bike",
+      image: "/vehicle-storage.png",
     },
   ];
 
@@ -362,44 +436,14 @@ export default function StorageSolutions() {
 
   return (
     <div className="min-h-screen bg-white font-sans overflow-x-hidden">
-      {/* ===== HERO SECTION ===== */}
-      <section
-        ref={heroRef}
-        className="relative bg-gradient-to-br from-(--blue-900) to-(--blue-800) overflow-hidden"
-      >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-16 lg:pt-12 lg:pb-24">
-          <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
-            {/* Left Content */}
-            <div className="relative z-10">
-              {/* Breadcrumb */}
-              <nav className="hero-breadcrumb flex items-center gap-2 text-xs mb-6 lg:mb-8">
-                <span className="text-(--blue-200) hover:text-white cursor-pointer transition-colors">
-                  Home
-                </span>
-                <ArrowRight className="w-3 h-3 text-(--blue-300) rotate-[-90deg]" />
-                <span className="text-(--blue-200) hover:text-white cursor-pointer transition-colors">
-                  Services
-                </span>
-                <ArrowRight className="w-3 h-3 text-(--blue-300) rotate-[-90deg]" />
-                <span className="text-white font-medium">Storage Solutions</span>
-              </nav>
-
-              <h1 className="hero-title text-3xl sm:text-4xl lg:text-5xl font-bold text-white leading-tight mb-3">
-                Storage Solutions
-              </h1>
-              <h2 className="hero-subtitle text-2xl sm:text-3xl lg:text-4xl font-bold text-(--lime-400) leading-tight mb-6">
-                Safe. Secure. Reliable.
-              </h2>
-
-              <p className="hero-subtitle text-(--blue-200) text-sm lg:text-base leading-relaxed max-w-md mb-8">
-                Whether you need short-term storage during a move or a long-term
+      {/* ===== HERO SECTION ===== storage-service-hero-img*/}
+     <HeroSection
+  title="Storage Solutions"
+  highlightedTitle=" Safe. Secure. Reliable."
+  description=" Whether you need short-term storage during a move or a long-term
                 solution for extra space, we keep your belongings safe and
-                accessible.
-              </p>
-
-              {/* Feature Pills */}
-              <div className="flex flex-wrap gap-3 lg:gap-4 mb-8">
-                {[
+                accessible."
+  features={[
                   {
                     icon: Shield,
                     text: "24/7 Security",
@@ -420,140 +464,11 @@ export default function StorageSolutions() {
                     text: "Easy Access",
                     sub: "Access your items whenever you need",
                   },
-                ].map((pill, idx) => (
-                  <div
-                    key={idx}
-                    className="hero-feature-pill flex items-center gap-2.5 bg-white/10 backdrop-blur-sm rounded-lg px-3 py-2.5 border border-white/10"
-                  >
-                    <div className="w-8 h-8 bg-(--lime-500) rounded-full flex items-center justify-center flex-shrink-0">
-                      <pill.icon className="w-4 h-4 text-white" />
-                    </div>
-                    <div>
-                      <p className="text-white text-xs font-semibold">
-                        {pill.text}
-                      </p>
-                      <p className="text-(--blue-200) text-[10px] leading-tight">
-                        {pill.sub}
-                      </p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-
-              {/* CTAs */}
-              <div className="hero-cta flex flex-wrap items-center gap-4">
-                <a
-                  href="#"
-                  className="inline-flex items-center gap-2 bg-(--lime-500) hover:bg-(--lime-600) text-white font-semibold px-6 py-3 rounded-full text-sm transition-colors group"
-                >
-                  Get a Free Quote
-                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                </a>
-                <a
-                  href="tel:18001234567"
-                  className="inline-flex items-center gap-2 bg-white/10 hover:bg-white/20 text-white border border-white/20 font-medium px-5 py-3 rounded-full text-sm transition-colors"
-                >
-                  <Phone className="w-4 h-4 text-(--lime-400)" />
-                  Call 1800 123 4567
-                </a>
-              </div>
-            </div>
-
-            {/* Right Image */}
-            <div className="hero-image relative hidden lg:block">
-              <div className="relative rounded-2xl overflow-hidden aspect-[4/3]">
-                <div className="absolute inset-0 bg-(--blue-800)/20" />
-                <div className="w-full h-full bg-(--gray-200) flex items-center justify-center">
-                  <div className="text-center p-8">
-                    <Warehouse className="w-20 h-20 text-(--gray-400) mx-auto mb-3" />
-                    <p className="text-(--gray-500) text-sm">
-                      Storage warehouse with boxes
-                    </p>
-                    <p className="text-(--gray-400) text-xs mt-1">
-                      Replace with actual image
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-              {/* Responsibility Badge */}
-              <div className="hero-badge absolute -bottom-4 -left-4 lg:bottom-4 lg:-left-8 bg-(--blue-900) rounded-xl p-4 shadow-xl border border-(--blue-700) flex items-center gap-3 max-w-[200px]">
-                <div className="w-10 h-10 bg-(--lime-500) rounded-full flex items-center justify-center flex-shrink-0">
-                  <Shield className="w-5 h-5 text-white" />
-                </div>
-                <div>
-                  <p className="text-white font-semibold text-xs leading-tight">
-                    Your Belongings
-                  </p>
-                  <p className="text-(--lime-400) font-bold text-xs leading-tight">
-                    Our Responsibility
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Bottom Wave */}
-        <div className="absolute bottom-0 left-0 right-0">
-          <svg
-            viewBox="0 0 1440 80"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-            className="w-full h-auto"
-            preserveAspectRatio="none"
-          >
-            <path
-              d="M0 80V40C240 80 480 0 720 0C960 0 1200 80 1440 40V80H0Z"
-              fill="white"
-            />
-          </svg>
-        </div>
-      </section>
-
+                ]}
+  image={{ src: "/storage-service-hero-img.png", alt: "hero-family-moving-image" }}
+/>
       {/* ===== SECURE STORAGE FOR EVERY NEED ===== */}
-      <section ref={secureRef} className="py-4 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="secure-header text-center text-2xl sm:text-3xl font-bold text-(--blue-900) mb-2">
-            Secure Storage <span className="text-(--lime-500)">for Every Need</span>
-          </h2>
-          <div className="flex justify-center gap-1 mb-6">
-            <div className="w-2 h-2 rounded-full bg-(--lime-500)" />
-            <div className="w-2.5 h-2.5 rounded-full bg-(--lime-500)" />
-            <div className="w-2 h-2 rounded-full bg-(--lime-500)" />
-          </div>
-
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-5 lg:gap-6">
-            {storageTypes.map((type, idx) => (
-              <div
-                key={idx}
-                className="secure-card bg-(--gray-200) rounded-2xl p-5 border border-(--gray-100) hover:shadow-xl hover:border-(--blue-200) transition-all group"
-              >
-                <div className="flex items-center gap-2.5 mb-4">
-                  <div className="w-9 h-9 bg-(--blue-50) rounded-lg flex items-center justify-center">
-                    <type.icon className="w-5 h-5 text-(--blue-900)" />
-                  </div>
-                  <h3 className="text-(--blue-900) font-bold text-sm leading-tight">
-                    {type.title}
-                  </h3>
-                </div>
-
-                <div className="rounded-xl bg-(--gray-100) aspect-[4/3] flex items-center justify-center mb-4 overflow-hidden">
-                  <div className="text-center p-4">
-                    <Package className="w-8 h-8 text-(--gray-400) mx-auto mb-1" />
-                    <p className="text-(--gray-400) text-[10px]">{type.imgLabel}</p>
-                  </div>
-                </div>
-
-                <p className="text-(--gray-500) text-sm ">
-                  {type.desc}
-                </p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
+ <ServicesSection services={storageTypes} title="Secure Storage " highlightTitle="for Every Need" />
       {/* ===== WHY CHOOSE OUR STORAGE SOLUTIONS? ===== */}
       <section ref={whyRef} className="py-4 ">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -633,55 +548,7 @@ export default function StorageSolutions() {
       </section>
 
       {/* ===== CTA BANNER ===== */}
-      <section ref={ctaRef} className="py-4  px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto">
-          <div className="cta-content bg-(--blue-900) rounded-2xl lg:rounded-3xl p-6 sm:p-8 lg:p-10 relative overflow-hidden">
-            {/* Decorative */}
-            <div className="absolute top-0 left-0 w-32 h-32 bg-(--lime-500)/10 rounded-full -translate-x-1/2 -translate-y-1/2" />
-            <div className="absolute bottom-0 right-0 w-24 h-24 bg-(--lime-500)/10 rounded-full translate-x-1/2 translate-y-1/2" />
-
-            <div className="relative z-10 flex flex-col lg:flex-row items-center justify-between gap-6 lg:gap-8">
-              {/* Left - Image placeholder */}
-              <div className="hidden lg:block w-48 h-32 bg-(--blue-800)/50 rounded-xl flex items-center justify-center flex-shrink-0">
-                <div className="text-center">
-                  <Package className="w-10 h-10 text-(--blue-300) mx-auto mb-1" />
-                  <p className="text-(--blue-300) text-[10px]">Stacked boxes</p>
-                </div>
-              </div>
-
-              {/* Center Content */}
-              <div className="flex-1 text-center lg:text-left">
-                <h3 className="text-white font-bold text-xl lg:text-2xl mb-2">
-                  Need Extra Space?{" "}
-                  <span className="text-(--lime-400)">We&apos;ve Got You Covered!</span>
-                </h3>
-                <p className="text-(--blue-200) text-sm mb-5">
-                  Secure, flexible and affordable storage solutions designed for
-                  you.
-                </p>
-              </div>
-
-              {/* Right CTAs */}
-              <div className="flex flex-col sm:flex-row items-center gap-3 flex-shrink-0">
-                <a
-                  href="#"
-                  className="inline-flex items-center gap-2 bg-(--lime-500) hover:bg-(--lime-600) text-white font-semibold px-5 py-3 rounded-full text-sm transition-colors group"
-                >
-                  Get a Free Quote
-                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                </a>
-                <a
-                  href="tel:18001234567"
-                  className="inline-flex items-center gap-2 bg-white/10 hover:bg-white/20 text-white border border-white/20 font-medium px-5 py-3 rounded-full text-sm transition-colors"
-                >
-                  <Phone className="w-4 h-4" />
-                  Call 1800 123 4567
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+ <CTASection {...ctaSections[0]} />;
 
       {/* ===== STATS BAR ===== */}
       <StatsBar/>
