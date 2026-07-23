@@ -127,12 +127,12 @@ export default function Navbar() {
         <div className="max-w-7xl mx-auto px-4 md:px-8">
           <div className="flex items-center justify-between h-16 md:h-20">
             {/* Logo */}
-            <div className={`${scrolled ? "flex" : "hidden"} items-center space-x-1 cursor-pointer`}>
+           <Link href="/"> <div className={`${scrolled ? "flex" : "hidden"} items-center space-x-1 cursor-pointer`}>
               <img src="/omsai-logo.png" className="w-60"/>
-            </div>
-              <div className={`${scrolled ? "hidden" : "flex"} items-center space-x-1 cursor-pointer`}>
+            </div></Link>
+             <Link href="/"> <div className={`${scrolled ? "hidden" : "flex"} items-center space-x-1 cursor-pointer`}>
               <img src="/omsai-logo-white.png" className="w-60"/>
-            </div>
+            </div></Link>
 
             {/* Desktop nav with mega menus */}
             <nav className="hidden lg:flex items-center gap-1">
@@ -299,7 +299,9 @@ export default function Navbar() {
             </div>
 
             {/* Mobile toggle */}
-            <button className="lg:hidden text-white cursor-pointer" onClick={() => setMobileOpen(!mobileOpen)}>
+            <button 
+            className={`lg:hidden  cursor-pointer ${scrolled ? 'text-blue-900' : 'text-white'}`}
+             onClick={() => setMobileOpen(!mobileOpen)}>
               {mobileOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
             </button>
           </div>

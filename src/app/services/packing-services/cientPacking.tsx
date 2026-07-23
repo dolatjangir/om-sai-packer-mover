@@ -32,9 +32,80 @@ import {
 } from "lucide-react";
 import { FaFacebook, FaInstagram, FaLinkedin, FaTwitter } from "react-icons/fa";
 import StatsBar from "@/components/statsBar";
+import HeroSection from "@/components/services-hero-reusable/heroSection";
+import ServicesSection from "@/components/cardSection";
+import Link from "next/link";
+import CTASection from "@/components/ctaBanner";
 
 gsap.registerPlugin(ScrollTrigger);
+export const ctaSections = [
+  {
+    title: "Let Our Experts",
+    highlight: "Pack It Right!",
+    description:
+      "Get professional packing services for a safe and hassle-free move.",
+    image: "/packing-service-cta-img.png",
 
+    features: [
+      {
+        icon: CheckCircle2,
+        text: "Free Survey Available",
+      },
+      {
+        icon: CheckCircle2,
+        text: "No Hidden Charges",
+      },
+      {
+        icon: CheckCircle2,
+        text: "100% Customer Satisfaction",
+      },
+    ],
+
+    primaryButton: {
+      text: "Get a Free Quote",
+      href: "/get-a-quote",
+    },
+
+    secondaryButton: {
+      text: "Call 1800 123 4567",
+      href: "tel:18001234567",
+    },
+  },
+
+  {
+    title: "Planning an",
+    highlight: "Office Relocation?",
+    description:
+      "Fast, secure, and hassle-free office shifting services.",
+
+    image: "/office-service-bottom-left.png",
+
+    features: [
+      {
+        icon: CheckCircle2,
+        text: "Professional Team",
+      },
+      {
+        icon: CheckCircle2,
+        text: "Safe Transportation",
+      },
+      {
+        icon: CheckCircle2,
+        text: "On-Time Delivery",
+      },
+    ],
+
+    primaryButton: {
+      text: "Book Now",
+      href: "#",
+    },
+
+    secondaryButton: {
+      text: "Call 1800 123 4567",
+      href: "tel:18001234567",
+    },
+  },
+];
 export default function PackingServices() {
   const heroRef = useRef<HTMLDivElement>(null);
   const servicesRef = useRef<HTMLDivElement>(null);
@@ -321,38 +392,33 @@ export default function PackingServices() {
       icon: Home,
       title: "Home Packing",
       desc: "Complete packing for household items with utmost care.",
-      imgLabel: "Home packing",
+      image: "/packing&unpacking.png",
     },
     {
       icon: Building,
       title: "Office Packing",
       desc: "Secure packing of office equipment, documents & furniture.",
-      imgLabel: "Office packing",
+       image: "/packing&unpacking.png",
     },
     {
       icon: Wine,
       title: "Fragile Item Packing",
       desc: "Special care for fragile items like glassware, ceramics & more.",
-      imgLabel: "Fragile packing",
+       image: "/packing&unpacking.png",
     },
     {
       icon: Monitor,
       title: "Electronics Packing",
       desc: "Safe packing for electronic items with anti-static materials.",
-      imgLabel: "Electronics packing",
+       image: "/packing&unpacking.png",
     },
     {
       icon: Sofa,
       title: "Furniture Packing",
       desc: "Strong packing for furniture to prevent scratches & damage.",
-      imgLabel: "Furniture packing",
+      image: "/packing&unpacking.png",
     },
-    {
-      icon: Box,
-      title: "Custom Packing",
-      desc: "Tailored packing solutions for unique or valuable items.",
-      imgLabel: "Custom packing",
-    },
+    
   ];
 
   const whyChoose = [
@@ -422,11 +488,11 @@ export default function PackingServices() {
   ];
 
   const materials = [
-    { icon: Box, label: "Corrugated Boxes" },
-    { icon: Package, label: "Bubble Wrap" },
-    { icon: FileCheck, label: "Stretch Film" },
-    { icon: Tag, label: "Packing Tape" },
-    { icon: Shield, label: "Foam Sheets" },
+    { image: "/box-img.png", label: "Corrugated Boxes" },
+    { image: "/pop-polithin.png", label: "Bubble Wrap" },
+    { image: "/wrap-polithin.png", label: "Stretch Film" },
+    { image: "/tape.png", label: "Packing Tape" },
+    { image: "/plasitic-foam.png", label: "Foam Sheets" },
   ];
 
   const stats = [
@@ -438,175 +504,25 @@ export default function PackingServices() {
   ];
 
   return (
-    <div className="min-h-screen bg-(--background) font-sans overflow-x-hidden">
+    <div className="min-h-screen bg-white font-sans overflow-x-hidden">
       {/* ===== HERO SECTION ===== */}
-      <section
-        ref={heroRef}
-        className="relative bg-gradient-to-br from-(--blue-900) to-(--blue-800) overflow-hidden"
-      >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-16 lg:pt-12 lg:pb-24">
-          <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
-            {/* Left Content */}
-            <div className="relative z-10">
-              {/* Breadcrumb */}
-              <nav className="hero-breadcrumb flex items-center gap-2 text-xs mb-6 lg:mb-8">
-                <span className="text-(--blue-200) hover:text-white cursor-pointer transition-colors">
-                  Home
-                </span>
-                <ChevronRight className="w-3 h-3 text-(--blue-300)" />
-                <span className="text-(--blue-200) hover:text-white cursor-pointer transition-colors">
-                  Services
-                </span>
-                <ChevronRight className="w-3 h-3 text-(--blue-300)" />
-                <span className="text-white font-medium">Packing Services</span>
-              </nav>
-
-              <h1 className="hero-title text-3xl sm:text-4xl lg:text-5xl font-bold text-white leading-tight mb-3">
-                Packing Services
-              </h1>
-              <h2 className="hero-subtitle text-2xl sm:text-3xl lg:text-4xl font-bold text-(--lime-400) leading-tight mb-6">
-                Packed to Protect. Delivered with Care.
-              </h2>
-
-              <p className="hero-text text-(--blue-200) text-sm lg:text-base leading-relaxed max-w-md mb-8">
-                Professional packing is the first step to a safe and successful
-                move. We use high-quality materials and expert techniques to ensure
-                your belongings are packed securely for any journey.
-              </p>
-
-              {/* Badges */}
-              <div className="flex flex-wrap gap-3 lg:gap-4 mb-8">
-                {[
-                  { icon: Users, text: "Expert Packers", sub: "Trained & verified professionals" },
-                  { icon: Package, text: "Quality Materials", sub: "Premium packing materials used" },
-                  { icon: Shield, text: "Safe & Secure", sub: "Maximum protection for your items" },
-                  { icon: MapPin, text: "Doorstep Service", sub: "We come to you anywhere, anytime" },
-                ].map((badge, idx) => (
-                  <div
-                    key={idx}
-                    className="hero-badge flex items-center gap-2.5 bg-white/10 backdrop-blur-sm rounded-lg px-3 py-2.5 border border-white/10"
-                  >
-                    <div className="w-8 h-8 bg-(--lime-500) rounded-full flex items-center justify-center flex-shrink-0">
-                      <badge.icon className="w-4 h-4 text-white" />
-                    </div>
-                    <div>
-                      <p className="text-white text-xs font-semibold">{badge.text}</p>
-                      <p className="text-(--blue-200) text-[10px] leading-tight">{badge.sub}</p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-
-              {/* CTAs */}
-              <div className="hero-cta flex flex-wrap items-center gap-4">
-                <a
-                  href="#"
-                  className="inline-flex items-center gap-2 bg-(--lime-500) hover:bg-(--lime-600) text-white font-semibold px-6 py-3 rounded-full text-sm transition-colors group"
-                >
-                  Get a Free Quote
-                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                </a>
-                <a
-                  href="tel:18001234567"
-                  className="inline-flex items-center gap-2 bg-white/10 hover:bg-white/20 text-white border border-white/20 font-medium px-5 py-3 rounded-full text-sm transition-colors"
-                >
-                  <Phone className="w-4 h-4 text-(--lime-400)" />
-                  Call 1800 123 4567
-                </a>
-              </div>
-            </div>
-
-            {/* Right Image */}
-            <div className="hero-image relative hidden lg:block">
-              <div className="relative rounded-2xl overflow-hidden aspect-[4/3]">
-                <div className="absolute inset-0 bg-(--blue-800)/20" />
-                <div className="w-full h-full bg-(--gray-200) flex items-center justify-center">
-                  <div className="text-center p-8">
-                    <Package className="w-20 h-20 text-(--gray-400) mx-auto mb-3" />
-                    <p className="text-(--gray-500) text-sm">
-                      Packers wrapping furniture
-                    </p>
-                    <p className="text-(--gray-400) text-xs mt-1">
-                      Replace with actual image
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-              {/* Safe Packing Card */}
-              <div className="hero-card absolute -bottom-4 right-4 lg:bottom-4 lg:right-4 bg-(--blue-900) rounded-xl p-4 shadow-xl border border-(--blue-700) max-w-[160px]">
-                <div className="flex items-center gap-2 mb-1">
-                  <div className="w-8 h-8 bg-(--lime-500) rounded-full flex items-center justify-center">
-                    <Shield className="w-4 h-4 text-white" />
-                  </div>
-                </div>
-                <p className="text-white font-bold text-xs leading-tight">
-                  Safe Packing.
-                </p>
-                <p className="text-(--lime-400) font-bold text-xs leading-tight">
-                  Zero Worries.
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Bottom Wave */}
-        <div className="absolute bottom-0 left-0 right-0">
-          <svg
-            viewBox="0 0 1440 80"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-            className="w-full h-auto"
-            preserveAspectRatio="none"
-          >
-            <path
-              d="M0 80V40C240 80 480 0 720 0C960 0 1200 80 1440 40V80H0Z"
-              fill="white"
-            />
-          </svg>
-        </div>
-      </section>
+     
+      <HeroSection
+        title="Packing Services"
+        highlightedTitle="Packed to Protect. Delivered with Care."
+        description="Professional packing is the first step to a safe and successful move. We use high-quality materials and expert techniques to ensure your belongings are packed securely for any journey."
+        features={[
+          { icon: Shield, text: "Expert Packers", sub: "Trained & verified professionals" },
+          { icon: Clock, text: "Quality Materials", sub: "Premium packing materials used" },
+          { icon: Package, text: "Safe & Secure", sub: "Maximum protection for your items" },
+          { icon: Banknote, text: "Doorstep Service", sub: "We come to you anywhere, anytime" },
+        ]}
+        image={{ src: "/packing-services-hero--img.png", alt: "packing-services-image" }}
+      />
 
       {/* ===== OUR PROFESSIONAL PACKING SERVICES ===== */}
-      <section ref={servicesRef} className="py-4 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="services-header text-center text-2xl sm:text-3xl font-bold text-(--blue-900) ">
-            Our Professional <span className="text-(--lime-500)">Packing Services</span>
-          </h2>
-          <div className="w-12 h-1 bg-(--lime-500) mx-auto mb-4" />
-
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-2 lg:gap-2">
-            {services.map((service, idx) => (
-              <div
-                key={idx}
-                className="service-card bg-(--gray-50) rounded-2xl p-5 border border-(--gray-100) hover:shadow-xl hover:border-(--blue-200) transition-all group"
-              >
-                <div className="flex items-center gap-2 mb-4">
-                  <div className="w-10 h-10 bg-(--blue-50) rounded-lg flex items-center justify-center">
-                    <service.icon className="w-6 h-6 text-(--blue-900)" />
-                  </div>
-                  <h3 className="text-(--blue-900) font-bold text-sm leading-tight">
-                    {service.title}
-                  </h3>
-                </div>
-
-                <div className="rounded-xl bg-(--gray-100) aspect-[4/3] flex items-center justify-center mb-4 overflow-hidden">
-                  <div className="text-center p-4">
-                    <Package className="w-8 h-8 text-(--gray-400) mx-auto mb-1" />
-                    <p className="text-(--gray-400) text-[10px]">{service.imgLabel}</p>
-                  </div>
-                </div>
-
-                <p className="text-(--blue-900) text-sm leading-tight">
-                  {service.desc}
-                </p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
+    
+ <ServicesSection services={services} title="Our Professional" highlightTitle="Packing Services" />
       {/* ===== WHY CHOOSE MOVEEASY PACKING SERVICES? ===== */}
       <section ref={whyRef} className="py-4 bg-(--gray-50)">
         <div className="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -706,8 +622,8 @@ export default function PackingServices() {
                     key={idx}
                     className="material-item flex flex-col items-center text-center"
                   >
-                    <div className="w-14 h-14 lg:w-16 lg:h-16 bg-(--gray-100) rounded-xl flex items-center justify-center mb-2">
-                      <mat.icon className="w-6 h-6 lg:w-7 lg:h-7 text-(--gray-400)" />
+                    <div className="w-14 h-14 lg:w-26 lg:h-26 bg-(--gray-100) rounded-xl flex items-center justify-center mb-2">
+                      <img src={mat.image} alt={mat.label} className="w-14 h-14 lg:w-24 lg:h-24 text-(--gray-400)" />
                     </div>
                     <p className="text-(--gray-600) text-[10px] lg:text-xs font-medium leading-tight">
                       {mat.label}
@@ -730,21 +646,18 @@ export default function PackingServices() {
                   From pin to piano, we pack everything with the same level of care
                   and professionalism.
                 </p>
-                <a
-                  href="#"
+                <Link
+                  href="/get-a-quote"
                   className="inline-flex items-center gap-2 bg-(--lime-500) hover:bg-(--lime-600) text-white font-semibold px-5 py-2.5 rounded-full text-sm transition-colors group"
                 >
                   Get a Free Quote
                   <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                </a>
+                </Link>
               </div>
 
               {/* Decorative image placeholder */}
-              <div className="absolute bottom-4 right-4 w-32 h-24 bg-(--blue-800)/50 rounded-xl hidden lg:flex items-center justify-center">
-                <div className="text-center">
-                  <Package className="w-8 h-8 text-(--blue-300) mx-auto mb-1" />
-                  <p className="text-(--blue-300) text-[10px]">Stacked boxes</p>
-                </div>
+              <div className="absolute bottom-4 right-4 w-[50%] h-[90%] hidden sm:flex items-center justify-center">
+              <img src="/storage-solution-cta-img.png" alt="Relax Banner" className="w-full h-full object-cover" />
               </div>
             </div>
           </div>
@@ -755,49 +668,7 @@ export default function PackingServices() {
     <StatsBar/>
 
       {/* ===== CTA BANNER ===== */}
-      <section ref={ctaRef} className="py-8 lg:py-12 bg-white px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto">
-          <div className="cta-content bg-(--blue-900) rounded-2xl lg:rounded-3xl p-6 sm:p-8 lg:p-10 relative overflow-hidden">
-            <div className="relative z-10 flex flex-col lg:flex-row items-center justify-between gap-6">
-              {/* Left Image */}
-              <div className="hidden lg:block w-40 h-32 bg-(--blue-800)/50 rounded-xl flex items-center justify-center flex-shrink-0">
-                <div className="text-center">
-                  <Package className="w-10 h-10 text-(--blue-300) mx-auto mb-1" />
-                  <p className="text-(--blue-300) text-[10px]">Mover with box</p>
-                </div>
-              </div>
-
-              {/* Center Content */}
-              <div className="flex-1 text-center lg:text-left">
-                <h3 className="text-white font-bold text-xl lg:text-2xl mb-2">
-                  Let Our Experts <span className="text-(--lime-400)">Pack It Right!</span>
-                </h3>
-                <p className="text-(--blue-200) text-sm">
-                  Get professional packing services for a safe and hassle-free move.
-                </p>
-              </div>
-
-              {/* Right CTAs */}
-              <div className="flex flex-col sm:flex-row items-center gap-3 flex-shrink-0">
-                <a
-                  href="#"
-                  className="inline-flex items-center gap-2 bg-(--lime-500) hover:bg-(--lime-600) text-white font-semibold px-5 py-3 rounded-full text-sm transition-colors group"
-                >
-                  Get a Free Quote
-                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                </a>
-                <a
-                  href="tel:18001234567"
-                  className="inline-flex items-center gap-2 bg-white/10 hover:bg-white/20 text-white border border-white/20 font-medium px-5 py-3 rounded-full text-sm transition-colors"
-                >
-                  <Phone className="w-4 h-4" />
-                  Call 1800 123 4567
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+     <CTASection {...ctaSections[0]} />
 
     </div>
   );

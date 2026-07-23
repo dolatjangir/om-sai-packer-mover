@@ -33,12 +33,84 @@ import {
   Flower2,
   MapPinned,
   Users,
+  Banknote,
 } from "lucide-react";
 import { FaFacebookF, FaInstagram, FaTwitter } from "react-icons/fa";
 import { FaLinkedin } from "react-icons/fa6";
+import HeroSection from "@/components/services-hero-reusable/heroSection";
+import CTASection from "@/components/ctaBanner";
+import StatsBar from "@/components/statsBar";
+import ServicesSection from "@/components/cardSection";
 
 gsap.registerPlugin(ScrollTrigger);
+const ctaSections = [
+  {
+    title: "Planning a",
+    highlight: "Long Distance Move?",
+    description:
+      "Get a free quote today and move with confidence!",
+    image: "/residential-service-bottom-left.png",
 
+    features: [
+      {
+        icon: CheckCircle2,
+        text: "Free Survey Available",
+      },
+      {
+        icon: CheckCircle2,
+        text: "No Hidden Charges",
+      },
+      {
+        icon: CheckCircle2,
+        text: "100% Customer Satisfaction",
+      },
+    ],
+
+    primaryButton: {
+      text: "Get a Free Quote",
+      href: "/get-a-quote",
+    },
+
+    secondaryButton: {
+      text: "Call 1800 123 4567",
+      href: "tel:18001234567",
+    },
+  },
+
+  {
+    title: "Planning an",
+    highlight: "Office Relocation?",
+    description:
+      "Fast, secure, and hassle-free office shifting services.",
+
+    image: "/office-service-bottom-left.png",
+
+    features: [
+      {
+        icon: CheckCircle2,
+        text: "Professional Team",
+      },
+      {
+        icon: CheckCircle2,
+        text: "Safe Transportation",
+      },
+      {
+        icon: CheckCircle2,
+        text: "On-Time Delivery",
+      },
+    ],
+
+    primaryButton: {
+      text: "Book Now",
+      href: "#",
+    },
+
+    secondaryButton: {
+      text: "Call 1800 123 4567",
+      href: "tel:18001234567",
+    },
+  },
+];
 export default function LongDistanceMoves() {
   const heroRef = useRef<HTMLDivElement>(null);
   const trustRef = useRef<HTMLDivElement>(null);
@@ -318,37 +390,32 @@ export default function LongDistanceMoves() {
       icon: Package,
       title: "Professional Packing",
       desc: "High-quality packing materials and expert packing for maximum safety.",
-      imgLabel: "Professional packing",
+      image: "/packing&unpacking.png",
     },
     {
       icon: Truck,
       title: "Secure Transportation",
       desc: "Well-maintained vehicles designed for long distance and safe transit.",
-      imgLabel: "Transportation truck",
+    image: "/packing&unpacking.png",
     },
     {
       icon: Box,
       title: "Loading & Unloading",
       desc: "Trained professionals handle loading and unloading with care.",
-      imgLabel: "Loading unloading",
+      image: "/packing&unpacking.png",
     },
-    {
-      icon: Shield,
-      title: "Goods Insurance",
-      desc: "Comprehensive insurance options to protect your belongings.",
-      imgLabel: "Insurance shield",
-    },
+   
     {
       icon: MapPinned,
       title: "Real-Time Tracking",
       desc: "Stay updated with real-time tracking of your shipment in transit.",
-      imgLabel: "Tracking phone",
+       image: "/packing&unpacking.png",
     },
     {
       icon: Home,
       title: "Door-to-Door Service",
       desc: "We pick up from your door and deliver to your new address safely.",
-      imgLabel: "Door delivery",
+      image: "/packing&unpacking.png",
     },
   ];
 
@@ -418,132 +485,19 @@ export default function LongDistanceMoves() {
   return (
     <div className="min-h-screen bg-white font-sans overflow-x-hidden">
       {/* ===== HERO SECTION ===== */}
-      <section
-        ref={heroRef}
-        className="relative bg-gradient-to-br from-(--blue-900) to-(--blue-800) overflow-hidden"
-      >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-16 lg:pt-12 lg:pb-24">
-          <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
-            {/* Left Content */}
-            <div className="relative z-10">
-              {/* Breadcrumb */}
-              <nav className="hero-breadcrumb flex items-center gap-2 text-xs mb-6 lg:mb-8">
-                <span className="text-(--blue-200) hover:text-white cursor-pointer transition-colors">
-                  Home
-                </span>
-                <ChevronRight className="w-3 h-3 text-(--blue-300)" />
-                <span className="text-(--blue-200) hover:text-white cursor-pointer transition-colors">
-                  Services
-                </span>
-                <ChevronRight className="w-3 h-3 text-(--blue-300)" />
-                <span className="text-white font-medium">Long Distance Moves</span>
-              </nav>
+     <HeroSection
+       title="Long Distance Moves"
+       highlightedTitle="Anywhere. Anytime. Hassle-Free."
+       description="Moving to a new city or state? We make your long distance move smooth, safe and stress-free. With expert planning, secure transportation and on-time delivery, your belongings are in safe hands – no matter the distance."
 
-              <h1 className="hero-title text-3xl sm:text-4xl lg:text-5xl font-bold text-white leading-tight mb-3">
-                Long Distance Moves
-              </h1>
-              <h2 className="hero-subtitle text-2xl sm:text-3xl lg:text-4xl font-bold text-(--lime-400) leading-tight mb-6">
-                Anywhere. Anytime. Hassle-Free.
-              </h2>
-
-              <p className="hero-text text-(--blue-200) text-sm lg:text-base leading-relaxed max-w-md mb-8">
-                Moving to a new city or state? We make your long distance move
-                smooth, safe and stress-free. With expert planning, secure
-                transportation and on-time delivery, your belongings are in safe
-                hands – no matter the distance.
-              </p>
-
-              {/* Badges */}
-              <div className="flex flex-wrap gap-3 lg:gap-4 mb-8">
-                {heroBadges.map((badge, idx) => (
-                  <div
-                    key={idx}
-                    className="hero-badge flex items-center gap-2.5 bg-white/10 backdrop-blur-sm rounded-lg px-3 py-2.5 border border-white/10"
-                  >
-                    <div className="w-8 h-8 bg-(--lime-500) rounded-full flex items-center justify-center flex-shrink-0">
-                      <badge.icon className="w-4 h-4 text-white" />
-                    </div>
-                    <div>
-                      <p className="text-white text-xs font-semibold">{badge.text}</p>
-                      <p className="text-(--blue-200) text-[10px] leading-tight">{badge.sub}</p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-
-              {/* CTAs */}
-              <div className="hero-cta flex flex-wrap items-center gap-4">
-                <a
-                  href="#"
-                  className="inline-flex items-center gap-2 bg-(--lime-500) hover:bg-(--lime-600) text-white font-semibold px-6 py-3 rounded-full text-sm transition-colors group"
-                >
-                  Get a Free Quote
-                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                </a>
-                <a
-                  href="tel:18001234567"
-                  className="inline-flex items-center gap-2 bg-white/10 hover:bg-white/20 text-white border border-white/20 font-medium px-5 py-3 rounded-full text-sm transition-colors"
-                >
-                  <Phone className="w-4 h-4 text-(--lime-400)" />
-                  Call 1800 123 4567
-                </a>
-              </div>
-            </div>
-
-            {/* Right Image */}
-            <div className="hero-image relative hidden lg:block">
-              <div className="relative rounded-2xl overflow-hidden aspect-[4/3]">
-                <div className="absolute inset-0 bg-(--blue-800)/20" />
-                <div className="w-full h-full bg-(--gray-200) flex items-center justify-center">
-                  <div className="text-center p-8">
-                    <Truck className="w-20 h-20 text-(--gray-400) mx-auto mb-3" />
-                    <p className="text-(--gray-500) text-sm">
-                      Long distance truck on highway
-                    </p>
-                    <p className="text-(--gray-400) text-xs mt-1">
-                      Replace with actual image
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-              {/* We Move You Across India Card */}
-              <div className="hero-card absolute bottom-8 left-8 bg-(--blue-900) rounded-xl p-4 shadow-xl border border-(--blue-700) max-w-[160px]">
-                <div className="flex flex-col items-center text-center">
-                  <div className="w-10 h-10 bg-(--lime-500) rounded-full flex items-center justify-center mb-2">
-                    <MapPin className="w-5 h-5 text-white" />
-                  </div>
-                  <p className="text-white font-bold text-sm leading-tight">
-                    We Move
-                  </p>
-                  <p className="text-white font-bold text-sm leading-tight">
-                    You Across
-                  </p>
-                  <p className="text-(--lime-400) font-bold text-sm leading-tight">
-                    India
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Bottom Wave */}
-        <div className="absolute bottom-0 left-0 right-0">
-          <svg
-            viewBox="0 0 1440 80"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-            className="w-full h-auto"
-            preserveAspectRatio="none"
-          >
-            <path
-              d="M0 80V40C240 80 480 0 720 0C960 0 1200 80 1440 40V80H0Z"
-              fill="white"
-            />
-          </svg>
-        </div>
-      </section>
+       features={[
+         { icon: Shield, text: "Pan India Service", sub: "We move you anywhere in India" },
+         { icon: Clock, text: "Safe & Secure", sub: "Your goods are packed and transported safely" },
+         { icon: Package, text: "On-Time Delivery", sub: "Timely delivery, every time" },
+         { icon: Banknote, text: "24/7 Support", sub: "We're here to help you, always" },
+       ]}
+       image={{ src: "/long-distans-move-hero-img.png", alt: "long-distance-move-image" }}
+     />
 
       {/* ===== TRUST BAR ===== */}
       <section ref={trustRef} className="relative z-10 -mt-8 lg:-mt-12 px-4 sm:px-6 lg:px-8">
@@ -570,43 +524,7 @@ export default function LongDistanceMoves() {
       </section>
 
       {/* ===== WHAT WE OFFER ===== */}
-      <section ref={offerRef} className="py-4 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="offer-header text-center text-2xl sm:text-3xl font-bold text-(--blue-900) mb-2">
-            What We Offer in <span className="text-(--lime-500)">Long Distance Moves</span>
-          </h2>
-          <div className="w-12 h-1 bg-(--lime-500) mx-auto mb-4" />
-
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-2">
-            {offers.map((offer, idx) => (
-              <div
-                key={idx}
-                className="offer-card bg-(--gray-50) rounded-2xl p-4 border border-(--gray-100) hover:shadow-xl hover:border-(--blue-200) transition-all group"
-              >
-                <div className="flex items-center gap-2.5 mb-4">
-                  <div className="w-9 h-9 bg-(--blue-50) rounded-lg flex items-center justify-center">
-                    <offer.icon className="w-5 h-5 text-(--blue-900)" />
-                  </div>
-                  <h3 className="text-(--blue-900) font-bold text-sm leading-tight">
-                    {offer.title}
-                  </h3>
-                </div>
-
-                <div className="rounded-xl bg-(--gray-100) aspect-[4/3] flex items-center justify-center mb-4 overflow-hidden">
-                  <div className="text-center p-4">
-                    <Package className="w-8 h-8 text-(--gray-400) mx-auto mb-1" />
-                    <p className="text-(--gray-400) text-[10px]">{offer.imgLabel}</p>
-                  </div>
-                </div>
-
-                <p className="text-(--blue-900) text-sm leading-tight">
-                  {offer.desc}
-                </p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+       <ServicesSection services={offers} title="What We Offer in" highlightTitle="Long Distance Moves" />
 
       {/* ===== OUR LONG DISTANCE MOVING PROCESS ===== */}
       <section ref={processRef} className="py-4 bg-(--gray-50)">
@@ -665,7 +583,7 @@ export default function LongDistanceMoves() {
             {/* Left - India Map */}
             <div
               ref={indiaRef}
-              className="india-content bg-(--blue-900) rounded-2xl p-6 lg:p-8 relative overflow-hidden"
+              className="india-content bg-(--blue-900) flex flex-row items-center justify-around rounded-2xl p-6 lg:p-8 relative overflow-hidden"
             >
               <div className="relative z-10">
                 <h3 className="text-white font-bold text-xl lg:text-2xl mb-1">
@@ -686,11 +604,8 @@ export default function LongDistanceMoves() {
               </div>
 
               {/* Map placeholder */}
-              <div className="absolute bottom-4 right-4 w-40 h-40 bg-(--blue-800)/50 rounded-xl flex items-center justify-center">
-                <div className="text-center">
-                  <MapPin className="w-10 h-10 text-(--blue-300) mx-auto mb-1" />
-                  <p className="text-(--blue-300) text-[10px]">India map with pins</p>
-                </div>
+              <div className=" w-[60%] h-full ">
+                <img src="/map-img.png" alt="India Map" className="w-full h-full object-cover" />
               </div>
             </div>
 
@@ -722,73 +637,10 @@ export default function LongDistanceMoves() {
       </section>
 
       {/* ===== STATS BAR ===== */}
-      <section ref={statsRef} className="py-4 bg-white border-t border-(--gray-100)">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-6 lg:gap-8">
-            {stats.map((stat, idx) => (
-              <div
-                key={idx}
-                className="stat-item flex items-center gap-3 justify-center lg:justify-start"
-              >
-                <div className="w-10 h-10 bg-(--blue-50) rounded-lg flex items-center justify-center flex-shrink-0">
-                  <stat.icon className="w-5 h-5 text-(--blue-900)" />
-                </div>
-                <div>
-                  <p className="text-(--blue-900) font-bold text-lg lg:text-xl">
-                    {stat.value}
-                  </p>
-                  <p className="text-(--gray-500) text-xs">{stat.label}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+       <StatsBar/>
 
       {/* ===== CTA BANNER ===== */}
-      <section ref={ctaRef} className="py-4 bg-white px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto">
-          <div className="cta-content bg-(--blue-900) rounded-2xl lg:rounded-3xl p-6 sm:p-8 lg:p-10 relative overflow-hidden">
-            <div className="relative z-10 flex flex-col lg:flex-row items-center justify-between gap-6">
-              {/* Left Image */}
-              <div className="hidden lg:block w-40 h-32 bg-(--blue-800)/50 rounded-xl flex items-center justify-center flex-shrink-0">
-                <div className="text-center">
-                  <Package className="w-10 h-10 text-(--blue-300) mx-auto mb-1" />
-                  <p className="text-(--blue-300) text-[10px]">Stacked boxes</p>
-                </div>
-              </div>
-
-              {/* Center Content */}
-              <div className="flex-1 text-center lg:text-left">
-                <h3 className="text-white font-bold text-xl lg:text-2xl mb-2">
-                  Planning a <span className="text-(--lime-400)">Long Distance Move?</span>
-                </h3>
-                <p className="text-(--blue-200) text-sm">
-                  Get a free quote today and move with confidence!
-                </p>
-              </div>
-
-              {/* Right CTAs */}
-              <div className="flex flex-col sm:flex-row items-center gap-3 flex-shrink-0">
-                <a
-                  href="#"
-                  className="inline-flex items-center gap-2 bg-(--lime-500) hover:bg-(--lime-600) text-white font-semibold px-5 py-3 rounded-full text-sm transition-colors group"
-                >
-                  Get a Free Quote
-                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                </a>
-                <a
-                  href="tel:18001234567"
-                  className="inline-flex items-center gap-2 bg-white/10 hover:bg-white/20 text-white border border-white/20 font-medium px-5 py-3 rounded-full text-sm transition-colors"
-                >
-                  <Phone className="w-4 h-4" />
-                  Call 1800 123 4567
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+      <CTASection {...ctaSections[0]} />
 
      
     </div>

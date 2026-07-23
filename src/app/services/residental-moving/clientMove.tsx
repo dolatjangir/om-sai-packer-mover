@@ -518,7 +518,7 @@ export default function ResidentialMoving() {
 
 
       {/* ===== CTA BANNER ===== */}
-     <CTASection {...ctaSections[0]} />;
+     <CTASection {...ctaSections[0]} />
 
       {/* ===== STATS BAR ===== */}
     <StatsBar/>

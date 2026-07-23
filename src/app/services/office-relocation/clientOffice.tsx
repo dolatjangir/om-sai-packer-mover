@@ -32,11 +32,16 @@ import {
   Mail,
   Building,
   Check,
+  Banknote,
+  Warehouse,
 } from "lucide-react";
 import { FaFacebook, FaInstagram, FaLinkedin, FaTwitter } from "react-icons/fa";
 import StatsBar from "@/components/statsBar";
+import HeroSection from "@/components/services-hero-reusable/heroSection";
+import ServicesSection from "@/components/cardSection";
+import CTASection from "@/components/ctaBanner";
 gsap.registerPlugin(ScrollTrigger);
-
+  
 export default function OfficeRelocation() {
   const heroRef = useRef<HTMLDivElement>(null);
   const solutionsRef = useRef<HTMLDivElement>(null);
@@ -266,42 +271,106 @@ export default function OfficeRelocation() {
     return () => clearTimeout(timer);
   }, []);
 
+const ctaSections = [
+  {
+    title: "Ready for a",
+    highlight: "Smooth Home Move?",
+    description:
+      "Let our experts handle your move with care and professionalism.",
+    image: "/office-relocation-cta-img.png",
+
+    features: [
+      {
+        icon: CheckCircle2,
+        text: "Free Survey Available",
+      },
+      {
+        icon: CheckCircle2,
+        text: "No Hidden Charges",
+      },
+      {
+        icon: CheckCircle2,
+        text: "100% Customer Satisfaction",
+      },
+    ],
+
+    primaryButton: {
+      text: "Get a Free Quote",
+      href: "/get-a-quote",
+    },
+
+    secondaryButton: {
+      text: "Call 1800 123 4567",
+      href: "tel:18001234567",
+    },
+  },
+
+  {
+    title: "Planning to ",
+    highlight: " Relocate Your Office?",
+    description:
+      "Let us handle your move while you focus on growing your business.",
+
+    image: "/office-relocation-hero-img.png",
+
+    features: [
+      {
+        icon: CheckCircle2,
+        text: "Professional Team",
+      },
+      {
+        icon: CheckCircle2,
+        text: "Safe Transportation",
+      },
+      {
+        icon: CheckCircle2,
+        text: "On-Time Delivery",
+      },
+    ],
+
+    primaryButton: {
+      text: "Book Now",
+      href: "#",
+    },
+
+    secondaryButton: {
+      text: "Call 1800 123 4567",
+      href: "tel:18001234567",
+    },
+  },
+];
+
   const solutions = [
     {
       icon: Calendar,
       title: "Pre-Move Planning",
       desc: "Detailed assessment & customized moving plan for your office.",
-      imgLabel: "Planning clipboard",
+       image: "/packing&unpacking.png",
     },
     {
       icon: Package,
       title: "Packing & Labeling",
       desc: "Safe packing of office equipment, documents and furniture.",
-      imgLabel: "Packing boxes",
+       image: "/packing&unpacking.png",
     },
-    {
-      icon: Wrench,
-      title: "Dismantling & Handling",
-      desc: "Expert dismantling of workstations, cabins and office furniture.",
-      imgLabel: "Dismantling furniture",
-    },
+   
     {
       icon: Truck,
       title: "Transportation",
       desc: "Well-maintained vehicles for safe and timely transport.",
-      imgLabel: "Moving truck",
+       image: "/packing&unpacking.png",
     },
     {
       icon: Monitor,
       title: "Unpacking & Setup",
       desc: "Unpacking and setting up your office at the new location.",
-      imgLabel: "Setting up office",
+        image: "/packing&unpacking.png",
     },
     {
       icon: Sparkles,
       title: "Clean-Up Support",
       desc: "We leave your old or new office clean and ready to use.",
-      imgLabel: "Clean office",
+       image: "/packing&unpacking.png",
     },
   ];
 
@@ -388,172 +457,21 @@ export default function OfficeRelocation() {
   return (
     <div className="min-h-screen bg-white font-sans overflow-x-hidden">
       {/* ===== HERO SECTION ===== */}
-      <section
-        ref={heroRef}
-        className="relative bg-gradient-to-br from-(--blue-900) to-(--blue-800) overflow-hidden"
-      >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-16 lg:pt-12 lg:pb-24">
-          <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
-            {/* Left Content */}
-            <div className="relative z-10">
-              {/* Breadcrumb */}
-              <nav className="hero-breadcrumb flex items-center gap-2 text-xs mb-6 lg:mb-8">
-                <span className="text-(--blue-200) hover:text-white cursor-pointer transition-colors">
-                  Home
-                </span>
-                <ChevronRight className="w-3 h-3 text-(--blue-300)" />
-                <span className="text-(--blue-200) hover:text-white cursor-pointer transition-colors">
-                  Services
-                </span>
-                <ChevronRight className="w-3 h-3 text-(--blue-300)" />
-                <span className="text-white font-medium">Office Relocation</span>
-              </nav>
-
-              <h1 className="hero-title text-3xl sm:text-4xl lg:text-5xl font-bold text-white leading-tight mb-3">
-                Office Relocation
-              </h1>
-              <h2 className="hero-subtitle text-2xl sm:text-3xl lg:text-4xl font-bold text-(--lime-400) leading-tight mb-6">
-                Move Your Business Forward
-              </h2>
-
-              <p className="hero-text text-(--blue-200) text-sm lg:text-base leading-relaxed max-w-md mb-8">
-                We make your office relocation smooth, efficient and stress-free
-                with minimal downtime. From packing to setup, we handle everything
-                so you can focus on what matters most – your business.
-              </p>
-
-              {/* Badges */}
-              <div className="flex flex-wrap gap-3 lg:gap-4 mb-8">
-                {[
-                  { icon: Calendar, text: "Planned & Organized", sub: "Detailed planning for a seamless move" },
-                  { icon: Shield, text: "Safe & Secure", sub: "Your office assets are in safe hands" },
-                  { icon: Clock, text: "Min. Downtime", sub: "Quick & efficient move to reduce disruption" },
-                  { icon: Users, text: "Expert Team", sub: "Trained professionals for a hassle-free move" },
-                ].map((badge, idx) => (
-                  <div
-                    key={idx}
-                    className="hero-badge flex items-center gap-2.5 bg-white/10 backdrop-blur-sm rounded-lg px-3 py-2.5 border border-white/10"
-                  >
-                    <div className="w-8 h-8 bg-(--lime-500) rounded-full flex items-center justify-center flex-shrink-0">
-                      <badge.icon className="w-4 h-4 text-white" />
-                    </div>
-                    <div>
-                      <p className="text-white text-xs font-semibold">{badge.text}</p>
-                      <p className="text-(--blue-200) text-[10px] leading-tight">{badge.sub}</p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-
-              {/* CTAs */}
-              <div className="hero-cta flex flex-wrap items-center gap-4">
-                <a
-                  href="#"
-                  className="inline-flex items-center gap-2 bg-(--lime-500) hover:bg-(--lime-600) text-white font-semibold px-6 py-3 rounded-full text-sm transition-colors group"
-                >
-                  Get a Free Quote
-                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                </a>
-                <a
-                  href="tel:18001234567"
-                  className="inline-flex items-center gap-2 bg-white/10 hover:bg-white/20 text-white border border-white/20 font-medium px-5 py-3 rounded-full text-sm transition-colors"
-                >
-                  <Phone className="w-4 h-4 text-(--lime-400)" />
-                  Call 1800 123 4567
-                </a>
-              </div>
-            </div>
-
-            {/* Right Image */}
-            <div className="hero-image relative hidden lg:block">
-              <div className="relative rounded-2xl overflow-hidden aspect-[4/3]">
-                <div className="absolute inset-0 bg-(--blue-800)/20" />
-                <div className="w-full h-full bg-(--gray-200) flex items-center justify-center">
-                  <div className="text-center p-8">
-                    <Users className="w-20 h-20 text-(--gray-400) mx-auto mb-3" />
-                    <p className="text-(--gray-500) text-sm">
-                      Office movers at work
-                    </p>
-                    <p className="text-(--gray-400) text-xs mt-1">
-                      Replace with actual image
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-              {/* Seamless Moves Card */}
-              <div className="hero-card absolute -bottom-4 right-4 lg:bottom-4 lg:right-4 bg-(--blue-900) rounded-xl p-4 shadow-xl border border-(--blue-700) max-w-[180px]">
-                <div className="flex items-center gap-2 mb-1">
-                  <div className="w-8 h-8 bg-(--lime-500) rounded-full flex items-center justify-center">
-                    <Building className="w-4 h-4 text-white" />
-                  </div>
-                </div>
-                <p className="text-white font-bold text-xs leading-tight">
-                  Seamless Moves.
-                </p>
-                <p className="text-(--lime-400) font-bold text-xs leading-tight">
-                  Stronger Business.
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Bottom Wave */}
-        <div className="absolute bottom-0 left-0 right-0">
-          <svg
-            viewBox="0 0 1440 80"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-            className="w-full h-auto"
-            preserveAspectRatio="none"
-          >
-            <path
-              d="M0 80V40C240 80 480 0 720 0C960 0 1200 80 1440 40V80H0Z"
-              fill="white"
-            />
-          </svg>
-        </div>
-      </section>
+      <HeroSection
+        title="Office Relocation"
+        highlightedTitle="Move Your Business Forward"
+        description="We make your office relocation smooth, efficient and stress-free with minimal downtime. From packing to setup, we handle everything so you can focus on what matters most – your business."
+        features={[
+          { icon: Shield, text: "Planned & Organized", sub: "Detailed planning for a seamless move" },
+          { icon: Clock, text: "Safe & Secure", sub: "Your office assets are in safe hands" },
+          { icon: Package, text: "Min. Downtime", sub: "Quick & efficient move to reduce disruption" },
+          { icon: Banknote, text: "Expert Team", sub: "Trained professionals for a hassle-free move" },
+        ]}
+        image={{ src: "/office-relocation-hero-img.png", alt: "office-relocation-image" }}
+      />
 
       {/* ===== COMPLETE OFFICE RELOCATION SOLUTIONS ===== */}
-      <section ref={solutionsRef} className="py-4 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="solutions-header text-center text-2xl sm:text-3xl font-bold text-(--blue-900) mb-2">
-            Complete Office Relocation <span className="text-(--lime-500)">Solutions</span>
-          </h2>
-          <div className="w-12 h-1 bg-(--lime-500) mx-auto mb-4" />
-
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-2">
-            {solutions.map((sol, idx) => (
-              <div
-                key={idx}
-                className="solution-card bg-(--gray-50) rounded-2xl p-4 border border-(--gray-100) hover:shadow-xl hover:border-(--blue-200) transition-all group"
-              >
-                <div className="flex items-center gap-2.5 mb-4">
-                  <div className="w-9 h-9 bg-(--blue-50) rounded-lg flex items-center justify-center">
-                    <sol.icon className="w-6 h-6 text-(--blue-900)" />
-                  </div>
-                  <h3 className="text-(--blue-900) font-bold text-sm leading-tight">
-                    {sol.title}
-                  </h3>
-                </div>
-
-                <div className="rounded-xl bg-(--gray-100) aspect-[4/3] flex items-center justify-center mb-4 overflow-hidden">
-                  <div className="text-center p-4">
-                    <Package className="w-8 h-8 text-(--gray-400) mx-auto mb-1" />
-                    <p className="text-(--gray-400) text-[10px]">{sol.imgLabel}</p>
-                  </div>
-                </div>
-
-                <p className="text-(--blue-900) text-sm leading-tight">
-                  {sol.desc}
-                </p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+    <ServicesSection services={solutions} title="Complete Office Relocation" highlightTitle="Solutions" />
 
       {/* ===== OUR OFFICE RELOCATION PROCESS ===== */}
       <section ref={processRef} className="py-4 bg-(--gray-50)">
@@ -634,64 +552,7 @@ export default function OfficeRelocation() {
       </section>
 
       {/* ===== CTA BANNER ===== */}
-      <section ref={ctaRef} className="py-4 bg-white px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto">
-          <div className="cta-content bg-(--blue-900) rounded-2xl lg:rounded-3xl p-6 sm:p-8 lg:p-10 relative overflow-hidden">
-            <div className="relative z-10 flex flex-col lg:flex-row items-center justify-between gap-6">
-              {/* Left Image */}
-              <div className="hidden lg:block w-40 h-32 bg-(--blue-800)/50 rounded-xl flex items-center justify-center flex-shrink-0">
-                <div className="text-center">
-                  <Monitor className="w-10 h-10 text-(--blue-300) mx-auto mb-1" />
-                  <p className="text-(--blue-300) text-[10px]">Office setup</p>
-                </div>
-              </div>
-
-              {/* Center Content */}
-              <div className="flex-1 text-center lg:text-left">
-                <h3 className="text-white font-bold text-xl lg:text-2xl mb-2">
-                  Planning to <span className="text-(--lime-400)">Relocate Your Office?</span>
-                </h3>
-                <p className="text-(--blue-200) text-sm mb-5">
-                  Let us handle your move while you focus on growing your business.
-                </p>
-
-                <div className="flex flex-wrap items-center justify-center lg:justify-start gap-4 lg:gap-6">
-                  {[
-                    { icon: CheckCircle2, text: "No Hidden Charges" },
-                    { icon: Clock, text: "On-Time Delivery" },
-                    { icon: Shield, text: "100% Safe & Secure" },
-                    { icon: Headphones, text: "24/7 Support" },
-                  ].map((check, idx) => (
-                    <div key={idx} className="flex items-center gap-1.5">
-                      <check.icon className="w-4 h-4 text-(--lime-400)" />
-                      <span className="text-white text-xs font-medium">{check.text}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              {/* Right CTAs */}
-              <div className="flex flex-col sm:flex-row items-center gap-3 flex-shrink-0">
-                <a
-                  href="#"
-                  className="inline-flex items-center gap-2 bg-(--lime-500) hover:bg-(--lime-600) text-white font-semibold px-5 py-3 rounded-full text-sm transition-colors group"
-                >
-                  Get a Free Quote
-                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                </a>
-                <a
-                  href="tel:18001234567"
-                  className="inline-flex items-center gap-2 bg-white/10 hover:bg-white/20 text-white border border-white/20 font-medium px-5 py-3 rounded-full text-sm transition-colors"
-                >
-                  <Phone className="w-4 h-4" />
-                  Call 1800 123 4567
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
+     <CTASection {...ctaSections[0]} /> 
       {/* ===== STATS BAR ===== */}
      <StatsBar/>
 

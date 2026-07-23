@@ -32,8 +32,11 @@ import {
   Monitor,
   Warehouse,
   ShieldCheck,
+  Banknote,
 } from "lucide-react";
 import { FaFacebook, FaInstagram, FaLinkedin, FaTwitter } from "react-icons/fa";
+import HeroSection from "@/components/services-hero-reusable/heroSection";
+import ServicesSection from "@/components/cardSection";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -312,44 +315,40 @@ export default function VehicleShipping() {
       icon: Car,
       title: "Cars",
       desc: "Hatchback, Sedan, SUV, Luxury & Premium Cars",
-      imgLabel: "Car",
+      image: "/packing&unpacking.png",
     },
     {
       icon: Bike,
       title: "Bikes",
       desc: "All types of motorcycles and scooters",
-      imgLabel: "Bike",
+      image: "/packing&unpacking.png",
     },
     {
       icon: Truck,
       title: "Commercial Vehicles",
       desc: "Trucks, Tempo, Pickup, LCV & HCV",
-      imgLabel: "Commercial vehicle",
+      image: "/packing&unpacking.png",
     },
     {
       icon: Construction,
       title: "Heavy Machinery",
       desc: "Construction equipment and industrial vehicles",
-      imgLabel: "Heavy machinery",
+      image: "/packing&unpacking.png",
     },
     {
       icon: Tractor,
       title: "Tractors",
       desc: "Agricultural tractors and farm equipment",
-      imgLabel: "Tractor",
+      image: "/packing&unpacking.png",
     },
-    {
-      icon: Ship,
-      title: "Boats",
-      desc: "Boats, Yachts and water vehicles",
-      imgLabel: "Boat",
-    },
+   
   ];
 
   const processSteps = [
     {
       num: "1",
       icon: ClipboardList,
+       
       title: "Request a Quote",
       desc: "Share details about your vehicle and route.",
     },
@@ -441,169 +440,23 @@ export default function VehicleShipping() {
   ];
 
   return (
-    <div className="min-h-screen bg-(--background) font-sans overflow-x-hidden">
+    <div className="min-h-screen bg-white font-sans overflow-x-hidden">
       {/* ===== HERO SECTION ===== */}
-      <section
-        ref={heroRef}
-        className="relative bg-gradient-to-br from-(--blue-900) to-(--blue-800) overflow-hidden"
-      >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-16 lg:pt-12 lg:pb-24">
-          <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
-            {/* Left Content */}
-            <div className="relative z-10">
-              {/* Breadcrumb */}
-              <nav className="hero-breadcrumb flex items-center gap-2 text-xs mb-6 lg:mb-8">
-                <span className="text-(--blue-200) hover:text-white cursor-pointer transition-colors">
-                  Home
-                </span>
-                <ChevronRight className="w-3 h-3 text-(--blue-300)" />
-                <span className="text-(--blue-200) hover:text-white cursor-pointer transition-colors">
-                  Services
-                </span>
-                <ChevronRight className="w-3 h-3 text-(--blue-300)" />
-                <span className="text-white font-medium">Vehicle Shipping</span>
-              </nav>
-
-              <h1 className="hero-title text-3xl sm:text-4xl lg:text-5xl font-bold text-white leading-tight mb-3">
-                Vehicle Shipping
-              </h1>
-              <h2 className="hero-subtitle text-2xl sm:text-3xl lg:text-4xl font-bold text-(--lime-400) leading-tight mb-6">
-                Safe Transport. Zero Worries.
-              </h2>
-
-              <p className="hero-text text-(--blue-200) text-sm lg:text-base leading-relaxed max-w-md mb-8">
-                We provide safe, secure and reliable vehicle shipping services
-                across India. Whether it's your car, bike or any other vehicle,
-                we ensure it reaches your destination in perfect condition.
-              </p>
-
-              {/* Badges */}
-              <div className="flex flex-wrap gap-3 lg:gap-4 mb-8">
-                {heroBadges.map((badge, idx) => (
-                  <div
-                    key={idx}
-                    className="hero-badge flex items-center gap-2.5 bg-white/10 backdrop-blur-sm rounded-lg px-3 py-2.5 border border-white/10"
-                  >
-                    <div className="w-8 h-8 bg-(--lime-500) rounded-full flex items-center justify-center flex-shrink-0">
-                      <badge.icon className="w-4 h-4 text-white" />
-                    </div>
-                    <div>
-                      <p className="text-white text-xs font-semibold">{badge.text}</p>
-                      <p className="text-(--blue-200) text-[10px] leading-tight">{badge.sub}</p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-
-              {/* CTAs */}
-              <div className="hero-cta flex flex-wrap items-center gap-4">
-                <a
-                  href="#"
-                  className="inline-flex items-center gap-2 bg-(--lime-500) hover:bg-(--lime-600) text-white font-semibold px-6 py-3 rounded-full text-sm transition-colors group"
-                >
-                  Get a Free Quote
-                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                </a>
-                <a
-                  href="tel:18001234567"
-                  className="inline-flex items-center gap-2 bg-white/10 hover:bg-white/20 text-white border border-white/20 font-medium px-5 py-3 rounded-full text-sm transition-colors"
-                >
-                  <Phone className="w-4 h-4 text-(--lime-400)" />
-                  Call 1800 123 4567
-                </a>
-              </div>
-            </div>
-
-            {/* Right Image */}
-            <div className="hero-image relative hidden lg:block">
-              <div className="relative rounded-2xl overflow-hidden aspect-[4/3]">
-                <div className="absolute inset-0 bg-(--blue-800)/20" />
-                <div className="w-full h-full bg-(--gray-200) flex items-center justify-center">
-                  <div className="text-center p-8">
-                    <Truck className="w-20 h-20 text-(--gray-400) mx-auto mb-3" />
-                    <p className="text-(--gray-500) text-sm">
-                      Car carrier truck
-                    </p>
-                    <p className="text-(--gray-400) text-xs mt-1">
-                      Replace with actual image
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-              {/* Your Vehicle Card */}
-              <div className="hero-card absolute -bottom-4 right-4 lg:bottom-4 lg:right-4 bg-(--blue-900) rounded-xl p-4 shadow-xl border border-(--blue-700) max-w-[180px]">
-                <div className="flex items-center gap-2 mb-1">
-                  <div className="w-8 h-8 bg-(--lime-500) rounded-full flex items-center justify-center">
-                    <Shield className="w-4 h-4 text-white" />
-                  </div>
-                </div>
-                <p className="text-white font-bold text-xs leading-tight">
-                  Your Vehicle,
-                </p>
-                <p className="text-(--lime-400) font-bold text-xs leading-tight">
-                  Our Responsibility
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Bottom Wave */}
-        <div className="absolute bottom-0 left-0 right-0">
-          <svg
-            viewBox="0 0 1440 80"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-            className="w-full h-auto"
-            preserveAspectRatio="none"
-          >
-            <path
-              d="M0 80V40C240 80 480 0 720 0C960 0 1200 80 1440 40V80H0Z"
-              fill="white"
-            />
-          </svg>
-        </div>
-      </section>
+    <HeroSection
+      title="Vehicle Shipping"
+      highlightedTitle="Safe Transport. Zero Worries."
+      description="We provide safe, secure and reliable vehicle shipping services across India. Whether it's your car, bike or any other vehicle, we ensure it reaches your destination in perfect condition."
+      features={[
+        { icon: Shield, text: "Pan India Service", sub: "Delivering vehicles to every corner" },
+        { icon: Clock, text: "Safe & Secure", sub: "Advanced equipment & handling" },
+        { icon: Package, text: "On-Time Delivery", sub: "Timely and reliable transport" },
+        { icon: Banknote, text: "Fully Insured", sub: "Complete insurance for your peace of mind" },
+      ]}
+      image={{ src: "/residential-moving-hero-img.png", alt: "hero-family-moving-image" }}
+    />
 
       {/* ===== VEHICLES WE SHIP ===== */}
-      <section ref={vehiclesRef} className="py-4 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="vehicles-header text-center text-2xl sm:text-3xl font-bold text-(--blue-900) mb-2">
-            Vehicles We <span className="text-(--lime-500)">Ship</span>
-          </h2>
-          <div className="w-12 h-1 bg-(--lime-500) mx-auto mb-4" />
-
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-2">
-            {vehicles.map((vehicle, idx) => (
-              <div
-                key={idx}
-                className="vehicle-card bg-(--gray-50) rounded-2xl p-3 border border-(--gray-100) hover:shadow-xl hover:border-(--blue-200) transition-all group"
-              >
-                <div className="flex items-center gap-2.5 mb-4">
-                  <div className="w-9 h-9 bg-(--blue-50) rounded-lg flex items-center justify-center">
-                    <vehicle.icon className="w-5 h-5 text-(--blue-900)" />
-                  </div>
-                  <h3 className="text-(--blue-900) font-bold text-sm leading-tight">
-                    {vehicle.title}
-                  </h3>
-                </div>
-
-                <div className="rounded-xl bg-(--gray-100) aspect-[4/3] flex items-center justify-center mb-4 overflow-hidden">
-                  <div className="text-center p-4">
-                    <Car className="w-8 h-8 text-(--gray-400) mx-auto mb-1" />
-                    <p className="text-(--gray-400) text-[10px]">{vehicle.imgLabel}</p>
-                  </div>
-                </div>
-
-                <p className="text-(--blue-900) text-sm leading-tight">
-                  {vehicle.desc}
-                </p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+      <ServicesSection services={vehicles} title="Our Residential" highlightTitle="Moving Services" />
 
       {/* ===== OUR VEHICLE SHIPPING PROCESS ===== */}
       <section ref={processRef} className="py-4 bg-(--gray-50)">

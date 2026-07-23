@@ -227,7 +227,7 @@ const handleQuickSubmit = async () => {
   />
 
   {/* HERO CONTENT */}
-  <div className="absolute inset-0 z-20 flex flex-col items-center justify-center px-4 text-center">
+  <div className="absolute inset-0 z-20 pt-30 sm:pt-8 sm:flex flex-col items-center justify-center px-4 text-center">
     <h1
       className="hero-fade-in font-black italic uppercase max-w-3xl leading-none"
       style={{
@@ -247,7 +247,7 @@ const handleQuickSubmit = async () => {
       Relocate anywhere in the Jaipur, stress-free.
     </p>
     {/*  */}
-         <div className="w-full max-w-7xl mx-auto p-3  min-height-screen flex items-center justify-center">
+         <div className="hidden w-full max-w-7xl mx-auto p-3  min-height-screen  sm:flex items-center justify-center">
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 w-full">
         {services.map((service) => (
           <div 
@@ -281,21 +281,21 @@ const handleQuickSubmit = async () => {
       {/* ===================== OVERLAPPING FILTER BAR ===================== */}
     <div className="bg-[#F7F8F5]">
       <div
-        className="relative w-full px-4 pb-16"
+        className="relative w-full px-2 sm:px-4 pb-16"
         style={{ zIndex: 40 }}
       >
         <div
-          className="mx-auto max-w-5xl bg-stone-100 rounded-2xl shadow-2xl px-5 py-5 md:px-8 md:py-6"
+          className="mx-auto max-w-5xl bg-stone-100 rounded-2xl shadow-2xl px-5 py-5 md:px-8 md:py-6 -mt-56 sm:-mt-18 lg:-mt-20 xl:-mt-24"
           style={{
-            marginTop: "-110px",
+            
             border: "1px solid rgba(0,0,0,0.06)",
           }}
         >
          
 
           <div className="relative grid grid-cols-1 md:grid-cols-4 gap-4 pb-8 items-end">
-               <img src="/parcels.png" className="absolute w-24 top-34 right-16  mt-6"/>
-            <img src="/truck.png" className="absolute w-50 top-18 right-40  mt-6"/>
+               <img src="/parcels.png" className="hidden lg:block absolute w-24 top-34 right-16  mt-6"/>
+            <img src="/truck.png" className="hidden lg:block absolute w-50 top-18 right-40  mt-6"/>
             <div className="flex flex-col gap-1.5">
               <label className="text-xs font-bold uppercase tracking-wide text-gray-500">
                 Moving from
@@ -403,7 +403,7 @@ const handleQuickSubmit = async () => {
         <button
   onClick={handleQuickSubmit}
   disabled={isSubmitting}
-  className="group w-full md:w-auto flex items-center justify-center gap-2 bg-lime-500 hover:bg-lime-400 disabled:opacity-50 text-black font-extrabold text-sm px-8 py-3 rounded-full uppercase tracking-wider shadow-lg transition-all duration-300 cursor-pointer"
+  className="group w-full md:w-auto flex items-center justify-center gap-2 bg-lime-500 hover:bg-lime-400 disabled:opacity-50 text-black font-extrabold text-xs sm:text-sm px-8 py-3 rounded-full uppercase tracking-wider shadow-lg transition-all duration-300 cursor-pointer"
 >
   {isSubmitting ? (
     <>

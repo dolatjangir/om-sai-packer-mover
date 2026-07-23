@@ -80,7 +80,7 @@ export default function CTASection({
 
           <div className="relative z-10 flex flex-col lg:flex-row items-center justify-between gap-6 lg:gap-8">
             {/* Left Image */}
-            <div className="hidden lg:flex w-56 rounded-xl  items-center justify-center shrink-0">
+            <div className="hidden lg:flex w-60 rounded-xl  items-center justify-center shrink-0">
               <img src={image} alt={title} />
             </div>
 
