@@ -81,7 +81,7 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState<boolean>(false);
   const [openMenu, setOpenMenu] = useState<string | null>(null);
   const [mobileOpen, setMobileOpen] = useState<boolean>(false);
-
+const [mobileSubmenu, setMobileSubmenu] = useState<string | null>(null);
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40);
     window.addEventListener("scroll", onScroll);
@@ -308,31 +308,161 @@ export default function Navbar() {
         </div>
 
         {/* Mobile menu panel */}
-        {mobileOpen && (
-          <div className="lg:hidden px-6 pb-6 max-h-[70vh] overflow-y-auto" style={{ background: scrolled ? "#005bb5" : "rgba(0,91,181,0.95)" }}>
-            <div className="flex flex-col gap-1 pt-2">
-              {navItems.map((item) => (
-                <Link
-                  key={item.label}
-                  href={item.href ?? "#"}
-                  className="text-white font-semibold text-sm py-3 border-b border-white/10"
-                >
-                  {item.label}
-                </Link>
-              ))}
-              <a href="tel:+18005551234" className="flex items-center gap-2 text-white font-semibold text-sm py-3">
-                <Phone className="w-4 h-4" style={{ color: "#84cc16" }} />
-                (800) 555-1234
-              </a>
+ {mobileOpen && (
+  <div
+    className="lg:hidden fixed inset-0 top-0 overflow-y-auto pb-28"
+    style={{ background: "#ffffff", height: "100dvh" }}
+  >
+    {/* Diagonal ribbon background - subtle, modern opacity */}
+    <div
+      className="absolute inset-0 pointer-events-none"
+    style={{
+  background: "linear-gradient(135deg, transparent 0%, transparent 35%, rgba(0,91,181,0.12) 45%, rgba(0,91,181,0.16) 55%, rgba(132,204,22,0.08) 65%, transparent 80%, transparent 100%)",
+}}
+    />
+
+    {/* Header: Close + Logo */}
+    <div className="relative z-10 flex items-center justify-between px-5 py-4 border-b border-blue-100/50">
+      <img src="/omsai-logo.png" className="w-36 h-auto object-contain" alt="Logo" />
+      <button
+        onClick={() => {
+          setMobileOpen(false);
+          setMobileSubmenu(null);
+        }}
+        className="w-10 h-10 flex items-center justify-center rounded-full bg-blue-50 text-blue-900 hover:bg-blue-100 transition-colors cursor-pointer"
+      >
+        <X className="w-5 h-5" />
+      </button>
+    </div>
+
+    {/* Scrollable Nav Content */}
+    <nav className="relative z-10 flex flex-col px-5 pt-2">
+      {navItems.map((item) => (
+        <div key={item.label} className="border-b border-blue-900/8 last:border-b-0">
+          {item.menu ? (
+            <>
               <button
-                className="mt-2 text-black text-xs font-extrabold uppercase tracking-wide px-5 py-3 rounded-full cursor-pointer"
-                style={{ background: "#84cc16" }}
+                onClick={() =>
+                  setMobileSubmenu(mobileSubmenu === item.menu ? null : item.menu)
+                }
+                className="w-full flex items-center justify-between text-blue-900 font-semibold text-[15px] py-4 cursor-pointer hover:text-blue-700 transition-colors"
               >
-                Get a Quote
+                {item.label}
+                <ChevronDown
+                  className={`w-4 h-4 text-lime-600 transition-transform duration-250 ${
+                    mobileSubmenu === item.menu ? "rotate-180" : ""
+                  }`}
+                />
               </button>
-            </div>
-          </div>
-        )}
+
+              {/* Animated Submenu */}
+              <div
+                className={`overflow-hidden transition-all duration-300 ease-in-out ${
+                  mobileSubmenu === item.menu ? "max-h-[500px] opacity-100" : "max-h-0 opacity-0"
+                }`}
+              >
+                <div className="pb-3 pl-2 flex flex-col gap-0.5">
+                  {item.menu === "services" &&
+                    navServices.map((s) => (
+                      <Link
+                        key={s.title}
+                        href={s.href}
+                        onClick={() => setMobileOpen(false)}
+                        className="py-2.5 px-3 text-sm text-blue-800/80 font-medium rounded-lg hover:bg-blue-50 hover:text-blue-900 transition-colors"
+                      >
+                        {s.title}
+                      </Link>
+                    ))}
+
+                  {item.menu === "fleet" &&
+                    navFleet.map((f) => (
+                      <Link
+                        key={f.title}
+                        href={f.href}
+                        onClick={() => setMobileOpen(false)}
+                        className="py-2.5 px-3 text-sm text-blue-800/80 font-medium rounded-lg hover:bg-blue-50 hover:text-blue-900 transition-colors"
+                      >
+                        {f.title}
+                      </Link>
+                    ))}
+
+                  {item.menu === "resources" &&
+                    navResources.map((r) => (
+                      <Link
+                        key={r.title}
+                        href={r.href}
+                        onClick={() => setMobileOpen(false)}
+                        className="py-2.5 px-3 text-sm text-blue-800/80 font-medium rounded-lg hover:bg-blue-50 hover:text-blue-900 transition-colors"
+                      >
+                        {r.title}
+                      </Link>
+                    ))}
+
+                  {item.menu === "company" &&
+                    navCompany.map((c) => (
+                      <Link
+                        key={c.title}
+                        href={c.href}
+                        onClick={() => setMobileOpen(false)}
+                        className="py-2.5 px-3 text-sm text-blue-800/80 font-medium rounded-lg hover:bg-blue-50 hover:text-blue-900 transition-colors"
+                      >
+                        {c.title}
+                      </Link>
+                    ))}
+
+                  {item.menu === "locations" &&
+                    navLocationGroups.map((group) => (
+                      <div key={group.region} className="px-3 py-2">
+                        <p className="text-[11px] font-bold uppercase tracking-widest text-blue-400 mb-2">
+                          {group.region}
+                        </p>
+                        {group.cities.map((city) => (
+                          <Link
+                            key={city}
+                            href="#"
+                            onClick={() => setMobileOpen(false)}
+                            className="flex items-center gap-2 py-2 text-sm text-blue-800/70 hover:text-blue-900 transition-colors"
+                          >
+                            <MapPin className="w-3.5 h-3.5 text-lime-500" />
+                            {city}
+                          </Link>
+                        ))}
+                      </div>
+                    ))}
+                </div>
+              </div>
+            </>
+          ) : (
+            <Link
+              href={item.href ?? "#"}
+              onClick={() => setMobileOpen(false)}
+              className="block text-blue-900 font-semibold text-[15px] py-4 hover:text-blue-700 transition-colors"
+            >
+              {item.label}
+            </Link>
+          )}
+        </div>
+      ))}
+    </nav>
+
+    {/* Fixed Bottom Bar: Phone + CTA */}
+    <div className="fixed bottom-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-md border-t border-blue-100 px-5 py-3.5 flex items-center gap-3 shadow-[0_-4px_20px_rgba(0,0,0,0.06)]">
+      <a
+        href="tel:+919694666677"
+        className="flex items-center justify-center gap-2 text-blue-900 font-bold text-sm py-3 px-4 rounded-full bg-blue-50 hover:bg-blue-100 transition-colors flex-1"
+      >
+        <Phone className="w-4 h-4 text-lime-600" />
+      9694666677
+      </a>
+
+      <Link href="/register" className="flex-[1.3]">
+        <button className="w-full text-black text-xs font-extrabold uppercase tracking-wide px-5 py-3.5 rounded-full hover:brightness-105 active:scale-[0.98] transition-all cursor-pointer shadow-md" style={{ background: "#84cc16" }}>
+          Register
+        </button>
+      </Link>
+    </div>
+  </div>
+)}
       </header>
 
       <style>{`
