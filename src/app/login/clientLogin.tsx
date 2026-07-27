@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import Image from "next/image";
 import { signIn } from "next-auth/react";
 import { useSearchParams } from "next/navigation";
+import Link from "next/link";
 
 export default function LoginClient() {
   const searchParams = useSearchParams();
@@ -78,11 +79,11 @@ export default function LoginClient() {
     <main className="relative w-full h-screen flex flex-row justify-around items-center-safe overflow-x-hidden font-sans select-none">
       {/* Background Image Container */}
       <div className="absolute inset-0 -z-10">
-        <img
+       <Link href="/"> <img
           src="/login-bg-img.png"
           alt="Om Sai Packers & Movers Background"
           className="object-cover object-center w-full h-screen"
-        />
+        /></Link>
       </div>
 
       {/* LEFT CONTENT AREA */}
@@ -90,11 +91,11 @@ export default function LoginClient() {
         {/* Top Branding Logo */}
         <div className="flex items-center gap-3 mb-12 md:mb-0">
           <div className="relative w-1/2 shrink-0 rounded-lg p-1">
-            <img
+          <Link href="/">  <img
               src="/omsai-logo-white.png"
               alt="Logo Icon"
               className="object-contain"
-            />
+            /></Link>
           </div>
         </div>
 
