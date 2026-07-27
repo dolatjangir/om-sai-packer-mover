@@ -289,11 +289,11 @@ const [mobileSubmenu, setMobileSubmenu] = useState<string | null>(null);
                 +91 9694666677
  </span>
               </a>
-             <Link href="/get-a-quote"> <button
+             <Link href="/register"> <button
                 className="text-black text-xs font-extrabold uppercase tracking-wide px-5 py-2.5 rounded-full transition-colors duration-300 cursor-pointer"
                 style={{ background: "#84cc16" }}
               >
-                Get a Quote
+                Register
               </button>
               </Link>
             </div>
