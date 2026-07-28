@@ -52,6 +52,91 @@
   --stone-800: #292524;
   --stone-900: #1c1917;
   --stone-950: #0c0a09;
+
+  /* for seo and blog section only */
+    /* Brand Colors */
+    --color-primary: #2563eb;
+    --color-primary-hover: #1d4ed8;
+    --color-primary-dark: #1e40af;
+
+    /* Accent Colors */
+    --color-purple: #9333ea;
+    --color-cyan: #0891b2;
+    --color-emerald: #10b981;
+    --color-amber: #f59e0b;
+
+    /* Background Colors */
+    --color-bg: #ffffff;
+    --color-bg-hover: #f8fafc;
+    --color-nav-bg: #ffffff;
+    --color-nav-bg-scroll: rgba(255, 255, 255, 0.95);
+    --color-section-alt: #f8fafc;
+    --color-section-alt-2: #f1f5f980;
+    --color-card-bg: #ffffff;
+/* Text Colors */
+    --color-text-primary: #0f172a;
+    --color-text-secondary: #475569;
+    --color-text-muted: #64748b;
+    --color-text-faint: #94a3b8;
+
+    /* Border Colors */
+    --color-border: #e2e8f0;
+    --color-border-light: #f1f5f9;
+    --color-border-hover: #dbeafe;
+
+    /* Badge Colors */
+    --color-badge-bg: #eff6ff;
+    --color-badge-border: #dbeafe;
+    --color-badge-text: #1d4ed8;
+
+    /* Tag Colors */
+    --color-tag-bestseller: #f59e0b;
+    --color-tag-popular: #3b82f6;
+    --color-tag-new: #10b981;
+
+    /* Icon Backgrounds */
+    --color-icon-bg-1: #eff6ff;
+    --color-icon-bg-2: #faf5ff;
+    --color-icon-bg-3: #ecfeff;
+    --color-icon-bg-4: #ecfdf5;
+
+    /* Robot / Hero Glow */
+    --color-robot-bg: #eff6ff;
+    --color-robot-border: #dbeafe;
+    --color-glow: #dbeafe;
+    --color-glow-strong: #bfdbfe;
+     /* Bubble Background */
+  --color-bubble-bg: #dbeafe;
+    /* Course Gradients */
+    --gradient-course-1: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+    --gradient-course-2: linear-gradient(135deg, #581c87 0%, #312e81 100%);
+    --gradient-course-3: linear-gradient(135deg, #164e63 0%, #134e4a 100%);
+    --gradient-course-4: linear-gradient(135deg, #064e3b 0%, #14532d 100%);
+
+    /* Course Icon Colors */
+    --color-course-icon-1: #60a5fa;
+    --color-course-icon-2: #c084fc;
+    --color-course-icon-3: #22d3ee;
+    --color-course-icon-4: #34d399;
+
+    /* Star / Gold */
+    --color-star: #fbbf24;
+    --color-gold: #f59e0b;
+    --color-gold-bg: #fffbeb;
+    --color-gold-border: #fcd34d;
+
+    /* Avatar */
+    --color-avatar-bg: #e2e8f0;
+
+    /* Microsoft Logo Colors */
+    --color-ms-red: #f25022;
+    --color-ms-green: #7fba00;
+    --color-ms-blue: #00a4ef;
+    --color-ms-yellow: #ffb900;
+
+    /* NVIDIA */
+    --color-nvidia: #76b900;
+
 }
 
 @theme inline {

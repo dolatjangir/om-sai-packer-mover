@@ -20,6 +20,8 @@ import {
   Shield,
   Package,
 } from "lucide-react";
+import { LayoutGroup } from "framer-motion";
+import { blockquote } from "framer-motion/m";
 
 const navigationConfig = {
   USER: [
@@ -35,6 +37,8 @@ const navigationConfig = {
     { name: "Drivers", href: "/admin/drivers", icon: Truck },
     { name: "Reports", href: "/admin/reports", icon: BarChart3 },
      { name: "Leads", href: "/admin/leads", icon: Users },
+     {name:"Seo Manager", href:"/admin/seo-manager", icon:LayoutGroup},
+     {name:"Blog Manager", href:"/admin/blogs", icon:blockquote}
   ],
   DRIVER: [
     { name: "Dashboard", href: "/driver", icon: LayoutDashboard },

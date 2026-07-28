@@ -133,7 +133,7 @@ model User {
   email         String     @unique
   emailVerified DateTime?
   image         String?    @db.Text
-   imagePublicId String?
+  imagePublicId String?
   password      String?    @db.Text
   role          UserRole?
   status        UserStatus @default(ACTIVE)
@@ -221,6 +221,52 @@ model Booking {
   @@index([movingDate])
   @@index([driverId])
   @@index([createdAt])
+}
+
+// ======================seo entry model==========
+model SeoEntry {
+  id                 String   @id @default(uuid())
+  pageName           String
+  slug               String   @unique
+  url                String   @unique
+  metaTitle          String
+  metaDescription    String   @db.VarChar(1000)
+  keywords           String   @db.VarChar(1000) // Stored as JSON string array
+  canonicalUrl       String?  @db.VarChar(500)
+  ogTitle            String?  @db.VarChar(255)
+  ogDescription      String?  @db.VarChar(1000)
+  ogImage            String?  @db.VarChar(500)
+  twitterTitle       String?  @db.VarChar(255)
+  twitterDescription String?  @db.VarChar(1000)
+  twitterImage       String?  @db.VarChar(500)
+  seoScore           Int      @default(0)
+  status             Status   @default(published)
+  indexable          Boolean  @default(true)
+  lastModified       DateTime @updatedAt
+  createdAt          DateTime @default(now())
+
+  @@index([status])
+  @@index([seoScore])
+  @@map("seo_entries")
+}
+
+// ====================== blog model ==============
+model Blog {
+  id          String   @id @default(cuid())
+  title       String
+  slug        String   @unique
+  excerpt     String?  @db.Text
+  content     String   @db.LongText
+  featuredImg String?
+  pageName    String
+  tags        String?
+  isPublished Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([slug])
+  @@index([isPublished])
+  @@index([pageName])
 }
 
 model TrackingUpdate {
@@ -361,4 +407,9 @@ model Vehicle {
 
   @@index([driverId])
   @@index([status])
+}
+
+enum Status {
+  published
+  draft
 }

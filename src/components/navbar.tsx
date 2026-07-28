@@ -68,6 +68,7 @@ const navCompany = [
   { title: "Careers", desc: "Join our growing moving crew.", icon: Briefcase,href:"/company/careers" },
   { title: "Why Choose Us", desc: "What sets our service apart.", icon: Award,href:"/company/why-choose-us" },
   { title: "Contact Us", desc: "Talk to our relocation specialists.", icon: MessageCircle,href:"/company/contact-us" },
+  { title: "Gallery", desc: "Our images, mission, and values.", icon: Users,href:"/company/gallery" },
 ];
 
 const greetings = [

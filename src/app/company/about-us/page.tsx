@@ -1,11 +1,19 @@
-"use client"
+import React from 'react'
 
-import HeroSection from "./clientabout"
+import { getPageBlogs } from '../../../../lib/blogs';
+import { generateSEOMetadata } from '../../../../lib/seometadata';
+import RelatedBlogs from '@/components/related-blogs';
+import AboutUsPage from './clientabout';
 
-export default function page() {
+
+export const dynamic = 'force-dynamic';
+export const generateMetadata = generateSEOMetadata;
+export default async function page() {
+   const blogs = await getPageBlogs('about-us');
   return (
-    <div>
-      <HeroSection/>
-    </div>
+    <>
+    <AboutUsPage/>
+      <RelatedBlogs blogs={blogs} />
+                      </>
   )
 }

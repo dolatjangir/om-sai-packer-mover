@@ -1,8 +1,19 @@
 import React from 'react'
-import Careers from './clientCareer'
 
-export default function page() {
+import { getPageBlogs } from '../../../../lib/blogs';
+import { generateSEOMetadata } from '../../../../lib/seometadata';
+import RelatedBlogs from '@/components/related-blogs';
+import Careers from './clientCareer';
+
+
+export const dynamic = 'force-dynamic';
+export const generateMetadata = generateSEOMetadata;
+export default async function page() {
+   const blogs = await getPageBlogs('careers');
   return (
-   <Careers/>
+    <>
+    <Careers/>
+      <RelatedBlogs blogs={blogs} />
+                      </>
   )
 }

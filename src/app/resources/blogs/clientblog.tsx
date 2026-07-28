@@ -189,7 +189,7 @@ export default function BlogPage() {
       
 
       {/* Hero Section */}
-      <section className="bg-[var(--blue-900)] relative overflow-hidden py-4">
+      <section className="bg-[var(--blue-900)] relative overflow-hidden pb-4 pt-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid lg:grid-cols-2 gap-8 items-center">
             <div className="py-4">
@@ -217,7 +217,7 @@ export default function BlogPage() {
                 <img
                   src="https://images.unsplash.com/photo-1600518464441-9154a4dea21b?w=700&h=500&fit=crop"
                   alt="Professional movers carrying furniture"
-                  className="rounded-lg w-full h-auto object-cover"
+                  className="rounded-lg w-full h-auto pt-4 object-cover"
                 />
                 <div className="absolute -bottom-4 -right-4 w-32 h-32 border-[16px] border-[var(--lime-500)] rounded-full opacity-80"></div>
                 <div className="absolute -bottom-8 -right-8 w-48 h-48 border-[8px] border-[var(--lime-400)] rounded-full opacity-40"></div>
