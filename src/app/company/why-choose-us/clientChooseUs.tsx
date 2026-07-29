@@ -194,6 +194,7 @@ export default function WhyChooseUs() {
       desc: "We use high-quality packing materials and secure handling techniques to ensure the safety of your belongings.",
       color: "bg-[var(--blue-900)]",
       imgLabel: "Mover packing boxes",
+      image:"/why-choose-us-bottom-1-img.png"
     },
     {
       icon: Users,
@@ -201,6 +202,7 @@ export default function WhyChooseUs() {
       desc: "Our trained and verified professionals handle your move with skill, care and complete responsibility.",
       color: "bg-[var(--lime-500)]",
       imgLabel: "Movers carrying furniture",
+       image:"/why-choose-us-bottom-4-img.png"
     },
     {
       icon: Clock,
@@ -208,6 +210,7 @@ export default function WhyChooseUs() {
       desc: "We value your time and ensure timely pickup and delivery, every time.",
       color: "bg-[var(--lime-500)]",
       imgLabel: "MoveEasy truck",
+       image:"/why-choose-us-bottom-2-img.png"
     },
     {
       icon: Tag,
@@ -215,6 +218,7 @@ export default function WhyChooseUs() {
       desc: "No hidden charges. Get upfront, honest and competitive quotes for a worry-free move.",
       color: "bg-[var(--blue-900)]",
       imgLabel: "Piggy bank with coins",
+       image:"/why-choose-us-bottom-5-img.png"
     },
     {
       icon: Headphones,
@@ -222,6 +226,7 @@ export default function WhyChooseUs() {
       desc: "Our support team is always available to assist you before, during and after your move.",
       color: "bg-[var(--blue-900)]",
       imgLabel: "Support representative",
+       image:"/why-choose-us-bottom-3-img.png"
     },
     {
       icon: Package,
@@ -229,6 +234,7 @@ export default function WhyChooseUs() {
       desc: "From packing, loading, transportation to unpacking and setup – we handle everything for you.",
       color: "bg-[var(--lime-500)]",
       imgLabel: "Packed boxes in room",
+       image:"/why-choose-us-bottom-6-img.png"
     },
   ];
 
@@ -239,16 +245,11 @@ export default function WhyChooseUs() {
         ref={heroRef}
         className="relative bg-gradient-to-br from-[var(--blue-900)] to-[var(--blue-800)] overflow-hidden"
       >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 pb-24 lg:pt-24 lg:pb-32">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8  pb-12 pt-24 lg:pb-16">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             {/* Left Content */}
             <div className="relative z-10">
-              <div className="hero-label flex items-center gap-3 mb-6">
-                <span className="text-[var(--lime-400)] text-sm font-bold tracking-wider uppercase">
-                  Who Choose Us
-                </span>
-                <div className="h-px w-16 bg-[var(--lime-400)] opacity-60" />
-              </div>
+            
 
               <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white leading-tight mb-6">
                 <span className="hero-title-line block">Safe Moves.</span>
@@ -268,39 +269,13 @@ export default function WhyChooseUs() {
 
             {/* Right Image */}
             <div className="hero-image-area relative hidden lg:block">
-              <div className="relative rounded-2xl overflow-hidden bg-[var(--blue-800)] bg-opacity-40 aspect-[4/3] flex items-center justify-center">
-                <div className="text-center p-8">
-                  <Users className="w-24 h-24 text-[var(--blue-300)] mx-auto mb-4" />
-                  <p className="text-[var(--blue-200)] text-sm">
-                    Movers with Truck Image
-                  </p>
-                  <p className="text-[var(--blue-300)] text-xs mt-2">
-                    Replace with your actual image
-                  </p>
-                </div>
-                <div className="absolute top-4 right-4 bg-white/10 backdrop-blur-sm rounded-lg px-3 py-2">
-                  <div className="flex items-center gap-2">
-                    <Truck className="w-5 h-5 text-[var(--lime-400)]" />
-                    <span className="text-white font-bold text-sm">
-                      MoveEasy
-                    </span>
-                  </div>
-                  <span className="text-[var(--blue-200)] text-[10px]">
-                    PACKERS & MOVERS
-                  </span>
-                </div>
+              <div className="relative rounded-2xl overflow-hidden bg-[var(--blue-800)] bg-opacity-40  flex items-center justify-center">
+              <img src="/why-coose-us-hero-img.png" alt="Team work"/>
+               
               </div>
             </div>
           </div>
         </div>
-
-        {/* Lime Curve */}
-        <div
-          className="hero-curve absolute bottom-0 right-0 w-64 h-32 lg:w-96 lg:h-48 bg-[var(--lime-500)]"
-          style={{
-            clipPath: "ellipse(90% 100% at 100% 100%)",
-          }}
-        />
       </section>
 
       {/* Stats Bar */}
@@ -311,15 +286,15 @@ export default function WhyChooseUs() {
               {stats.map((stat, idx) => (
                 <div
                   key={idx}
-                  className={`stat-item flex items-center gap-4 ${idx !== stats.length-1 ? "border-r" : ""} justify-center lg:justify-start`}
+                  className={`stat-item flex items-center gap-4 ${idx !== stats.length-1 ? "sm:border-r" : ""} justify-center lg:justify-start`}
                 >
                   <div
-                    className={`w-12 h-12 ${stat.color} rounded-full flex items-center justify-center flex-shrink-0`}
+                    className={`w-8 h-8 sm:w-12 sm:h-12 ${stat.color} rounded-full flex items-center justify-center flex-shrink-0`}
                   >
                     <stat.icon className="w-5 h-5 text-white" />
                   </div>
                   <div>
-                    <p className="text-[var(--blue-900)] font-bold text-lg lg:text-xl">
+                    <p className="text-[var(--blue-900)] font-bold text-sm sm:text-lg lg:text-xl">
                       {stat.value}
                     </p>
                     <p className="text-[var(--gray-500)] text-xs lg:text-sm">
@@ -370,14 +345,7 @@ export default function WhyChooseUs() {
                 {/* Image */}
                 <div className="sm:w-[38%] lg:w-[52%] w-full">
                   <div className="rounded-xl lg:rounded-2xl bg-[var(--gray-100)] aspect-[4/3] flex items-center justify-center overflow-hidden">
-                    <div className="text-center p-6">
-                      <div className="w-12 h-12 bg-[var(--gray-200)] rounded-lg flex items-center justify-center mx-auto mb-2">
-                        <Home className="w-6 h-6 text-[var(--gray-400)]" />
-                      </div>
-                      <p className="text-[var(--gray-400)] text-xs">
-                        {reason.imgLabel}
-                      </p>
-                    </div>
+                   <img src={reason.image} alt={reason.imgLabel} className="object-cover w-full h-auto"/>
                   </div>
                 </div>
               </div>
@@ -481,7 +449,7 @@ export default function WhyChooseUs() {
 
             {/* Center */}
             <Link
-              href="#"
+              href="/get-a-quote"
               className="bg-[var(--blue-900)] hover:bg-[var(--blue-800)] text-white font-semibold px-6 py-3 rounded-full flex items-center gap-2 transition-colors group flex-shrink-0"
             >
               Get a Free Quote

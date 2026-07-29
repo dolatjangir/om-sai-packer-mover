@@ -19,8 +19,11 @@ import {
   X,
   Home,
   Truck,
+  Package,
+  Banknote,
 } from "lucide-react";
 import StatsBar from "@/components/statsBar";
+import HeroSection from "@/components/services-hero-reusable/heroSection";
 
 const categories = [
   "All Articles",
@@ -189,43 +192,19 @@ export default function BlogPage() {
       
 
       {/* Hero Section */}
-      <section className="bg-[var(--blue-900)] relative overflow-hidden pb-4 pt-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid lg:grid-cols-2 gap-8 items-center">
-            <div className="py-4">
-              <div className="flex items-center gap-3 mb-4">
-                <span className="text-[var(--lime-400)] text-xs font-bold uppercase tracking-widest">
-                  BLOGS & ARTICLES
-                </span>
-                <div className="h-px w-12 bg-[var(--lime-400)]"></div>
-              </div>
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4">
-                Our <span className="text-[var(--lime-400)]">Blog</span>
-              </h1>
-              <p className="text-[var(--blue-200)] text-base md:text-lg mb-6 max-w-md">
-                Tips, guides and expert advice to make your moving experience
-                easy and stress-free.
-              </p>
-              <button className="inline-flex items-center gap-2 bg-[var(--lime-500)] hover:bg-[var(--lime-600)] text-white px-6 py-3 rounded-full font-semibold text-sm transition-colors group">
-                Get Moving Tips
-                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-              </button>
-            </div>
-
-            <div className="relative hidden lg:block">
-              <div className="relative">
-                <img
-                  src="https://images.unsplash.com/photo-1600518464441-9154a4dea21b?w=700&h=500&fit=crop"
-                  alt="Professional movers carrying furniture"
-                  className="rounded-lg w-full h-auto pt-4 object-cover"
-                />
-                <div className="absolute -bottom-4 -right-4 w-32 h-32 border-[16px] border-[var(--lime-500)] rounded-full opacity-80"></div>
-                <div className="absolute -bottom-8 -right-8 w-48 h-48 border-[8px] border-[var(--lime-400)] rounded-full opacity-40"></div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+      <HeroSection
+           title="Our Blog "
+           highlightedTitle=""
+           description="Tips, guides and expert advice to make your moving experience easy and stress-free."
+    
+           features={[
+             { icon: Shield, text: "Pan India Service", sub: "We move you anywhere in India" },
+             { icon: Clock, text: "Safe & Secure", sub: "Your goods are packed and transported safely" },
+             { icon: Package, text: "On-Time Delivery", sub: "Timely delivery, every time" },
+             { icon: Banknote, text: "24/7 Support", sub: "We're here to help you, always" },
+           ]}
+           image={{ src: "https://images.unsplash.com/photo-1600518464441-9154a4dea21b?w=700&h=500&fit=crop", alt: "blog hero image" }}
+         />
 
       {/* Category Tabs */}
       <section className="bg-white border-b border-[var(--gray-200)] py-4">

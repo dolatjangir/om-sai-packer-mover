@@ -28,6 +28,7 @@ import {
   ChevronRight,
 } from "lucide-react";
 import { BsBag } from "react-icons/bs";
+import Link from "next/link";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -328,18 +329,18 @@ export default function Careers() {
       {/* ===== HERO SECTION ===== */}
       <section
         ref={heroRef}
-        className="relative bg-gradient-to-br from-(--blue-900) to-(--blue-800) overflow-hidden"
+        className="relative bg-gradient-to-br  from-(--blue-900) to-(--blue-800) h-[85vh]  overflow-hidden"
       >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 pb-20 lg:pt-20 lg:pb-28">
+        <div className="max-w-7xl  mx-auto px-4 sm:px-6 lg:px-8 pt-12 pb-20 lg:pt-20 lg:pb-28">
           <div className="grid lg:grid-cols-2 gap-10 lg:gap-12 items-center">
             {/* Left Content */}
             <div className="relative z-10">
-              <div className="hero-label flex items-center gap-3 mb-6">
+              {/* <div className="hero-label flex items-center gap-3 mb-6">
                 <span className="text-(--lime-400) text-sm font-bold tracking-wider uppercase">
                   Careers
                 </span>
                 <div className="h-px w-12 bg-(--lime-400) opacity-60" />
-              </div>
+              </div> */}
 
               <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white leading-tight mb-4">
                 <span className="hero-title-line block">Build Your Career.</span>
@@ -355,37 +356,29 @@ export default function Careers() {
               </p>
 
               <div className="flex flex-wrap items-center gap-4">
-                <a
-                  href="#"
+                <Link
+                  href="/get-a-quote"
                   className="hero-btn inline-flex items-center gap-2 bg-(--lime-500) hover:bg-(--lime-600) text-white font-semibold px-6 py-3 rounded-full text-sm transition-colors group"
                 >
-                  View Open Positions
+                  Get A Quote
                   <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                </a>
-                <a
-                  href="#"
+                </Link>
+                <Link
+                  href="/fleet/packer-mover"
                   className="hero-btn inline-flex items-center gap-2 bg-transparent hover:bg-white/10 text-white border border-white/30 font-medium px-6 py-3 rounded-full text-sm transition-colors group"
                 >
                   Life at Om Sai
                   <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                </a>
+                </Link>
               </div>
             </div>
 
             {/* Right Image */}
-            <div className="hero-image relative hidden lg:block">
-              <div className="relative rounded-2xl overflow-hidden aspect-[4/3]">
-                <div className="absolute inset-0 bg-(--blue-800)/20" />
+            <div className="hero-image relative hidden lg:block sm:pt-5">
+              <div className="relative rounded-2xl overflow-hidden">
+                {/* <div className="absolute inset-0 bg-(--blue-800)/20" /> */}
                 <div className="w-full h-full bg-(--gray-200) flex items-center justify-center">
-                  <div className="text-center p-8">
-                    <Users className="w-20 h-20 text-(--gray-400) mx-auto mb-3" />
-                    <p className="text-(--gray-500) text-sm">
-                      Team celebrating together
-                    </p>
-                    <p className="text-(--gray-400) text-xs mt-1">
-                      Replace with actual image
-                    </p>
-                  </div>
+                 <img src="/career-hero-img.png" alt="career image"/>
                 </div>
               </div>
             </div>
@@ -393,16 +386,16 @@ export default function Careers() {
         </div>
 
         {/* Lime Curve Decoration */}
-        <div
+        {/* <div
           className="absolute bottom-0 right-0 w-48 h-24 lg:w-80 lg:h-40 bg-(--lime-500)"
           style={{
             clipPath: "ellipse(90% 100% at 100% 100%)",
           }}
-        />
+        /> */}
       </section>
 
       {/* ===== CULTURE BAR ===== */}
-      <section ref={cultureRef} className="   ">
+      <section ref={cultureRef} className=" mt-2  ">
         <div className="max-w-7xl mx-auto bg-(--blue-900) rounded-xl py-6 px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
             {cultureCards.map((card, idx) => (
@@ -459,16 +452,8 @@ export default function Careers() {
           <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
             {/* Left Image */}
             <div className="why-image">
-              <div className="rounded-2xl overflow-hidden bg-(--gray-200) aspect-[4/3] flex items-center justify-center">
-                <div className="text-center p-8">
-                  <Users className="w-16 h-16 text-(--gray-400) mx-auto mb-3" />
-                  <p className="text-(--gray-500) text-sm">
-                    Team collaborating on laptop
-                  </p>
-                  <p className="text-(--gray-400) text-xs mt-1">
-                    Replace with actual image
-                  </p>
-                </div>
+              <div className="rounded-2xl overflow-hidden bg-(--gray-200)  flex items-center justify-center">
+              <img src="/career-bottom-left-img.png" alt="Team collaborating on laptop" className="w-full h-auto object-cover"/>
               </div>
             </div>
 
@@ -555,7 +540,7 @@ export default function Careers() {
                     </div>
                     <a
                       href="#"
-                      className="inline-flex items-center gap-1.5 bg-(--lime-50)  border border-(--lime-500) hover:border-(--lime-600) text-(--lime-500) hover:text-(--lime-600) text-xs font-semibold px-4 py-2 rounded-full transition-colors group flex-shrink-0 self-start sm:self-center"
+                      className="inline-flex items-center cursor-none gap-1.5 bg-(--lime-50)  border border-(--lime-500) hover:border-(--lime-600) text-(--lime-500) hover:text-(--lime-600) text-xs font-semibold px-4 py-2 rounded-full transition-colors group flex-shrink-0 self-start sm:self-center"
                     >
                       Apply Now
                       <ChevronRight className="w-3 h-3 group-hover:translate-x-0.5 transition-transform" />
@@ -566,7 +551,7 @@ export default function Careers() {
 
               <a
                 href="#"
-                className="inline-flex items-center gap-2 mt-6 bg-(--lime-500) hover:bg-(--lime-600) text-white font-semibold px-6 py-3 rounded-full text-sm transition-colors group"
+                className="inline-flex items-center gap-2 mt-6  cursor-none bg-(--lime-500) hover:bg-(--lime-600) text-white font-semibold px-6 py-3 rounded-full text-sm transition-colors group"
               >
                 View All Openings
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
@@ -586,17 +571,17 @@ export default function Careers() {
 
               {/* Image Grid */}
               <div className="grid grid-cols-2 gap-3 lg:gap-4 mb-4">
-                {[...Array(4)].map((_, idx) => (
+                {[
+                  {image:"/career-bottom-right-1-img.png",name:"om sai employee"},
+                  {image:"/career-bottom-right-2-img.png",name:"om sai employee meeting room"},
+                  {image:"/career-bottom-right-3-img.png",name:"om sai employee celebrate"},
+                  {image:"/career-bottom-right-4-img.png",name:"om sai employee playing"},
+                ].map((data, idx) => (
                   <div
                     key={idx}
                     className="life-card rounded-xl bg-(--gray-100) aspect-[2/1] flex items-center justify-center overflow-hidden"
                   >
-                    <div className="text-center p-4">
-                      <Users className="w-8 h-8 text-(--gray-400) mx-auto mb-1" />
-                      <p className="text-(--gray-400) text-[10px]">
-                        Team photo {idx + 1}
-                      </p>
-                    </div>
+                    <img src={data.image} alt={data.name} className="object-cover w-full h-auto"/>
                   </div>
                 ))}
               </div>
@@ -702,10 +687,10 @@ export default function Careers() {
               </div>
               <div>
                 <a
-                  href="mailto:careers@omsai.com"
+                  href="mailto:info@omsaipackermover.com"
                   className="text-white font-bold text-sm lg:text-base hover:text-(--blue-900) transition-colors"
                 >
-                  careers@omsai.com
+                  info@omsaipackermover.com
                 </a>
                 <p className="text-white/80 text-xs">
                   We&apos;d love to hear from you

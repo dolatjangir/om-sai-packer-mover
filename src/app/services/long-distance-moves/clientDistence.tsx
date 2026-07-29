@@ -484,7 +484,7 @@ export default function LongDistanceMoves() {
 
   return (
     <div className="min-h-screen bg-white font-sans overflow-x-hidden">
-      {/* ===== HERO SECTION ===== */}
+      {/* ===== HERO SECTION =====  */}
      <HeroSection
        title="Long Distance Moves"
        highlightedTitle="Anywhere. Anytime. Hassle-Free."

@@ -232,18 +232,12 @@ export default function Gallery() {
         ref={heroRef}
         className="relative bg-gradient-to-br from-(--blue-900) to-(--blue-800) overflow-hidden"
       >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-16 lg:pt-12 lg:pb-24">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 pb-16 lg:pt-28 lg:pb-24">
           <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
             {/* Left Content */}
             <div className="relative z-10">
               {/* Breadcrumb */}
-              <nav className="hero-breadcrumb flex items-center gap-2 text-xs mb-6 lg:mb-8">
-                <span className="text-(--blue-200) hover:text-white cursor-pointer transition-colors">
-                  Home
-                </span>
-                <ChevronRight className="w-3 h-3 text-(--blue-300)" />
-                <span className="text-white font-medium">Gallery</span>
-              </nav>
+             
 
               <h1 className="hero-title text-3xl sm:text-4xl lg:text-5xl font-bold text-white leading-tight mb-3">
                 Our Gallery

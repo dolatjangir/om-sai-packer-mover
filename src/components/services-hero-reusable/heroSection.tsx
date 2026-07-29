@@ -33,8 +33,8 @@ export interface HeroSectionProps {
 const DEFAULT_CTA: HeroCta = {
   quoteHref: "/get-a-quote",
   quoteLabel: "Get a Free Quote",
-  phoneHref: "tel:18001234567",
-  phoneLabel: "Call 1800 123 4567",
+  phoneHref: "tel:9314630634",
+  phoneLabel: "Call 9314630634",
 };
 
 export default function HeroSection({

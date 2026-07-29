@@ -20,8 +20,10 @@ import {
   Clock,
   ThumbsUp,
   Send,
+  Banknote,
 } from "lucide-react";
 import StatsBar from "@/components/statsBar";
+import HeroSection from "@/components/services-hero-reusable/heroSection";
 
 const trustBadges = [
   { icon: Shield, title: "Trusted by", subtitle: "10,000+ Customers" },
@@ -127,73 +129,19 @@ export default function ReviewsPage() {
   return (
     <div className="min-h-screen bg-white">
       {/* Hero Section */}
-      <section className="bg-(--blue-900) relative overflow-hidden py-4">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid lg:grid-cols-2 gap-8 items-center">
-            <div className="py-4">
-              <div className="flex items-center gap-3 mb-4">
-                <span className="text-(--lime-400) text-xs font-bold uppercase tracking-widest">
-                  Customer Reviews
-                </span>
-                <div className="h-px w-12 bg-(--lime-400)"></div>
-              </div>
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-2 leading-tight">
-                Real Stories.
-              </h1>
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-2 leading-tight">
-                Trusted by <span className="text-(--lime-400)">Thousands.</span>
-              </h1>
-              <p className="text-(--blue-200) text-base md:text-lg mb-6 max-w-lg">
-                We take pride in delivering safe, reliable and hassle-free
-                moving experiences. But don&apos;t just take our word for it –
-                here&apos;s what our happy customers have to say!
-              </p>
-              <div className="flex flex-wrap gap-6">
-                {trustBadges.map((badge) => {
-                  const Icon = badge.icon;
-                  return (
-                    <div key={badge.title} className="flex items-center gap-3">
-                      <div className="w-10 h-10 bg-(--lime-500) rounded-full flex items-center justify-center">
-                        <Icon className="w-5 h-5 text-white" />
-                      </div>
-                      <div>
-                        <p className="text-white text-sm font-semibold">{badge.title}</p>
-                        <p className="text-(--blue-300) text-xs">{badge.subtitle}</p>
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-
-            <div className="relative hidden lg:block">
-              <div className="relative">
-                <img
-                  src="https://images.unsplash.com/photo-1600518464441-9154a4dea21b?w=700&h=500&fit=crop"
-                  alt="Professional movers"
-                  className="rounded-lg w-full h-auto object-cover"
-                />
-                <div className="absolute bottom-8 right-8 bg-white rounded-xl p-5 max-w-xs shadow-xl">
-                  <div className="text-(--lime-500) text-3xl font-serif leading-none mb-2">
-                    &ldquo;&ldquo;
-                  </div>
-                  <p className="text-(--gray-700) text-sm leading-relaxed mb-3">
-                    Our commitment to excellence has earned the trust and loyalty
-                    of thousands of customers.
-                  </p>
-                  <div className="flex gap-1">
-                    {[1, 2, 3, 4, 5].map((s) => (
-                      <Star key={s} className="w-4 h-4 fill-(--lime-500) text-(--lime-500)" />
-                    ))}
-                  </div>
-                </div>
-                <div className="absolute -bottom-4 -right-4 w-32 h-32 border-[16px] border-(--lime-500) rounded-full opacity-80"></div>
-                <div className="absolute -bottom-8 -right-8 w-48 h-48 border-[8px] border-(--lime-400) rounded-full opacity-40"></div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+     <HeroSection
+          title="Real Stories. Trusted by"
+          highlightedTitle="Thousands."
+          description="We take pride in delivering safe, reliable and hassle-free moving experiences. But don't just take our word for it – here's what our happy customers have to say!"
+   
+          features={[
+            { icon: Shield, text: "Trusted by", sub: "10,000+ Customers" },
+            { icon: Clock, text: "4.8/5", sub: "Average Rating" },
+            { icon: Package, text: "200+ Cities", sub: "Successfully Served" },
+          
+          ]}
+          image={{ src: "https://images.unsplash.com/photo-1600518464441-9154a4dea21b?w=700&h=500&fit=crop", alt: "customer review image" }}
+        />
 
       {/* Rating Stats Section */}
       <section className="bg-white  py-4">

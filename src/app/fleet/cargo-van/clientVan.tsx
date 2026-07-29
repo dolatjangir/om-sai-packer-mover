@@ -98,13 +98,11 @@ export default function CargoVanPage() {
      
 
       {/* Hero Section */}
-      <section className="bg-(--blue-900) relative overflow-hidden py-4">
+      <section className="bg-(--blue-900) relative overflow-hidden pb-4 pt-18">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid lg:grid-cols-2 gap-8 items-center">
-            <div className="py-4">
-              <div className="flex items-center gap-2 text-(--blue-300) text-sm mb-4">
-                <span>Home</span><span>&gt;</span><span>Fleet</span><span>&gt;</span><span className="text-white">Cargo Van</span>
-              </div>
+            <div className="py-10">
+             
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-2 leading-tight">Cargo Van</h1>
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-(--lime-400) mb-4 leading-tight">For Every Move</h1>
               <p className="text-(--blue-200) text-base md:text-lg mb-6 max-w-lg">
@@ -130,7 +128,7 @@ export default function CargoVanPage() {
 
             <div className="relative hidden lg:block">
               <div className="relative">
-                <img src="https://images.unsplash.com/photo-1566008885218-90abf9200ddb?w=700&h=450&fit=crop" alt="Cargo Van" className="w-full h-auto object-contain" />
+                <img src="/cargo-van-hero-img.png" alt="Cargo Van" className="w-full h-auto rounded-xl object-contain" />
                 <div className="absolute -bottom-4 -right-4 w-32 h-32 border-[16px] border-(--lime-500) rounded-full opacity-80"></div>
                 <div className="absolute -bottom-8 -right-8 w-48 h-48 border-[8px] border-(--lime-400) rounded-full opacity-40"></div>
               </div>

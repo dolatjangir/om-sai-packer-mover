@@ -25,7 +25,9 @@ import {
   Printer,
   Settings,
   Share2,
+  Banknote,
 } from "lucide-react";
+import HeroSection from "@/components/services-hero-reusable/heroSection";
 
 const navLinks = [
   { name: "Home", href: "#" },
@@ -159,67 +161,19 @@ export default function MovingChecklistPage() {
     
 
       {/* Hero Section */}
-      <section className="bg-(--blue-900) relative overflow-hidden py-4">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid lg:grid-cols-2 gap-8 items-center">
-            <div className="py-4">
-              <div className="flex items-center gap-3 mb-4">
-                <span className="text-(--lime-400) text-xs font-bold uppercase tracking-widest">Moving Checklist</span>
-                <div className="h-px w-12 bg-(--lime-400)"></div>
-              </div>
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-2 leading-tight">Your Complete</h1>
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-(--lime-400) mb-4 leading-tight">Moving Checklist</h1>
-              <p className="text-(--blue-200) text-base md:text-lg mb-6 max-w-lg">
-                A well-planned move starts with a checklist. Follow our step-by-step guide to stay organized and make your move smooth and stress-free.
-              </p>
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-                {heroFeatures.map((feat) => {
-                  const Icon = feat.icon;
-                  return (
-                    <div key={feat.title} className="flex flex-col items-center text-center gap-2">
-                      <div className="w-12 h-12 bg-(--lime-500) rounded-full flex items-center justify-center">
-                        <Icon className="w-6 h-6 text-white" />
-                      </div>
-                      <p className="text-white text-xs font-semibold leading-tight">{feat.title}</p>
-                      <p className="text-white text-xs leading-tight">{feat.subtitle}</p>
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-
-            <div className="relative hidden lg:block">
-              <div className="relative">
-                <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=700&h=500&fit=crop" alt="Couple planning move" className="rounded-lg w-full h-auto object-cover" />
-                <div className="absolute -bottom-4 -right-4 w-32 h-32 border-[16px] border-(--lime-500) rounded-full opacity-80"></div>
-                <div className="absolute -bottom-8 -right-8 w-48 h-48 border-[8px] border-(--lime-400) rounded-full opacity-40"></div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Floating Features Bar */}
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-6">
-          <div className="bg-white rounded-xl p-4 shadow-lg">
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-              {floatingFeatures.map((feat) => {
-                const Icon = feat.icon;
-                return (
-                  <div key={feat.title} className="flex items-center gap-3">
-                    <div className="w-10 h-10 bg-(--blue-50) rounded-lg flex items-center justify-center flex-shrink-0">
-                      <Icon className="w-5 h-5 text-(--blue-600)" />
-                    </div>
-                    <div>
-                      <p className="text-(--gray-900) text-sm font-semibold">{feat.title}</p>
-                      <p className="text-(--gray-500) text-xs">{feat.subtitle}</p>
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-        </div>
-      </section>
+     <HeroSection
+               title="Your Complete "
+               highlightedTitle="Moving Checklist"
+               description="A well-planned move starts with a checklist. Follow our step-by-step guide to stay organized and make your move smooth and stress-free."
+        
+               features={[
+                 { icon: Shield, text: "Step-by-Step Guide", sub: "We move you anywhere in India" },
+                 { icon: Clock, text: "Stay Organized & Stress-Free", sub: "Your goods are packed and transported safely" },
+                 { icon: Package, text: "Save Time & Effort", sub: "Timely delivery, every time" },
+                 { icon: Banknote, text: "Nothing Left Behind", sub: "We're here to help you, always" },
+               ]}
+               image={{ src: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=700&h=500&fit=crop", alt: "blog hero image" }}
+             />
 
       {/* Timeline Section */}
       <section className="bg-white py-4">

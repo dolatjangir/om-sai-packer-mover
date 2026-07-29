@@ -78,16 +78,14 @@ export default function BikeCourierPage() {
   return (
     <div className="min-h-screen bg-white">
       {/* Hero Section */}
-      <section className="bg-(--blue-900) relative overflow-hidden py-4">
+      <section className="bg-(--blue-900) relative overflow-hidden pb-4 pt-18">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid lg:grid-cols-2 gap-8 items-center">
-            <div className="py-4">
-              <div className="flex items-center gap-2 text-(--blue-300) text-sm mb-4">
-                <span>Home</span><span>&gt;</span><span>Fleet</span><span>&gt;</span><span className="text-white">Bike Courier</span>
-              </div>
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-2 leading-tight">Bike Courier</h1>
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-(--lime-400) mb-4 leading-tight">Fast. Reliable. Always On Time.</h1>
-              <p className="text-(--blue-200) text-base md:text-lg mb-6 max-w-lg">
+            <div className="py-6">
+            
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white  leading-tight">Bike Courier</h1>
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-(--lime-400) mb-1 leading-tight">Fast. Reliable. Always On Time.</h1>
+              <p className="text-(--blue-200) text-base md:text-lg mb-2 max-w-lg">
                 Our Bike Courier service is perfect for small parcels, documents and urgent deliveries. Quick pickup, safe delivery and real-time tracking – right to your doorstep.
               </p>
               <div className="flex flex-wrap gap-4">
@@ -110,7 +108,7 @@ export default function BikeCourierPage() {
 
             <div className="relative hidden lg:block">
               <div className="relative">
-                <img src="https://images.unsplash.com/photo-1617347454431-f49d7ff5c3b1?w=700&h=450&fit=crop" alt="Bike Courier" className="w-full h-auto object-contain" />
+                <img src="/bike-curiour-hero-img.png" alt="Bike Courier" className="w-full h-auto rounded-xl object-contain" />
                 <div className="absolute -bottom-4 -right-4 w-32 h-32 border-[16px] border-(--lime-500) rounded-full opacity-80"></div>
                 <div className="absolute -bottom-8 -right-8 w-48 h-48 border-[8px] border-(--lime-400) rounded-full opacity-40"></div>
               </div>

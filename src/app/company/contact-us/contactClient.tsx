@@ -303,38 +303,14 @@ export default function ContactUs() {
             <div className="hero-image-area relative hidden lg:block">
               <div className="relative z-10">
                 <div className="relative rounded-2xl overflow-hidden bg-[var(--blue-800)] bg-opacity-50 aspect-[4/3] flex items-center justify-center">
-                  <div className="text-center p-8">
-                    <Truck className="w-24 h-24 text-[var(--blue-300)] mx-auto mb-4" />
-                    <p className="text-[var(--blue-200)] text-sm">
-                      Movers with Truck Image
-                    </p>
-                    <p className="text-[var(--blue-300)] text-xs mt-2">
-                      Replace with your actual image
-                    </p>
-                  </div>
-                  <div className="absolute top-4 right-4 bg-white/10 backdrop-blur-sm rounded-lg px-3 py-2">
-                    <div className="flex items-center gap-2">
-                      <Truck className="w-5 h-5 text-[var(--lime-400)]" />
-                      <span className="text-white font-bold text-sm">
-                        MoveEasy
-                      </span>
-                    </div>
-                    <span className="text-[var(--blue-200)] text-[10px]">
-                      PACKERS & MOVERS
-                    </span>
-                  </div>
+                 <img src="/contact-us-hero-img.png" alt="contact with us" className="object-center"/>
                 </div>
               </div>
             </div>
           </div>
         </div>
 
-        <div
-          className="hero-curve absolute bottom-0 right-0 w-64 h-32 lg:w-96 lg:h-48 bg-[var(--lime-500)]"
-          style={{
-            clipPath: "ellipse(90% 100% at 100% 100%)",
-          }}
-        />
+       
       </section>
 
       {/* Contact Section */}

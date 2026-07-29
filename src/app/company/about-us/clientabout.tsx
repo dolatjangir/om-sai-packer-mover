@@ -22,6 +22,7 @@ import {
   ArrowRight,
   Play,
 } from "lucide-react";
+import Link from "next/link";
 
 // ─── Animation Variants ─────────────────────────────────────────
 const fadeInUp:Variants = {
@@ -176,6 +177,29 @@ export default function AboutUsPage() {
           HERO SECTION
           ═══════════════════════════════════════════════════════ */}
       <section className="relative pt-16 pb-20 md:pt-24 md:pb-28 overflow-hidden">
+   <div className="absolute top-0 left-0 w-full h-28 bg-blue-600 z-0">
+    <svg
+      className="absolute bottom-0 left-0 w-full h-6 md:h-26"
+      viewBox="0 0 1200 60"
+      preserveAspectRatio="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      {/* Rounded zig-zag / snake wave path, filled with page background to "cut" into the blue */}
+      <path
+        d="M0,0 
+           C 50,60 100,0 150,30 
+           C 200,60 250,0 300,30 
+           C 350,60 400,0 450,30 
+           C 500,60 550,0 600,30 
+           C 650,60 700,0 750,30 
+           C 800,60 850,0 900,30 
+           C 950,60 1000,0 1050,30 
+           C 1100,60 1150,0 1200,30 
+           L1200,0 Z"
+        fill="blue"
+      />
+    </svg>
+  </div>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-8 items-center">
             {/* Left Content */}
@@ -185,9 +209,9 @@ export default function AboutUsPage() {
               whileInView="visible"
               viewport={{ once: true }}
             >
-              <SectionLabel text="About Us" />
+              
               <h1
-                className="text-4xl md:text-5xl lg:text-[3.2rem] font-bold leading-tight mt-4 mb-6"
+                className="text-4xl md:text-5xl lg:text-[3.2rem] font-bold leading-tight mt-6 mb-6"
                 style={{ color: colors.primary }}
               >
                 We Make Moving{" "}
@@ -234,21 +258,21 @@ export default function AboutUsPage() {
               className="relative"
             >
               {/* Main Image Container */}
-              <div className="relative rounded-3xl overflow-hidden shadow-2xl">
-                <div className="relative aspect-[4/3] w-full bg-gray-100">
+              <div className="relative rounded-3xl overflow-hidden ">
+                <div className="relative  w-full ">
                   <img
-                    src="/images/movers-hero.jpg"
+                    src="/about-us-hero-img.png"
                     alt="Professional movers carrying boxes"
-                    className="object-cover"
+                    className="object-cover w-full h-auto"
                     
                   />
                   {/* Fallback gradient if image not available */}
-                  <div className="absolute inset-0 bg-gradient-to-br from-slate-200 to-slate-300 flex items-center justify-center">
+                  {/* <div className="absolute inset-0 bg-gradient-to-br from-slate-200 to-slate-300 flex items-center justify-center">
                     <div className="text-center">
                       <Truck size={64} className="mx-auto mb-4 text-slate-400" />
                       <span className="text-slate-500 text-sm">Movers Image</span>
                     </div>
-                  </div>
+                  </div> */}
                 </div>
               </div>
 
@@ -304,7 +328,7 @@ export default function AboutUsPage() {
           STATS BAR
           ═══════════════════════════════════════════════════════ */}
       <section
-        className="py-12 md:py-16 relative overflow-hidden"
+        className="py-3 md:py-6 relative overflow-hidden"
         style={{ backgroundColor: colors.primary }}
       >
         {/* Subtle pattern overlay */}
@@ -324,7 +348,7 @@ export default function AboutUsPage() {
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
-            className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-4"
+            className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-4"
           >
             {stats.map((stat, idx) => (
               <motion.div
@@ -332,7 +356,7 @@ export default function AboutUsPage() {
                 variants={fadeInUp}
                 className={`text-center ${idx < stats.length - 1 ? "md:border-r md:border-white/20" : ""}`}
               >
-                <div className="flex justify-center mb-3">
+                <div className="flex justify-center mb-1">
                   <stat.icon
                     size={40}
                     strokeWidth={1.5}
@@ -340,7 +364,7 @@ export default function AboutUsPage() {
                   />
                 </div>
                 <div
-                  className="text-3xl md:text-4xl font-bold mb-1"
+                  className="text-2xl md:text-3xl font-bold mb-1"
                   style={{ color: colors.white }}
                 >
                   {stat.value}
@@ -551,52 +575,25 @@ export default function AboutUsPage() {
               viewport={{ once: true }}
               className="relative"
             >
-              <div className="relative rounded-3xl overflow-hidden shadow-2xl">
-                <div className="relative aspect-[4/3] w-full bg-gray-100">
+              <div className="relative rounded-3xl overflow-hidden ">
+                <div className="relative  w-full ">
                   <img
-                    src="/images/mover-truck.jpg"
+                    src="/about-us-bottom-img.png"
                     alt="Professional mover with company truck"
 
-                    className="object-cover"
+                    className="object-cover w-full h-auto"
                   />
                   {/* Fallback */}
-                  <div className="absolute inset-0 bg-gradient-to-br from-slate-200 to-slate-300 flex items-center justify-center">
+                  {/* <div className="absolute inset-0 bg-gradient-to-br from-slate-200 to-slate-300 flex items-center justify-center">
                     <div className="text-center">
                       <Truck size={64} className="mx-auto mb-4 text-slate-400" />
                       <span className="text-slate-500 text-sm">Mover with Truck</span>
                     </div>
-                  </div>
+                  </div> */}
                 </div>
               </div>
 
-              {/* Decorative dots */}
-              <div className="absolute -left-4 top-1/4 flex flex-col gap-2">
-                {[...Array(5)].map((_, i) => (
-                  <div
-                    key={i}
-                    className="w-2 h-2 rounded-full"
-                    style={{ backgroundColor: colors.accent }}
-                  />
-                ))}
-              </div>
-              <div className="absolute -left-4 top-1/4 mt-10 flex flex-col gap-2">
-                {[...Array(5)].map((_, i) => (
-                  <div
-                    key={i}
-                    className="w-2 h-2 rounded-full"
-                    style={{ backgroundColor: colors.accent }}
-                  />
-                ))}
-              </div>
-              <div className="absolute -left-4 top-1/4 mt-20 flex flex-col gap-2">
-                {[...Array(5)].map((_, i) => (
-                  <div
-                    key={i}
-                    className="w-2 h-2 rounded-full"
-                    style={{ backgroundColor: colors.accent }}
-                  />
-                ))}
-              </div>
+             
             </motion.div>
 
             {/* Right Content */}
@@ -649,7 +646,7 @@ export default function AboutUsPage() {
           CTA BANNER
           ═══════════════════════════════════════════════════════ */}
       <section
-        className="py-12 md:py-16 relative overflow-hidden"
+        className="py-4 md:py-8 relative overflow-hidden mb-4"
         style={{ backgroundColor: colors.primary }}
       >
         {/* Decorative circles */}
@@ -700,7 +697,8 @@ export default function AboutUsPage() {
               whileInView="visible"
               viewport={{ once: true }}
             >
-              <motion.button
+             <Link href="/get-a-quote"> 
+             <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 className="inline-flex items-center gap-3 px-8 py-3.5 rounded-lg font-semibold text-sm md:text-base shadow-lg transition-all"
@@ -717,6 +715,7 @@ export default function AboutUsPage() {
                   <ArrowRight size={14} className="text-white" />
                 </span>
               </motion.button>
+              </Link>
             </motion.div>
 
             {/* Right Contact */}
@@ -730,7 +729,7 @@ export default function AboutUsPage() {
               <div className="flex items-center justify-center md:justify-end gap-2 mb-2">
                 <Phone size={18} style={{ color: colors.accent }} />
                 <span className="text-xl font-bold text-white">
-                  1800 123 4567
+                  9314630634
                 </span>
               </div>
               <div className="flex items-center justify-center md:justify-end gap-2">
@@ -739,7 +738,7 @@ export default function AboutUsPage() {
                   className="text-sm"
                   style={{ color: "rgba(255,255,255,0.8)" }}
                 >
-                  support@moveeasy.com
+                  info@omsaipackersmovers.com
                 </span>
               </div>
             </motion.div>
