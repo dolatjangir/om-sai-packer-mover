@@ -44,9 +44,9 @@ const navServices = [
 ];
 
 const navLocationGroups: { region: string; cities: string[] }[] = [
-  { region: "West", cities: ["Los Angeles", "San Francisco", "Seattle", "Phoenix"] },
-  { region: "Central", cities: ["Chicago", "Dallas", "Denver", "Austin"] },
-  { region: "East", cities: ["New York", "Boston", "Miami", "Washington DC"] },
+  { region: "Jaipur", cities: ["Vaishali Nagar", "Malviya Nagar", "Mansarovar", "C-Scheme"] },
+  { region: "Central Jaipur", cities: ["Raja Park", "Adarsh Nagar", "Bani Park", "Sindhi Camp"] },
+  { region: "East Jaipur", cities: ["Jagatpura", "Pratap Nagar", "Sanganer", "Tonk Road"] },
 ];
 
 const navFleet = [
