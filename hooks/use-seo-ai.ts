@@ -1,6 +1,6 @@
 // hooks/use-seo-ai.ts
 import { useState, useCallback } from 'react';
-import { SEOPromptInput, SEOPromptOutput } from '../lib/seo-prompt';
+import { SEOPromptInput, SEOPromptOutput } from '../lib/seo-prompts';
 
 
 interface UseSEOAIState {

@@ -1,6 +1,6 @@
 // app/api/seo/generate/route.ts
 import { NextRequest, NextResponse } from 'next/server';
-import { SEOPromptInput } from '../../../../../lib/seo-prompt';
+import { SEOPromptInput } from '../../../../../lib/seo-prompts';
 import { generateSEO } from '../../../../../lib/ai-service';
 
 
@@ -17,7 +17,7 @@ export async function POST(request: NextRequest) {
 
     const seoData = await generateSEO({
       pageName: body.pageName,
-      canonicalUrl: body.canonicalUrl || 'https://creatikai.com',
+      canonicalUrl: body.canonicalUrl || 'https://omsaipackersandmovers.com',
       pageContent: body.pageContent,
     });
 
