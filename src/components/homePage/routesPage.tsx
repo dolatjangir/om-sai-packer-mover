@@ -15,12 +15,12 @@ interface Route {
 }
 
 const routes: Route[] = [
-  { from: "New York, NY", to: "Miami, FL", distance: "1,280 mi", duration: "3–5 days", price: 1899, popular: true,image:"/img1.avif" },
-  { from: "Los Angeles, CA", to: "Austin, TX", distance: "1,375 mi", duration: "3–5 days", price: 1749, popular: false,image:"/img2.avif" },
-  { from: "Chicago, IL", to: "Denver, CO", distance: "996 mi", duration: "2–4 days", price: 1399, popular: true,image:"/img3.webp" },
-  { from: "Seattle, WA", to: "San Francisco, CA", distance: "808 mi", duration: "2–3 days", price: 1249, popular: false,image:"/img4.webp" },
-  { from: "Boston, MA", to: "Washington, DC", distance: "440 mi", duration: "1–2 days", price: 899, popular: false,image:"/parcels.png" },
-  { from: "Dallas, TX", to: "Phoenix, AZ", distance: "887 mi", duration: "2–3 days", price: 1199, popular: false,image:"/img6.webp" },
+  { from: "Vaishali Nagar", to: "Sodala", distance: "5 km", duration: "15 mins", price: 150, popular: true, image: "/img1.avif" },
+  { from: "Malviya Nagar", to: "C-Scheme", distance: "8 km", duration: "25 mins", price: 200, popular: false, image: "/img2.avif" },
+  { from: "Mansarovar", to: "Raja Park", distance: "12 km", duration: "35 mins", price: 280, popular: true, image: "/img3.webp" },
+  { from: "Jagatpura", to: "Sindhi Camp", distance: "14 km", duration: "40 mins", price: 320, popular: false, image: "/img4.webp" },
+  { from: "Bapu Nagar", to: "Vidyadhar Nagar", distance: "9 km", duration: "30 mins", price: 220, popular: false, image: "/parcels.png" },
+  { from: "Sitapura", to: "Vaishali Nagar", distance: "22 km", duration: "55 mins", price: 450, popular: false, image: "/img6.webp" },
 ];
 
 
@@ -53,7 +53,7 @@ export default function RoutesPage() {
         >
           {/* Image at top */}
           <div className="relative w-full h-48 overflow-hidden">
-            <Image
+            <Image  
               src={route.image}
               alt={`${route.from} to ${route.to}`}
               fill
@@ -105,7 +105,7 @@ export default function RoutesPage() {
                   Starting at
                 </p>
                 <p className="text-xl font-black text-gray-900">
-                  ${route.price}
+                  ₹{route.price}
                 </p>
               </div>
               <Link href="/get-a-quote"><button className="bg-blue-700 hover:bg-blue-800 text-white text-xs font-extrabold uppercase tracking-wide px-4 py-2.5 rounded-full transition-colors duration-300 cursor-pointer">

@@ -3,12 +3,7 @@
 import { usePathname } from "next/navigation";
 import PackersMoversFooter from "../footer";
 import Navbar from "../navbar";
-
-
-
-
-
-
+import WhatsAppChatbot from "../whatsapp-button/whatsapp";
 export default function LayoutWrapper({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
 
@@ -29,7 +24,7 @@ export default function LayoutWrapper({ children }: { children: React.ReactNode 
     <>
       {!hideLayout && <Navbar />}
       {children}
-      
+       {!hideLayout &&  <WhatsAppChatbot/> }
      
       {!hideLayout &&  <PackersMoversFooter/> }
     </>
