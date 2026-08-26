@@ -17,7 +17,9 @@ import {
   TrendingUp,
   Star,
   Calendar,
-  MessageCircleCheck
+  MessageCircleCheck,
+  Paperclip,
+  ChevronLeft
 } from 'lucide-react'
 
 type Message = {
@@ -55,7 +57,7 @@ export default function WhatsAppChatbot() {
   const [isTyping, setIsTyping] = useState(false)
   const [showButton, setShowButton] = useState(true)
   const messagesEndRef = useRef<HTMLDivElement>(null)
-  
+
   // Form state
   const [activeFormMessageId, setActiveFormMessageId] = useState<string | null>(null);
   const [name, setName] = useState("");
@@ -120,7 +122,7 @@ export default function WhatsAppChatbot() {
       });
 
       const data = await res.json();
-      
+
       const botMessageId = (Date.now() + 1).toString();
       const botMessage: Message = {
         id: botMessageId,
@@ -135,7 +137,7 @@ export default function WhatsAppChatbot() {
       };
 
       setMessages((prev) => [...prev, botMessage]);
-      
+
       if (data.isDemo) {
         setActiveFormMessageId(botMessageId);
         setFormFields(data.formFields || ["name", "email", "phone", "message"]);
@@ -233,7 +235,7 @@ export default function WhatsAppChatbot() {
 
     } catch (err) {
       console.error(err);
-      
+
       setMessages((prev) => [
         ...prev,
         {
@@ -258,76 +260,96 @@ export default function WhatsAppChatbot() {
   }
 
   // Floating Button
-   // Button visible state
-   if (showButton && !isOpen) {
+  if (showButton && !isOpen) {
     return (
-      <div className={`fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-50 transition-all duration-500 `}>
-        {/* Main Pill Button */}
+      <div className="fixed bottom-6 right-6 z-50 flex items-end gap-3">
+        {/* Tooltip & Click to Chat */}
+        <div className="flex flex-col items-end gap-2 mb-2">
+          {/* Chat Bubble */}
+          <div className="relative -top-10 -right-10">
+            <div className="bg-white rounded-2xl rounded-br-none shadow-lg px-4 py-2.5 border border-gray-100">
+              <p className="text-sm font-semibold text-gray-800">Hi! Need help?</p>
+              <p className="text-xs text-gray-500">We're here!</p>
+            </div>
+            {/* Small triangle */}
+            <div className="absolute -bottom-1.5 right-0 w-3 h-3 bg-white border-b border-r border-gray-100 transform rotate-45 translate-x-1.5"></div>
+          </div>
+
+          {/* Click to chat text */}
+          <div className="flex items-center gap-1 pr-2">
+            <span className="text-sm font-medium text-[#0066cc] italic">Click to chat</span>
+            <svg width="24" height="16" viewBox="0 0 24 16" fill="none" className="text-[#0066cc]">
+              <path d="M0 12C8 4 16 4 24 8" stroke="currentColor" strokeWidth="2" fill="none"/>
+              <path d="M20 5L24 8L21 12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+          </div>
+        </div>
+
+        {/* Main Button */}
         <button
           onClick={handleOpen}
-          className="relative group flex items-center cursor-pointer p-3  rounded-full shadow-2xl shadow-blue-500/30 hover:shadow-blue-500/50 transition-all duration-300 hover:scale-105 active:scale-95"
+          className="relative group w-16 h-16 bg-[#0066cc] rounded-full shadow-2xl shadow-blue-500/40 hover:shadow-blue-500/60 transition-all duration-300 hover:scale-110 active:scale-95 flex items-center justify-center"
         >
-          {/* Robot Image - Peeking from left side */}
           <img 
             src="/chatbot-icon.png" 
             alt="AI Assistant" 
-            className=" w-10 h-10 sm:w-16 sm:h-16 object-contain drop-shadow-xl pointer-events-none select-none"
+            className="w-12 h-12 object-contain pointer-events-none select-none"
           />
-          
-          {/* <span className="text-white font-bold text-sm sm:text-lg tracking-wide ml-2">
-            Connect Now
-          </span> */}
+          {/* Online dot */}
+          <div className="absolute top-1 right-1 w-4 h-4 bg-green-400 rounded-full border-2 border-white" />
         </button>
-            
-        {/* Gold Notification Badge */}
-        {/* <div className="absolute -top-1 -right-1 w-5 h-5 sm:w-7 sm:h-7 bg-gradient-to-b from-[#FDE68A] via-[#F59E0B] to-[#B45309] rounded-full flex items-center justify-center shadow-lg border-2 border-white z-10">
-          <span className="text-white font-bold text-xs sm:text-base drop-shadow-sm">1</span>
-        </div> */}
       </div>
     )
   }
+
   // Compact Chat Widget Panel
   return (
     <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end gap-4">
       {/* Chat Panel */}
       <div 
-        className={`w-[380px] max-w-[calc(100vw-2rem)] h-[600px] max-h-[calc(100vh-7rem)] bg-white rounded-2xl shadow-2xl shadow-slate-900/20 flex flex-col overflow-hidden border border-gray-200 transition-all duration-300 origin-bottom-right ${
+        className={`w-[380px] max-w-[calc(100vw-2rem)] h-[600px] max-h-[calc(100vh-7rem)] bg-white rounded-3xl shadow-2xl shadow-slate-900/20 flex flex-col overflow-hidden border border-gray-100 transition-all duration-300 origin-bottom-right ${
           isOpen ? 'scale-100 opacity-100 translate-y-0' : 'scale-90 opacity-0 translate-y-4 pointer-events-none'
         }`}
       >
         {/* Header */}
-        <div className="bg-gradient-to-r from-[#0066cc] to-[#0052a3] px-5 py-4 flex items-center justify-between shrink-0">
-          <div className="flex items-center gap-3">
+        <div className="relative bg-gradient-to-r from-[#0066cc] to-[#0052a3] px-4 pt-4 pb-8 flex items-center justify-between shrink-0">
+          {/* Back Button */}
+          <button 
+            onClick={handleClose}
+            className="p-2 hover:bg-white/10 rounded-full transition-colors"
+          >
+            <ChevronLeft className="w-5 h-5 text-white" />
+          </button>
+
+          {/* Center: Avatar + Title */}
+          <div className="flex items-center gap-3 flex-1 justify-center">
             <div className="relative">
-              <div className="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center backdrop-blur-sm">
-                <Bot className="w-5 h-5 text-white" />
+              <div className="w-11 h-11 bg-white/20 rounded-full flex items-center justify-center p-1">
+                <img 
+                  src="/chatbot-icon.png" 
+                  alt="AI Assistant" 
+                  className="w-9 h-9 object-contain"
+                />
               </div>
               <div className="absolute bottom-0 right-0 w-3 h-3 bg-green-400 rounded-full border-2 border-[#0066cc]" />
             </div>
-            <div>
+            <div className="text-center">
               <h3 className="font-bold text-white text-sm">OmSai Assistant</h3>
-              <p className="text-blue-100 text-xs flex items-center gap-1">
-                <span className="w-1.5 h-1.5 bg-green-400 rounded-full animate-pulse" />
-                Online now
-              </p>
+              <p className="text-blue-100 text-xs">We're here to help you!</p>
             </div>
           </div>
-  
-          <div className="flex items-center gap-2">
-            <button 
-              onClick={openWhatsApp}
-              className="p-2 hover:bg-white/10 rounded-full transition-colors"
-              title="Continue on WhatsApp"
-            >
-              <MessageCircle className="w-4 h-4 text-white" />
-            </button>
-            <button 
-              onClick={handleClose}
-              className="p-2 hover:bg-white/10 rounded-full transition-colors"
-            >
-              <X className="w-5 h-5 text-white" />
-            </button>
-          </div>
+
+          {/* WhatsApp Button */}
+          <button 
+            onClick={openWhatsApp}
+            className="p-2 hover:bg-white/10 rounded-full transition-colors"
+            title="Continue on WhatsApp"
+          >
+            <MessageCircle className="w-5 h-5 text-white" />
+          </button>
+
+          {/* Curved bottom edge */}
+          <div className="absolute -bottom-3 left-0 right-0 h-6 bg-white rounded-t-[50%]"></div>
         </div>
 
         {/* Messages Area */}
@@ -341,40 +363,40 @@ export default function WhatsAppChatbot() {
 
           {messages.map((msg) => (
             <div key={msg.id} className={`flex ${msg.type === 'user' ? 'justify-end' : 'justify-start'}`}>
-              <div className={`flex items-start gap-2 max-w-[85%] ${msg.type === 'user' ? 'flex-row-reverse' : 'flex-row'}`}>
-                {/* Avatar */}
-                {msg.type === 'bot' ? (
-                  <div className="w-7 h-7 bg-gradient-to-br from-[#0066cc] to-[#0052a3] rounded-full flex items-center justify-center flex-shrink-0 shadow-sm mt-1">
-                    <Bot className="w-3.5 h-3.5 text-white" />
-                  </div>
-                ) : (
-                  <div className="w-7 h-7 bg-gray-300 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
-                    <User className="w-3.5 h-3.5 text-gray-600" />
+              <div className={`flex items-start gap-2 max-w-[90%] ${msg.type === 'user' ? 'flex-row-reverse' : 'flex-row'}`}>
+                {/* Avatar - Only for Bot */}
+                {msg.type === 'bot' && (
+                  <div className="w-8 h-8 flex-shrink-0 mt-1">
+                    <img 
+                      src="/chatbot-icon.png" 
+                      alt="Bot" 
+                      className="w-8 h-8 rounded-full object-contain"
+                    />
                   </div>
                 )}
 
                 {/* Message Bubble + Form */}
-                <div className="flex flex-col gap-2">
+                <div className="flex flex-col gap-1">
                   {/* Bubble */}
-                  <div className={`relative px-3.5 py-2.5 rounded-2xl text-sm leading-relaxed shadow-sm ${
+                  <div className={`relative px-4 py-2.5 text-sm leading-relaxed shadow-sm ${
                     msg.type === 'user' 
-                      ? 'bg-[#0066cc] text-white rounded-br-md' 
-                      : 'bg-white text-gray-800 rounded-bl-md border border-gray-100'
+                      ? 'bg-[#0066cc] text-white rounded-2xl rounded-tr-none' 
+                      : 'bg-white text-gray-800 rounded-2xl rounded-tl-none border border-gray-100'
                   }`}>
                     <div className="whitespace-pre-line text-[13px]">{msg.text}</div>
-                    
-                    {/* Time & Status */}
-                    <div className={`flex items-center gap-1 mt-1.5 text-[10px] ${
-                      msg.type === 'user' ? 'text-blue-200' : 'text-gray-400'
-                    }`}>
-                      <span>{msg.time}</span>
-                      {msg.type === 'user' && <CheckCheck className="w-3 h-3" />}
-                    </div>
+                  </div>
+
+                  {/* Time & Status */}
+                  <div className={`flex items-center gap-1 text-[10px] ${
+                    msg.type === 'user' ? 'text-gray-400 justify-end' : 'text-gray-400 pl-1'
+                  }`}>
+                    <span>{msg.time}</span>
+                    {msg.type === 'user' && <CheckCheck className="w-3 h-3 text-[#0066cc]" />}
                   </div>
 
                   {/* Demo Form */}
                   {msg.type === 'bot' && activeFormMessageId === msg.id && (
-                    <div className="p-4 bg-white rounded-xl shadow-md border border-gray-200 w-full">
+                    <div className="mt-2 p-4 bg-white rounded-xl shadow-md border border-gray-200 w-full">
                       <h3 className="font-bold text-gray-900 mb-1 flex items-center gap-2 text-sm">
                         <Calendar className="w-4 h-4 text-[#0066cc]" />
                         Book a Demo
@@ -390,7 +412,7 @@ export default function WhatsAppChatbot() {
                               placeholder="John Doe"
                               value={name}
                               onChange={(e) => setName(e.target.value)}
-                              className="w-full p-2 border border-gray-300 rounded-lg text-xs focus:outline-none focus:ring-2 focus:ring-[#0066cc]/20 focus:border-[#0066cc] transition-all"
+                              className="w-full p-2.5 border border-gray-200 rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-[#0066cc]/20 focus:border-[#0066cc] transition-all bg-gray-50"
                             />
                           </div>
                         )}
@@ -403,7 +425,7 @@ export default function WhatsAppChatbot() {
                               placeholder="john@example.com"
                               value={email}
                               onChange={(e) => setEmail(e.target.value)}
-                              className="w-full p-2 border border-gray-300 rounded-lg text-xs focus:outline-none focus:ring-2 focus:ring-[#0066cc]/20 focus:border-[#0066cc] transition-all"
+                              className="w-full p-2.5 border border-gray-200 rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-[#0066cc]/20 focus:border-[#0066cc] transition-all bg-gray-50"
                             />
                           </div>
                         )}
@@ -416,7 +438,7 @@ export default function WhatsAppChatbot() {
                               placeholder="+1 (555) 000-0000"
                               value={phone}
                               onChange={(e) => setPhone(e.target.value)}
-                              className="w-full p-2 border border-gray-300 rounded-lg text-xs focus:outline-none focus:ring-2 focus:ring-[#0066cc]/20 focus:border-[#0066cc] transition-all"
+                              className="w-full p-2.5 border border-gray-200 rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-[#0066cc]/20 focus:border-[#0066cc] transition-all bg-gray-50"
                             />
                           </div>
                         )}
@@ -429,14 +451,14 @@ export default function WhatsAppChatbot() {
                               value={description}
                               onChange={(e) => setDescription(e.target.value)}
                               rows={2}
-                              className="w-full p-2 border border-gray-300 rounded-lg text-xs resize-none focus:outline-none focus:ring-2 focus:ring-[#0066cc]/20 focus:border-[#0066cc] transition-all"
+                              className="w-full p-2.5 border border-gray-200 rounded-xl text-xs resize-none focus:outline-none focus:ring-2 focus:ring-[#0066cc]/20 focus:border-[#0066cc] transition-all bg-gray-50"
                             />
                           </div>
                         )}
 
                         <button
                           onClick={handleDemoSubmit}
-                          className="w-full bg-[#0066cc] hover:bg-[#0052a3] text-white font-medium py-2 rounded-lg transition-colors flex items-center justify-center gap-2 text-xs"
+                          className="w-full bg-[#0066cc] hover:bg-[#0052a3] text-white font-medium py-2.5 rounded-xl transition-colors flex items-center justify-center gap-2 text-xs"
                         >
                           <Send className="w-3.5 h-3.5" />
                           Submit Request
@@ -453,10 +475,14 @@ export default function WhatsAppChatbot() {
           {isTyping && (
             <div className="flex justify-start">
               <div className="flex items-end gap-2">
-                <div className="w-7 h-7 bg-gradient-to-br from-[#0066cc] to-[#0052a3] rounded-full flex items-center justify-center">
-                  <Bot className="w-3.5 h-3.5 text-white" />
+                <div className="w-8 h-8 flex-shrink-0">
+                  <img 
+                    src="/chatbot-icon.png" 
+                    alt="Bot" 
+                    className="w-8 h-8 rounded-full object-contain"
+                  />
                 </div>
-                <div className="bg-white rounded-2xl rounded-bl-md px-4 py-3 border border-gray-100 shadow-sm">
+                <div className="bg-white rounded-2xl rounded-tl-none px-4 py-3 border border-gray-100 shadow-sm">
                   <div className="flex gap-1">
                     <span className="w-1.5 h-1.5 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0ms' }} />
                     <span className="w-1.5 h-1.5 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '150ms' }} />
@@ -469,18 +495,16 @@ export default function WhatsAppChatbot() {
 
           {/* Quick Replies */}
           {messages[messages.length - 1]?.quickReplies && !isTyping && !activeFormMessageId && (
-            <div className="flex flex-wrap gap-2 pl-9">
+            <div className="grid grid-cols-2 gap-2 pl-10">
               {QUICK_REPLIES.map((reply) => {
                 const Icon = reply.icon
                 return (
                   <button
                     key={reply.text}
                     onClick={() => handleSendMessage(reply.text)}
-                    className="group flex items-center gap-1.5 px-3 py-1.5 bg-white border border-gray-200 rounded-full text-xs text-gray-600 hover:border-[#0066cc] hover:text-[#0066cc] transition-all shadow-sm hover:shadow-md"
+                    className="flex items-center gap-2 px-3 py-2.5 bg-white border border-gray-200 rounded-xl text-xs text-gray-700 hover:border-[#0066cc] hover:text-[#0066cc] transition-all shadow-sm"
                   >
-                    <div className={`w-5 h-5 ${reply.color} rounded-full flex items-center justify-center`}>
-                      <Icon className="w-2.5 h-2.5 text-white" />
-                    </div>
+                    <Icon className="w-4 h-4 text-gray-500" />
                     <span className="font-medium">{reply.text}</span>
                   </button>
                 )
@@ -493,36 +517,29 @@ export default function WhatsAppChatbot() {
 
         {/* Input Area */}
         <div className="bg-white border-t border-gray-100 p-3 shrink-0">
-          <div className="flex gap-2">
-            <div className="flex-1 relative">
-              <input
-                type="text"
-                value={inputText}
-                onChange={(e) => setInputText(e.target.value)}
-                onKeyPress={(e) => e.key === 'Enter' && handleSendMessage()}
-                placeholder={activeFormMessageId ? "Type your message..." : "Type your message..."}
-                className="w-full pl-4 pr-10 py-3 bg-gray-100 rounded-full text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#0066cc]/20 focus:bg-white transition-all"
-              />
-              <button
-                onClick={() => handleSendMessage()}
-                disabled={!inputText.trim()}
-                className="absolute right-1.5 top-1/2 -translate-y-1/2 w-8 h-8 bg-[#0066cc] text-white rounded-full flex items-center justify-center hover:bg-[#0052a3] disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
-              >
-                <Send className="w-4 h-4" />
-              </button>
-            </div>
+          <div className="flex items-center gap-2 bg-gray-50 rounded-full px-3 py-2 border border-gray-200 focus-within:border-[#0066cc] focus-within:ring-2 focus-within:ring-[#0066cc]/10 transition-all">
+            <Paperclip className="w-5 h-5 text-gray-400 cursor-pointer hover:text-gray-600 transition-colors" />
+            <input
+              type="text"
+              value={inputText}
+              onChange={(e) => setInputText(e.target.value)}
+              onKeyPress={(e) => e.key === 'Enter' && handleSendMessage()}
+              placeholder="Type your message..."
+              className="flex-1 bg-transparent text-sm text-gray-900 placeholder-gray-400 focus:outline-none"
+            />
+            <button
+              onClick={() => handleSendMessage()}
+              disabled={!inputText.trim()}
+              className="w-9 h-9 bg-[#0066cc] text-white rounded-full flex items-center justify-center hover:bg-[#0052a3] disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
+            >
+              <Send className="w-4 h-4" />
+            </button>
           </div>
 
-          {/* WhatsApp CTA */}
-          <div className="flex items-center justify-center gap-2 mt-2">
-            <span className="text-[10px] text-gray-400">Prefer WhatsApp?</span>
-            <button
-              onClick={openWhatsApp}
-              className="flex items-center gap-1 px-2.5 py-1 bg-green-50 text-green-600 rounded-full text-[11px] font-medium hover:bg-green-100 transition-colors"
-            >
-              <MessageCircle className="w-3 h-3" />
-              Continue on WhatsApp
-            </button>
+          {/* Powered By */}
+          <div className="flex items-center justify-center gap-1.5 mt-2 pt-2">
+            <Zap className="w-3 h-3 text-amber-500" />
+            <span className="text-[10px] text-gray-400 font-medium">Powered by OmSai</span>
           </div>
         </div>
       </div>

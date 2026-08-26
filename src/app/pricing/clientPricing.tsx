@@ -332,13 +332,13 @@ export default function Pricing() {
   ];
 
   return (
-    <div className="min-h-screen bg-white font-sans overflow-x-hidden">
+    <div className="min-h-screen bg-white font-sans overflow-x-hidden overflow-y-hidden">
       {/* ===== HERO SECTION ===== */}
       <section
         ref={heroRef}
         className="relative bg-gradient-to-br from-(--blue-900) to-(--blue-800) overflow-hidden"
       >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 pb-20 lg:pt-20 lg:pb-28">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-16  pb-20 lg:pt-28 lg:pb-28">
           <div className="grid lg:grid-cols-2 gap-10 lg:gap-12 items-center">
             {/* Left Content */}
             <div className="relative z-10">
@@ -391,18 +391,10 @@ export default function Pricing() {
             {/* Right Image */}
             <div className="hero-image relative hidden lg:block">
               <div className="relative rounded-2xl overflow-hidden aspect-[4/3]">
-                <div className="absolute inset-0 bg-(--blue-800)/20" />
-                <div className="w-full h-full bg-(--gray-200) flex items-center justify-center">
-                  <div className="text-center p-8">
-                    <Truck className="w-20 h-20 text-(--gray-400) mx-auto mb-3" />
-                    <p className="text-(--gray-500) text-sm">
-                      Movers with truck
-                    </p>
-                    <p className="text-(--gray-400) text-xs mt-1">
-                      Replace with actual image
-                    </p>
-                  </div>
-                </div>
+                
+                
+                 <img src="/pricing-hero-img.png" className=" w-full h-full flex items-center justify-center"/>
+               
               </div>
 
               {/* Smart Moving Card */}
