@@ -1,13 +1,14 @@
 import { NextResponse } from "next/server";
 import { auth } from "./auth";
 
+
 export default auth((req) => {
   const { nextUrl } = req;
   const isLoggedIn = !!req.auth;
   const userRole = req.auth?.user?.role;
   const userStatus = req.auth?.user?.status;
   const onboardingCompleted = req.auth?.user?.onboardingCompleted;
-
+// console.log("proxy is running");
     // DEBUG: Add this temporarily to see what's happening
   if (isLoggedIn && nextUrl.pathname !== "/api/auth/session") {
     console.log("MIDDLEWARE DEBUG:", {
@@ -88,14 +89,23 @@ export default auth((req) => {
   }
 
   // /user root: redirect ADMIN and DRIVER to their own dashboards
-  if (nextUrl.pathname === "/user") {
-    if (userRole === "ADMIN") {
-      return NextResponse.redirect(new URL("/admin", nextUrl));
-    }
-    if (userRole === "DRIVER") {
-      return NextResponse.redirect(new URL("/driver", nextUrl));
-    }
+  // if (nextUrl.pathname === "/user") {
+  //   if (userRole === "ADMIN") {
+  //     return NextResponse.redirect(new URL("/admin", nextUrl));
+  //   }
+  //   if (userRole === "DRIVER") {
+  //     return NextResponse.redirect(new URL("/driver", nextUrl));
+  //   }
+  // }
+  // USER routes: block ADMIN and DRIVER from accessing them at all
+if (nextUrl.pathname.startsWith("/user")) {
+  if (userRole === "ADMIN") {
+    return NextResponse.redirect(new URL("/admin", nextUrl));
   }
+  if (userRole === "DRIVER") {
+    return NextResponse.redirect(new URL("/driver", nextUrl));
+  }
+}
 
   // 9. Everything else (/, /forgot-password, public pages) → allow
   return NextResponse.next();

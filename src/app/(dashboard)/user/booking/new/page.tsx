@@ -285,7 +285,7 @@ const [bookingResult, setBookingResult] = useState<{
       
       // Optional: Auto-redirect after delay
       setTimeout(() => {
-        router.push("/user/bookings");
+        router.push("/user/booking");
       }, 4000);
     } else {
       setErrors({ submit: "Invalid response from server." });

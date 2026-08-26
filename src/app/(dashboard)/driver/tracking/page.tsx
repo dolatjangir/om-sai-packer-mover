@@ -1,6 +1,6 @@
 import { redirect } from "next/navigation";
 import { prisma } from "../../../../../lib/prisma";
-import { auth } from "../../../../../auth";
+import { auth } from "../../../../auth";
 import DriverTrackingClient from "./DriverTrackingClient";
 
 

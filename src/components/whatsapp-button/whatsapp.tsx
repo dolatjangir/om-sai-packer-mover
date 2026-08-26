@@ -34,17 +34,17 @@ type Message = {
 
 // Predefined quick replies
 const QUICK_REPLIES = [
-  { icon: Calendar, text: "Book a demo", color: "bg-blue-500" },
+  { icon: Calendar, text: "Get a free quote", color: "bg-blue-500" },
   { icon: Zap, text: "Pricing info", color: "bg-amber-500" },
-  { icon: MessageCircle, text: "Talk to sales", color: "bg-emerald-500" },
-  { icon: Sparkles, text: "Product features", color: "bg-violet-500" },
+  { icon: MessageCircle, text: "Talk to our team", color: "bg-emerald-500" },
+  { icon: Sparkles, text: "Our services", color: "bg-violet-500" },
   { icon: Shield, text: "Support help", color: "bg-rose-500" },
 ]
 
 const WELCOME_MESSAGE: Message = {
   id: 'welcome',
   type: 'bot',
-  text: "👋 Welcome to OmSai!\n\nI'm your AI assistant, here to help you discover how our intelligent agents can transform your real estate business.\n\nWhat brings you here today?",
+  text: "👋 Welcome to Om Sai Packers and Movers!\n\nI'm your AI assistant, here to help you plan a smooth, stress-free move — from packing to storage to long-distance relocation.\n\nWhat brings you here today?",
   time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
   quickReplies: true,
   showForm: false
@@ -63,7 +63,12 @@ export default function WhatsAppChatbot() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
+  const [movingFrom, setMovingFrom] = useState("");
+  const [movingTo, setMovingTo] = useState("");
+  const [moveDate, setMoveDate] = useState("");
   const [description, setDescription] = useState("");
+  const [moveType, setMoveType] = useState("");
+  const [agreeToTerms, setAgreeToTerms] = useState(false);
   const [formFields, setFormFields] = useState<string[]>([]);
 
   const scrollToBottom = () => {
@@ -140,7 +145,7 @@ export default function WhatsAppChatbot() {
 
       if (data.isDemo) {
         setActiveFormMessageId(botMessageId);
-        setFormFields(data.formFields || ["name", "email", "phone", "message"]);
+        setFormFields(data.formFields || ["name", "email", "phone", "moveType", "movingFrom", "movingTo", "moveDate", "message", "agreeToTerms"]);
       }
 
     } catch (error) {
@@ -166,40 +171,65 @@ export default function WhatsAppChatbot() {
   };
 
   const handleDemoSubmit = async () => {
-    if (!name || !email || !phone) {
+    // Required fields per the quote API schema
+    if (!name || !phone || !movingFrom || !movingTo || !moveDate ) {
       alert("Please fill all required fields");
       return;
     }
 
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) {
-      alert("Please enter a valid email address");
+    // mobileNumber must be exactly 10 digits (strip spaces, +91, dashes, etc.)
+    const cleanedPhone = phone.replace(/\D/g, "").slice(-10);
+    if (!/^\d{10}$/.test(cleanedPhone)) {
+      alert("Please enter a valid 10-digit mobile number");
       return;
     }
 
+    // email is optional, but if provided must be valid
+    if (email) {
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(email)) {
+        alert("Please enter a valid email address");
+        return;
+      }
+    }
+
+    // if (!agreeToTerms) {
+    //   alert("Please accept the terms and conditions to continue");
+    //   return;
+    // }
+
     try {
-      const res = await fetch("/api/demo", {
+      const res = await fetch("/api/quotes", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          name,
-          email,
-          phone,
-          description,
+          moveType,
+          movingDate: moveDate,
+          pickupLocation: movingFrom,
+          deliveryLocation: movingTo,
+          fullName: name,
+          mobileNumber: cleanedPhone,
+          emailAddress: email || "",
+          additionalRequirements: description || "",
+          agreeToTerms,
         }),
       });
 
       const data = await res.json();
 
       if (!data.success) {
+        const fieldErrors = data.errors
+          ? Object.values(data.errors).flat().join(" ")
+          : null;
+
         setMessages((prev) => [
           ...prev,
           {
             id: Date.now().toString(),
             type: "bot",
-            text: `❌ ${data.error || "Failed to submit demo request. Please try again."}`,
+            text: `❌ ${fieldErrors || data.message || "Failed to submit your quote request. Please try again."}`,
             time: new Date().toLocaleTimeString([], {
               hour: "2-digit",
               minute: "2-digit",
@@ -216,7 +246,7 @@ export default function WhatsAppChatbot() {
         {
           id: Date.now().toString(),
           type: "bot",
-          text: "✅ Your demo request has been submitted!\n\n📧 Check your email for confirmation.\n\n⏰ Our team will contact you within 24 hours.",
+          text: "✅ Your quote request has been submitted!\n\n📧 Check your email for confirmation.\n\n⏰ Our team will contact you within 24 hours with a free moving quote.",
           time: new Date().toLocaleTimeString([], {
             hour: "2-digit",
             minute: "2-digit",
@@ -230,7 +260,12 @@ export default function WhatsAppChatbot() {
       setName("");
       setEmail("");
       setPhone("");
+      setMovingFrom("");
+      setMovingTo("");
+      setMoveDate("");
       setDescription("");
+      setMoveType("");
+      setAgreeToTerms(false);
       setFormFields([]);
 
     } catch (err) {
@@ -241,7 +276,7 @@ export default function WhatsAppChatbot() {
         {
           id: Date.now().toString(),
           type: "bot",
-          text: "❌ Something went wrong. Please try again or contact us directly at sale@OmSai.com",
+          text: "❌ Something went wrong. Please try again or contact us directly at sale@omsaipackersandmover.com",
           time: new Date().toLocaleTimeString([], {
             hour: "2-digit",
             minute: "2-digit",
@@ -255,21 +290,21 @@ export default function WhatsAppChatbot() {
 
   const openWhatsApp = () => {
     const phone = "15551234567"
-    const message = encodeURIComponent("Hi! I chatted with your AI assistant and have some questions.")
+    const message = encodeURIComponent("Hi! I chatted with your AI assistant and have some questions about my move.")
     window.open(`https://wa.me/${phone}?text=${message}`, '_blank')
   }
 
   // Floating Button
   if (showButton && !isOpen) {
     return (
-      <div className="fixed bottom-6 right-6 z-50 flex items-end gap-3">
+      <div className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-50 flex items-end gap-2 sm:gap-3">
         {/* Tooltip & Click to Chat */}
-        <div className="flex flex-col items-end gap-2 mb-2">
+        <div className="hidden sm:flex flex-col items-end gap-2 mb-2">
           {/* Chat Bubble */}
           <div className="relative -top-10 -right-10">
             <div className="bg-white rounded-2xl rounded-br-none shadow-lg px-4 py-2.5 border border-gray-100">
-              <p className="text-sm font-semibold text-gray-800">Hi! Need help?</p>
-              <p className="text-xs text-gray-500">We're here!</p>
+              <p className="text-sm font-semibold text-gray-800">Hi! Planning a move?</p>
+              <p className="text-xs text-gray-500">We're here to help!</p>
             </div>
             {/* Small triangle */}
             <div className="absolute -bottom-1.5 right-0 w-3 h-3 bg-white border-b border-r border-gray-100 transform rotate-45 translate-x-1.5"></div>
@@ -288,15 +323,15 @@ export default function WhatsAppChatbot() {
         {/* Main Button */}
         <button
           onClick={handleOpen}
-          className="relative group w-16 h-16 bg-[#0066cc] rounded-full shadow-2xl shadow-blue-500/40 hover:shadow-blue-500/60 transition-all duration-300 hover:scale-110 active:scale-95 flex items-center justify-center"
+          className="relative group w-14 h-14 sm:w-16 sm:h-16 cursor-pointer bg-[#0066cc] rounded-full shadow-2xl shadow-blue-500/40 hover:shadow-blue-500/60 transition-all duration-300 hover:scale-110 active:scale-95 flex items-center justify-center"
         >
           <img 
             src="/chatbot-icon.png" 
-            alt="AI Assistant" 
-            className="w-12 h-12 object-contain pointer-events-none select-none"
+            alt="Om Sai Packers and Movers AI Assistant" 
+            className="w-10 h-10 sm:w-12 sm:h-12 object-contain pointer-events-none select-none"
           />
           {/* Online dot */}
-          <div className="absolute top-1 right-1 w-4 h-4 bg-green-400 rounded-full border-2 border-white" />
+          <div className="absolute top-1 right-1 w-3.5 h-3.5 sm:w-4 sm:h-4 bg-green-400 rounded-full border-2 border-white" />
         </button>
       </div>
     )
@@ -304,10 +339,10 @@ export default function WhatsAppChatbot() {
 
   // Compact Chat Widget Panel
   return (
-    <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end gap-4">
+    <div className="fixed inset-0 sm:inset-auto sm:bottom-6 sm:right-6 z-50 flex flex-col items-end gap-4">
       {/* Chat Panel */}
       <div 
-        className={`w-[380px] max-w-[calc(100vw-2rem)] h-[600px] max-h-[calc(100vh-7rem)] bg-white rounded-3xl shadow-2xl shadow-slate-900/20 flex flex-col overflow-hidden border border-gray-100 transition-all duration-300 origin-bottom-right ${
+        className={`w-full sm:w-[380px] max-w-full sm:max-w-[calc(100vw-2rem)] h-full sm:h-[600px] max-h-full sm:max-h-[calc(100vh-7rem)] bg-white sm:rounded-3xl shadow-2xl shadow-slate-900/20 flex flex-col overflow-hidden border-0 sm:border sm:border-gray-100 transition-all duration-300 origin-bottom-right ${
           isOpen ? 'scale-100 opacity-100 translate-y-0' : 'scale-90 opacity-0 translate-y-4 pointer-events-none'
         }`}
       >
@@ -322,20 +357,20 @@ export default function WhatsAppChatbot() {
           </button>
 
           {/* Center: Avatar + Title */}
-          <div className="flex items-center gap-3 flex-1 justify-center">
-            <div className="relative">
+          <div className="flex items-center gap-2 sm:gap-3 flex-1 justify-center px-2 min-w-0">
+            <div className="relative shrink-0">
               <div className="w-11 h-11 bg-white/20 rounded-full flex items-center justify-center p-1">
                 <img 
                   src="/chatbot-icon.png" 
-                  alt="AI Assistant" 
+                  alt="Om Sai Packers and Movers AI Assistant" 
                   className="w-9 h-9 object-contain"
                 />
               </div>
               <div className="absolute bottom-0 right-0 w-3 h-3 bg-green-400 rounded-full border-2 border-[#0066cc]" />
             </div>
-            <div className="text-center">
-              <h3 className="font-bold text-white text-sm">OmSai Assistant</h3>
-              <p className="text-blue-100 text-xs">We're here to help you!</p>
+            <div className="text-center min-w-0">
+              <h3 className="font-bold text-white text-sm truncate">Om Sai Packers &amp; Movers</h3>
+              <p className="text-blue-100 text-xs truncate">We're here to help you move!</p>
             </div>
           </div>
 
@@ -353,7 +388,7 @@ export default function WhatsAppChatbot() {
         </div>
 
         {/* Messages Area */}
-        <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-gray-50">
+        <div className="flex-1 overflow-y-auto p-3 sm:p-4 space-y-4 bg-gray-50">
           {/* Date Divider */}
           <div className="flex items-center justify-center">
             <div className="bg-gray-200 h-px flex-1" />
@@ -363,7 +398,7 @@ export default function WhatsAppChatbot() {
 
           {messages.map((msg) => (
             <div key={msg.id} className={`flex ${msg.type === 'user' ? 'justify-end' : 'justify-start'}`}>
-              <div className={`flex items-start gap-2 max-w-[90%] ${msg.type === 'user' ? 'flex-row-reverse' : 'flex-row'}`}>
+              <div className={`flex items-start gap-2 max-w-[92%] sm:max-w-[90%] ${msg.type === 'user' ? 'flex-row-reverse' : 'flex-row'}`}>
                 {/* Avatar - Only for Bot */}
                 {msg.type === 'bot' && (
                   <div className="w-8 h-8 flex-shrink-0 mt-1">
@@ -376,7 +411,7 @@ export default function WhatsAppChatbot() {
                 )}
 
                 {/* Message Bubble + Form */}
-                <div className="flex flex-col gap-1">
+                <div className="flex flex-col gap-1 min-w-0">
                   {/* Bubble */}
                   <div className={`relative px-4 py-2.5 text-sm leading-relaxed shadow-sm ${
                     msg.type === 'user' 
@@ -394,16 +429,32 @@ export default function WhatsAppChatbot() {
                     {msg.type === 'user' && <CheckCheck className="w-3 h-3 text-[#0066cc]" />}
                   </div>
 
-                  {/* Demo Form */}
+                  {/* Quote Form */}
                   {msg.type === 'bot' && activeFormMessageId === msg.id && (
                     <div className="mt-2 p-4 bg-white rounded-xl shadow-md border border-gray-200 w-full">
                       <h3 className="font-bold text-gray-900 mb-1 flex items-center gap-2 text-sm">
                         <Calendar className="w-4 h-4 text-[#0066cc]" />
-                        Book a Demo
+                        Get a Free Quote
                       </h3>
-                      <p className="text-[11px] text-gray-500 mb-3">Fill in your details and we'll contact you shortly.</p>
+                      <p className="text-[11px] text-gray-500 mb-3">Fill in your details and we'll get back to you with a moving quote.</p>
 
                       <div className="space-y-2.5">
+                        {formFields.includes("moveType") && (
+                          <div>
+                            <label className="text-[11px] font-medium text-gray-700 block mb-1">Move Type *</label>
+                            <select
+                              value={moveType}
+                              onChange={(e) => setMoveType(e.target.value)}
+                              className="w-full p-2.5 border border-gray-200 rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-[#0066cc]/20 focus:border-[#0066cc] transition-all bg-gray-50"
+                            >
+                              <option value="">Select a service</option>
+                              <option value="residential">Residential Moving</option>
+                              <option value="office">Office Relocation</option>
+                              <option value="vehicle">Vehicle Shipping</option>
+                            </select>
+                          </div>
+                        )}
+
                         {formFields.includes("name") && (
                           <div>
                             <label className="text-[11px] font-medium text-gray-700 block mb-1">Name *</label>
@@ -412,7 +463,7 @@ export default function WhatsAppChatbot() {
                               placeholder="John Doe"
                               value={name}
                               onChange={(e) => setName(e.target.value)}
-                              className="w-full p-2.5 border border-gray-200 rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-[#0066cc]/20 focus:border-[#0066cc] transition-all bg-gray-50"
+                              className="w-full p-2.5 border border-gray-200 rounded-xl text-gray-700 text-xs focus:outline-none focus:ring-2 focus:ring-[#0066cc]/20 focus:border-[#0066cc] transition-all bg-gray-50"
                             />
                           </div>
                         )}
@@ -425,7 +476,7 @@ export default function WhatsAppChatbot() {
                               placeholder="john@example.com"
                               value={email}
                               onChange={(e) => setEmail(e.target.value)}
-                              className="w-full p-2.5 border border-gray-200 rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-[#0066cc]/20 focus:border-[#0066cc] transition-all bg-gray-50"
+                              className="w-full p-2.5 border border-gray-200 text-gray-700 rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-[#0066cc]/20 focus:border-[#0066cc] transition-all bg-gray-50"
                             />
                           </div>
                         )}
@@ -435,10 +486,48 @@ export default function WhatsAppChatbot() {
                             <label className="text-[11px] font-medium text-gray-700 block mb-1">Phone *</label>
                             <input
                               type="tel"
-                              placeholder="+1 (555) 000-0000"
+                              placeholder="+91 00000 00000"
                               value={phone}
                               onChange={(e) => setPhone(e.target.value)}
-                              className="w-full p-2.5 border border-gray-200 rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-[#0066cc]/20 focus:border-[#0066cc] transition-all bg-gray-50"
+                              className="w-full p-2.5 border border-gray-200 text-gray-700 rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-[#0066cc]/20 focus:border-[#0066cc] transition-all bg-gray-50"
+                            />
+                          </div>
+                        )}
+
+                        {formFields.includes("movingFrom") && (
+                          <div>
+                            <label className="text-[11px] font-medium text-gray-700 block mb-1">Moving From</label>
+                            <input
+                              type="text"
+                              placeholder="e.g. Vaishali Nagar, Jaipur"
+                              value={movingFrom}
+                              onChange={(e) => setMovingFrom(e.target.value)}
+                              className="w-full p-2.5 border border-gray-200 rounded-xl text-gray-700 text-xs focus:outline-none focus:ring-2 focus:ring-[#0066cc]/20 focus:border-[#0066cc] transition-all bg-gray-50"
+                            />
+                          </div>
+                        )}
+
+                        {formFields.includes("movingTo") && (
+                          <div>
+                            <label className="text-[11px] font-medium text-gray-700 block mb-1">Moving To</label>
+                            <input
+                              type="text"
+                              placeholder="e.g. Mansarovar, Jaipur"
+                              value={movingTo}
+                              onChange={(e) => setMovingTo(e.target.value)}
+                              className="w-full p-2.5 border border-gray-200 rounded-xl text-gray-700 text-xs focus:outline-none focus:ring-2 focus:ring-[#0066cc]/20 focus:border-[#0066cc] transition-all bg-gray-50"
+                            />
+                          </div>
+                        )}
+
+                        {formFields.includes("moveDate") && (
+                          <div>
+                            <label className="text-[11px] font-medium text-gray-700 block mb-1">Preferred Move Date</label>
+                            <input
+                              type="date"
+                              value={moveDate}
+                              onChange={(e) => setMoveDate(e.target.value)}
+                              className="w-full p-2.5 border border-gray-200 rounded-xl text-gray-700 text-xs focus:outline-none focus:ring-2 focus:ring-[#0066cc]/20 focus:border-[#0066cc] transition-all bg-gray-50"
                             />
                           </div>
                         )}
@@ -447,13 +536,27 @@ export default function WhatsAppChatbot() {
                           <div>
                             <label className="text-[11px] font-medium text-gray-700 block mb-1">Message (Optional)</label>
                             <textarea
-                              placeholder="Tell us about your requirements..."
+                              placeholder="Tell us about your move — home size, special items, etc."
                               value={description}
                               onChange={(e) => setDescription(e.target.value)}
                               rows={2}
-                              className="w-full p-2.5 border border-gray-200 rounded-xl text-xs resize-none focus:outline-none focus:ring-2 focus:ring-[#0066cc]/20 focus:border-[#0066cc] transition-all bg-gray-50"
+                              className="w-full p-2.5 border border-gray-200 rounded-xl text-gray-700 text-xs resize-none focus:outline-none focus:ring-2 focus:ring-[#0066cc]/20 focus:border-[#0066cc] transition-all bg-gray-50"
                             />
                           </div>
+                        )}
+
+                        {formFields.includes("agreeToTerms") && (
+                          <label className="flex items-start gap-2 pt-1 cursor-pointer">
+                            <input
+                              type="checkbox"
+                              checked={agreeToTerms}
+                              onChange={(e) => setAgreeToTerms(e.target.checked)}
+                              className="mt-0.5 w-3.5 h-3.5 accent-[#0066cc] shrink-0"
+                            />
+                            <span className="text-[11px] text-gray-600 leading-snug">
+                              I agree to the terms and conditions *
+                            </span>
+                          </label>
                         )}
 
                         <button
@@ -495,7 +598,7 @@ export default function WhatsAppChatbot() {
 
           {/* Quick Replies */}
           {messages[messages.length - 1]?.quickReplies && !isTyping && !activeFormMessageId && (
-            <div className="grid grid-cols-2 gap-2 pl-10">
+            <div className="grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-2 gap-2 pl-0 sm:pl-10">
               {QUICK_REPLIES.map((reply) => {
                 const Icon = reply.icon
                 return (
@@ -504,8 +607,8 @@ export default function WhatsAppChatbot() {
                     onClick={() => handleSendMessage(reply.text)}
                     className="flex items-center gap-2 px-3 py-2.5 bg-white border border-gray-200 rounded-xl text-xs text-gray-700 hover:border-[#0066cc] hover:text-[#0066cc] transition-all shadow-sm"
                   >
-                    <Icon className="w-4 h-4 text-gray-500" />
-                    <span className="font-medium">{reply.text}</span>
+                    <Icon className="w-4 h-4 text-gray-500 shrink-0" />
+                    <span className="font-medium truncate">{reply.text}</span>
                   </button>
                 )
               })}
@@ -516,21 +619,21 @@ export default function WhatsAppChatbot() {
         </div>
 
         {/* Input Area */}
-        <div className="bg-white border-t border-gray-100 p-3 shrink-0">
+        <div className="bg-white border-t border-gray-100 p-3 shrink-0" style={{ paddingBottom: 'max(0.75rem, env(safe-area-inset-bottom))' }}>
           <div className="flex items-center gap-2 bg-gray-50 rounded-full px-3 py-2 border border-gray-200 focus-within:border-[#0066cc] focus-within:ring-2 focus-within:ring-[#0066cc]/10 transition-all">
-            <Paperclip className="w-5 h-5 text-gray-400 cursor-pointer hover:text-gray-600 transition-colors" />
+            <Paperclip className="w-5 h-5 text-gray-400 cursor-pointer hover:text-gray-600 transition-colors shrink-0" />
             <input
               type="text"
               value={inputText}
               onChange={(e) => setInputText(e.target.value)}
               onKeyPress={(e) => e.key === 'Enter' && handleSendMessage()}
               placeholder="Type your message..."
-              className="flex-1 bg-transparent text-sm text-gray-900 placeholder-gray-400 focus:outline-none"
+              className="flex-1 min-w-0 bg-transparent text-sm text-gray-900 placeholder-gray-400 focus:outline-none"
             />
             <button
               onClick={() => handleSendMessage()}
               disabled={!inputText.trim()}
-              className="w-9 h-9 bg-[#0066cc] text-white rounded-full flex items-center justify-center hover:bg-[#0052a3] disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
+              className="w-9 h-9 bg-[#0066cc] text-white rounded-full flex items-center justify-center hover:bg-[#0052a3] disabled:opacity-30 disabled:cursor-not-allowed transition-colors shrink-0"
             >
               <Send className="w-4 h-4" />
             </button>
@@ -539,7 +642,7 @@ export default function WhatsAppChatbot() {
           {/* Powered By */}
           <div className="flex items-center justify-center gap-1.5 mt-2 pt-2">
             <Zap className="w-3 h-3 text-amber-500" />
-            <span className="text-[10px] text-gray-400 font-medium">Powered by OmSai</span>
+            <span className="text-[10px] text-gray-400 font-medium">Powered by Om Sai Packers &amp; Movers</span>
           </div>
         </div>
       </div>

@@ -6,7 +6,7 @@ import {
   mapMoveTypeToServiceType,
   generateTrackingCode,
 } from "./utils";
-import { auth } from "../../../../auth";
+import { auth } from "../../../auth";
 import { prisma } from "../../../../lib/prisma";
 
 // ─── Validation Schema ───────────────────────────────────────────────

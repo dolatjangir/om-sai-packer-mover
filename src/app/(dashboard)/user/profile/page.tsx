@@ -1,7 +1,7 @@
 
 import { redirect } from "next/navigation";
 import { User, Mail, Phone, MapPin, Calendar } from "lucide-react";
-import { auth } from "../../../../../auth";
+import { auth } from "../../../../auth";
 import { prisma } from "../../../../../lib/prisma";
 
 export default async function ProfilePage() {

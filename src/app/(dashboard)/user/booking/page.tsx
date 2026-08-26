@@ -2,7 +2,7 @@
 import { redirect } from "next/navigation";
 import Link from "next/link";
 import { ArrowLeft, Package, Calendar, MapPin, CreditCard } from "lucide-react";
-import { auth } from "../../../../../auth";
+import { auth } from "../../../../auth";
 import { prisma } from "../../../../../lib/prisma";
 
 export default async function UserBookingsPage() {
@@ -40,7 +40,7 @@ export default async function UserBookingsPage() {
           <Package className="w-12 h-12 mx-auto text-(--gray-300) mb-4" />
           <p className="text-(--gray-500)">No bookings yet</p>
           <Link
-            href="/user/bookings/new"
+            href="/user/booking/new"
             className="inline-flex items-center gap-2 mt-4 px-4 py-2 bg-(--blue-600) text-white rounded-lg text-sm font-medium"
           >
             Book Your First Move

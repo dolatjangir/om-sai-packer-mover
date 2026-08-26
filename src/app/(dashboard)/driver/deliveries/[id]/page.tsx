@@ -1,7 +1,7 @@
 import { redirect } from "next/navigation";
 
 import DriverDeliveryDetailClient from "./DriverDeliveryDetailClient";
-import { auth } from "../../../../../../auth";
+import { auth } from "../../../../../auth";
 import { prisma } from "../../../../../../lib/prisma";
 
 export default async function DriverDeliveryDetailPage({ params }: { params: Promise<{ id: string }> }) {

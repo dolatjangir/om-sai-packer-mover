@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { useSession } from "next-auth/react";
 import { 
@@ -13,21 +13,51 @@ import {
   CheckCircle2
 } from "lucide-react";
 
-// Mock data - replace with your API calls
-const recentBookings = [
-  { id: "BK-001", from: "Mumbai", to: "Pune", date: "2024-03-15", status: "In Transit", items: "Household" },
-  { id: "BK-002", from: "Delhi", to: "Bangalore", date: "2024-02-28", status: "Delivered", items: "Office" },
-  { id: "BK-003", from: "Chennai", to: "Hyderabad", date: "2024-02-10", status: "Completed", items: "Vehicle" },
-];
-
-const stats = [
-  { label: "Total Bookings", value: "12", icon: Calendar, color: "bg-blue-50 text-blue-600" },
-  { label: "Active Moves", value: "2", icon: Package, color: "bg-amber-50 text-amber-600" },
-  { label: "Delivered", value: "10", icon: CheckCircle2, color: "bg-emerald-50 text-emerald-600" },
-];
+interface DashboardData {
+  stats: {
+    totalBookings: number;
+    activeMoves: number;
+    delivered: number;
+  };
+  recentBookings: Array<{
+    id: string;
+    from: string;
+    to: string;
+    date: string;
+    status: string;
+    items: string;
+  }>;
+}
 
 export default function UserDashboardPage() {
   const { data: session } = useSession();
+  const [dashboardData, setDashboardData] = useState<DashboardData | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    async function fetchDashboard() {
+      try {
+        const res = await fetch("/api/dashboard");
+        const json = await res.json();
+        if (json.success) {
+          setDashboardData(json.data);
+        }
+      } catch (err) {
+        console.error("Failed to load dashboard", err);
+      } finally {
+        setLoading(false);
+      }
+    }
+    fetchDashboard();
+  }, []);
+
+  const stats = [
+    { label: "Total Bookings", value: String(dashboardData?.stats.totalBookings ?? 0), icon: Calendar, color: "bg-blue-50 text-blue-600" },
+    { label: "Active Moves", value: String(dashboardData?.stats.activeMoves ?? 0), icon: Package, color: "bg-amber-50 text-amber-600" },
+    { label: "Delivered", value: String(dashboardData?.stats.delivered ?? 0), icon: CheckCircle2, color: "bg-emerald-50 text-emerald-600" },
+  ];
+
+  const recentBookings = dashboardData?.recentBookings ?? [];
 
   return (
     <div className="space-y-6">
@@ -88,37 +118,43 @@ export default function UserDashboardPage() {
           </Link>
         </div>
         
-        <div className="divide-y divide-slate-100">
-          {recentBookings.map((booking) => (
-            <div key={booking.id} className="px-6 py-4 flex items-center justify-between hover:bg-slate-50 transition-colors">
-              <div className="flex items-center gap-4">
-                <div className="w-10 h-10 rounded-xl bg-slate-100 flex items-center justify-center">
-                  <Package className="w-5 h-5 text-slate-500" />
+        {loading ? (
+          <div className="px-6 py-8 text-center text-slate-400 text-sm">Loading bookings...</div>
+        ) : recentBookings.length === 0 ? (
+          <div className="px-6 py-8 text-center text-slate-400 text-sm">No bookings yet</div>
+        ) : (
+          <div className="divide-y divide-slate-100">
+            {recentBookings.map((booking) => (
+              <div key={booking.id} className="px-6 py-4 flex items-center justify-between hover:bg-slate-50 transition-colors">
+                <div className="flex items-center gap-4">
+                  <div className="w-10 h-10 rounded-xl bg-slate-100 flex items-center justify-center">
+                    <Package className="w-5 h-5 text-slate-500" />
+                  </div>
+                  <div>
+                    <p className="font-semibold text-slate-800 text-sm">{booking.id}</p>
+                    <p className="text-xs text-slate-500 mt-0.5">
+                      {booking.from} → {booking.to} • {booking.items}
+                    </p>
+                  </div>
                 </div>
-                <div>
-                  <p className="font-semibold text-slate-800 text-sm">{booking.id}</p>
-                  <p className="text-xs text-slate-500 mt-0.5">
-                    {booking.from} → {booking.to} • {booking.items}
-                  </p>
+                <div className="flex items-center gap-4">
+                  <div className="hidden sm:flex items-center gap-1.5 text-xs text-slate-500">
+                    <Clock className="w-3.5 h-3.5" />
+                    {booking.date}
+                  </div>
+                  <span className={`
+                    px-2.5 py-1 rounded-full text-xs font-semibold
+                    ${booking.status === "Delivered" ? "bg-emerald-50 text-emerald-600" : 
+                      booking.status === "In Transit" ? "bg-amber-50 text-amber-600" : 
+                      "bg-slate-100 text-slate-600"}
+                  `}>
+                    {booking.status}
+                  </span>
                 </div>
               </div>
-              <div className="flex items-center gap-4">
-                <div className="hidden sm:flex items-center gap-1.5 text-xs text-slate-500">
-                  <Clock className="w-3.5 h-3.5" />
-                  {booking.date}
-                </div>
-                <span className={`
-                  px-2.5 py-1 rounded-full text-xs font-semibold
-                  ${booking.status === "Delivered" ? "bg-emerald-50 text-emerald-600" : 
-                    booking.status === "In Transit" ? "bg-amber-50 text-amber-600" : 
-                    "bg-slate-100 text-slate-600"}
-                `}>
-                  {booking.status}
-                </span>
-              </div>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+        )}
       </div>
 
       {/* Quick Actions */}
