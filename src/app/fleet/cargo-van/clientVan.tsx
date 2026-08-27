@@ -186,13 +186,13 @@ export default function CargoVanPage() {
             <div className="bg-white rounded-2xl border border-(--blue-200) p-6">
               <h3 className="text-(--blue-900) text-lg font-bold mb-4">Cargo Van Dimensions</h3>
               <div className="relative mb-4">
-                <img src="https://images.unsplash.com/photo-1566008885218-90abf9200ddb?w=600&h=300&fit=crop" alt="Cargo Van Side View" className="w-full h-48 object-contain" />
+                <img src="/cargo-van-h-w-img.png" alt="Cargo Van Side View" className="w-full h-54 object-contain" />
                 <div className="absolute left-2 top-1/2 -translate-y-1/2 text-(--blue-600) text-xs font-medium">
-                  <div className="flex flex-col items-center"><span>Height</span><span>4.5 ft</span></div>
+                  {/* <div className="flex flex-col items-center"><span>Height</span><span>4.5 ft</span></div> */}
                 </div>
-                <div className="absolute bottom-2 left-1/2 -translate-x-1/2 text-(--blue-600) text-xs font-medium">
+                {/* <div className="absolute bottom-2 left-1/2 -translate-x-1/2 text-(--blue-600) text-xs font-medium">
                   <span>Length 8.5 ft</span>
-                </div>
+                </div> */}
               </div>
               <div className="grid grid-cols-4 gap-3">
                 <div className="text-center p-3 bg-(--gray-50) rounded-lg"><p className="text-(--blue-500) text-xs">Width</p><p className="text-(--gray-900) text-sm font-bold">5.5 ft</p></div>
@@ -207,10 +207,10 @@ export default function CargoVanPage() {
               <h3 className="text-(--blue-900) text-lg font-bold mb-2">Spacious & Secure</h3>
               <p className="text-(--blue-500) text-sm mb-4">Our cargo vans are well-maintained and equipped to handle your goods with utmost care.</p>
               <div className="grid grid-cols-2 gap-3">
-                <img src="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=300&h=200&fit=crop" alt="Van interior" className="w-full h-32 object-cover rounded-lg" />
-                <img src="https://images.unsplash.com/photo-1558618666-fcd25c85f82e?w=300&h=200&fit=crop" alt="Van loaded" className="w-full h-32 object-cover rounded-lg" />
-                <img src="https://images.unsplash.com/photo-1600518464441-9154a4dea21b?w=300&h=200&fit=crop" alt="Van side" className="w-full h-32 object-cover rounded-lg" />
-                <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=300&h=200&fit=crop" alt="Van boxes" className="w-full h-32 object-cover rounded-lg" />
+                <img src="/cargo-van-storage-image-1.png" alt="Van interior" className="w-full h-32 object-cover rounded-lg" />
+                <img src="/cargo-van-storage-image-2.png" alt="Van loaded" className="w-full h-32 object-cover rounded-lg" />
+                <img src="/cargo-van-storage-image-3.png" alt="Van side" className="w-full h-32 object-cover rounded-lg" />
+                <img src="/cargo-van-storage-image-4.png" alt="Van boxes" className="w-full h-32 object-cover rounded-lg" />
               </div>
             </div>
           </div>
@@ -248,8 +248,8 @@ export default function CargoVanPage() {
           <div className="bg-(--blue-900) rounded-2xl p-6 md:p-8 relative overflow-hidden">
             <div className="flex flex-col md:flex-row items-center justify-between gap-6">
               <div className="flex items-center gap-4">
-                <div className="w-16 h-16 bg-(--blue-800) rounded-xl flex items-center justify-center flex-shrink-0 relative hidden sm:flex">
-                  <img src="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=100&h=100&fit=crop" alt="Box" className="w-12 h-12 object-cover rounded-lg" />
+                <div className="w-20 h-20 bg-(--blue-800) rounded-xl flex items-center justify-center flex-shrink-0 relative hidden sm:flex">
+                  <img src="/cargo-van-storage-image-4.png" alt="Box" className="w-18 h-18 object-cover rounded-lg" />
                   <div className="absolute -bottom-1 -right-1 w-6 h-6 bg-(--lime-500) rounded-full flex items-center justify-center">
                     <Shield className="w-3.5 h-3.5 text-white" />
                   </div>
