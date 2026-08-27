@@ -165,13 +165,13 @@ export default function BoxTruckPage() {
             <div className="bg-white rounded-2xl border border-(--gray-200) p-6">
               <h3 className="text-(--blue-900) text-lg font-bold mb-4">Box Truck Dimensions</h3>
               <div className="relative mb-4">
-                <img src="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=600&h=300&fit=crop" alt="Box Truck Side View" className="w-full h-48 object-contain" />
+                <img src="/box-truck-h-w-img.png" alt="Box Truck Side View" className="w-full h-48 object-contain" />
                 <div className="absolute left-2 top-1/2 -translate-y-1/2 text-(--blue-600) text-xs font-medium">
-                  <div className="flex flex-col items-center"><span>Height</span><span>7.5 ft</span></div>
+                  {/* <div className="flex flex-col items-center"><span>Height</span><span>7.5 ft</span></div> */}
                 </div>
-                <div className="absolute bottom-2 left-1/2 -translate-x-1/2 text-(--blue-600) text-xs font-medium">
+                {/* <div className="absolute bottom-2 left-1/2 -translate-x-1/2 text-(--blue-600) text-xs font-medium">
                   <span>Length 16 ft</span>
-                </div>
+                </div> */}
               </div>
               <div className="grid grid-cols-4 gap-3">
                 <div className="text-center p-3 bg-(--gray-50) rounded-lg"><p className="text-(--blue-500) text-xs">Width</p><p className="text-(--gray-900) text-sm font-bold">7.5 ft</p></div>
@@ -186,10 +186,10 @@ export default function BoxTruckPage() {
               <h3 className="text-(--blue-900) text-lg font-bold mb-2">Spacious & Built for Heavy Loads</h3>
               <p className="text-(--blue-500) text-sm mb-4">Our box trucks are designed to handle large volumes and heavy items with maximum safety and efficiency.</p>
               <div className="grid grid-cols-2 gap-3 mb-4">
-                <img src="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=300&h=200&fit=crop" alt="Truck interior" className="w-full h-32 object-cover rounded-lg" />
-                <img src="https://images.unsplash.com/photo-1558618666-fcd25c85f82e?w=300&h=200&fit=crop" alt="Truck loaded" className="w-full h-32 object-cover rounded-lg" />
-                <img src="https://images.unsplash.com/photo-1600518464441-9154a4dea21b?w=300&h=200&fit=crop" alt="Truck side" className="w-full h-32 object-cover rounded-lg" />
-                <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=300&h=200&fit=crop" alt="Truck boxes" className="w-full h-32 object-cover rounded-lg" />
+                <img src="/box-truck-storage-img-1.png" alt="Truck interior" className="w-full h-32 object-cover rounded-lg" />
+                <img src="/box-truck-storage-img-2.png" alt="Truck loaded" className="w-full h-32 object-cover rounded-lg" />
+                <img src="/box-truck-storage-img-3.png" alt="Truck side" className="w-full h-32 object-cover rounded-lg" />
+                <img src="/box-truck-storage-img-4.png" alt="Truck boxes" className="w-full h-32 object-cover rounded-lg" />
               </div>
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
                 {galleryFeatures.map((feat) => {
