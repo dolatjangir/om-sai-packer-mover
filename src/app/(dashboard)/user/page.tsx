@@ -37,7 +37,7 @@ export default function UserDashboardPage() {
   useEffect(() => {
     async function fetchDashboard() {
       try {
-        const res = await fetch("/api/dashboard");
+        const res = await fetch("/api/userdashdata");
         const json = await res.json();
         if (json.success) {
           setDashboardData(json.data);
@@ -71,7 +71,7 @@ export default function UserDashboardPage() {
         </p>
         <div className="flex flex-wrap gap-3 mt-6">
           <Link
-            href="/user/bookings"
+            href="/user/booking"
             className="inline-flex items-center gap-2 px-5 py-2.5 bg-white text-[#0E4995] rounded-xl font-semibold text-sm hover:bg-white/90 transition-colors"
           >
             <Calendar className="w-4 h-4" />
@@ -111,7 +111,7 @@ export default function UserDashboardPage() {
         <div className="px-6 py-4 border-b border-slate-100 flex items-center justify-between">
           <h3 className="font-bold text-slate-800">Recent Bookings</h3>
           <Link 
-            href="/user/bookings" 
+            href="/user/booking" 
             className="text-sm font-semibold text-blue-600 hover:text-blue-700 flex items-center gap-1"
           >
             View All <ArrowRight className="w-4 h-4" />
@@ -161,7 +161,7 @@ export default function UserDashboardPage() {
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         {[
           { label: "Track Shipment", desc: "Real-time location", href: "/user/tracking", icon: MapPin },
-          { label: "Book a Move", desc: "Schedule pickup", href: "/user/bookings", icon: Calendar },
+          { label: "Book a Move", desc: "Schedule pickup", href: "/user/booking", icon: Calendar },
           { label: "Edit Profile", desc: "Update details", href: "/user/profile", icon: Package },
           { label: "Support", desc: "Get help", href: "#", icon: CheckCircle2 },
         ].map((action) => {

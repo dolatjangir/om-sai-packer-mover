@@ -28,11 +28,19 @@ export default async function UserBookingsPage() {
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center gap-4">
-        <Link href="/user" className="p-2 hover:bg-gray-100 rounded-lg">
+      <div className="flex items-center justify-between">
+        <div className="flex items-center gap-4">
+        <Link href="/user" className="p-2 hover:bg-gray-300 text-gray-200 rounded-lg">
           <ArrowLeft className="w-5 h-5" />
         </Link>
         <h1 className="text-2xl font-bold text-(--gray-900)">My Bookings</h1>
+        </div>
+          <Link
+            href="/user/booking/new"
+            className="inline-flex items-center gap-2 mt-4 px-4 py-2 bg-(--blue-600) text-white rounded-lg text-sm font-medium"
+          >
+            Book A New Move
+          </Link>
       </div>
 
       {bookings.length === 0 ? (

@@ -62,8 +62,8 @@ export default function DashboardClientLayout({
   const userRole = session?.user?.role as "USER" | "ADMIN" | "DRIVER" | undefined;
   const navItems = userRole ? navigationConfig[userRole] : [];
 
-  const handleSignOut = () => {
-    signOut({ callbackUrl: "/login" });
+  const handleSignOut = async() => {
+    await signOut({ callbackUrl: "/login" });
   };
 
   return (
@@ -80,17 +80,30 @@ export default function DashboardClientLayout({
           ${mobileMenuOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"}
         `}
       >
-        <div className="h-16 flex items-center justify-between px-4 border-b border-slate-200">
-          <Link href={userRole === "ADMIN" ? "/admin" : userRole === "DRIVER" ? "/driver" : "/user"} className="flex items-center gap-3 overflow-hidden">
-            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-[#0E4995] to-[#2F7359] flex items-center justify-center shrink-0">
-              <Package className="w-4 h-4 text-white" />
-            </div>
-            <span className={`font-bold text-slate-800 whitespace-nowrap transition-opacity duration-200 ${sidebarOpen ? "opacity-100" : "opacity-0 lg:opacity-0"}`}>
-              Om Sai
-            </span>
-          </Link>
+        <div className={`h-16  flex items-center justify-between ${sidebarOpen ? "px-4" : "px-2"} border-b border-slate-200`}>
+          {/* <Link href={userRole === "ADMIN" ? "/admin" : userRole === "DRIVER" ? "/driver" : "/user"} className="flex items-center gap-3 overflow-hidden"> */}
+           <Link
+  href="/"
+  className={`flex items-center overflow-hidden ${
+    sidebarOpen ? "justify-start" : "justify-center"
+  }`}
+>
+  {sidebarOpen ? (
+    <img
+      src="/omsai-logo.png"
+      alt="Om Sai Packers & Movers"
+      className="w-48 h-auto object-contain"
+    />
+  ) : (
+    <img
+      src="/favicon.png"
+      alt="Om Sai"
+      className="w-10 h-10 object-contain"
+    />
+  )}
+</Link>
 
-          <button onClick={() => setSidebarOpen(!sidebarOpen)} className="hidden lg:flex w-6 h-6 rounded-full bg-slate-100 items-center justify-center hover:bg-slate-200 transition-colors">
+          <button onClick={() => setSidebarOpen(!sidebarOpen)} className={`hidden lg:flex ${sidebarOpen ? "min-w-6 min-h-6" : "min-w-5 min-h-5"} rounded-full bg-slate-100 items-center justify-center hover:bg-slate-200 transition-colors`}>
             {sidebarOpen ? <ChevronLeft className="w-3 h-3 text-slate-500" /> : <ChevronRight className="w-3 h-3 text-slate-500" />}
           </button>
 
@@ -136,7 +149,7 @@ export default function DashboardClientLayout({
 
           <button onClick={handleSignOut} className={`
               w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-red-600 
-              hover:bg-red-50 transition-all duration-200
+              hover:bg-red-50 transition-all duration-200 cursor-pointer
               ${!sidebarOpen && "lg:justify-center lg:px-2"}
             `} title={!sidebarOpen ? "Sign Out" : undefined}>
             <LogOut className="w-5 h-5 shrink-0" />
