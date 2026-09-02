@@ -524,11 +524,11 @@ const handleSubmit = async (e: React.FormEvent) => {
                 Call us now for instant support and quick booking.
               </p>
               <a 
-                href="tel:18001234567" 
+                href="tel:9314630634" 
                 className="flex items-center justify-center gap-2 border-2 border-[var(--lime-500)] text-[var(--blue-950)] font-black text-xl py-2.5 rounded-lg hover:bg-[var(--lime-50)] transition"
               >
                 <Phone className="h-5 w-5 text-[var(--lime-600)] fill-[var(--lime-600)]" />
-                1800 123 4567
+                +91 9314630634
               </a>
               <div className="text-[11px] text-[var(--gray-500)] font-medium flex items-center justify-center gap-1">
                 <Clock className="h-3.5 w-3.5" /> Mon - Sun (8:00 AM - 8:00 PM)

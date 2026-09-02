@@ -7,15 +7,15 @@ export default auth((req) => {
   const isLoggedIn = !!req.auth;
   const userRole = req.auth?.user?.role;
   const userStatus = req.auth?.user?.status;
-  const onboardingCompleted = req.auth?.user?.onboardingCompleted;
+  // const onboardingCompleted = req.auth?.user?.onboardingCompleted;
 // console.log("proxy is running");
     // DEBUG: Add this temporarily to see what's happening
   if (isLoggedIn && nextUrl.pathname !== "/api/auth/session") {
     console.log("MIDDLEWARE DEBUG:", {
       path: nextUrl.pathname,
       role: userRole,
-      onboardingCompleted: onboardingCompleted,
-      type: typeof onboardingCompleted,
+      // onboardingCompleted: onboardingCompleted,
+      // type: typeof onboardingCompleted,
     });
   }
   // 1. Allow all NextAuth API routes (signin, callback, session, etc.)
@@ -37,7 +37,7 @@ export default auth((req) => {
       return NextResponse.redirect(new URL("/login", nextUrl));
     }
     // Already onboarded? Send to their dashboard
-    if (onboardingCompleted === true && userRole !== null && userRole !== undefined) {
+    if ( userRole !== null && userRole !== undefined) {
       const redirectUrl =
         userRole === "ADMIN" ? "/admin" : userRole === "DRIVER" ? "/driver" : "/user";
       return NextResponse.redirect(new URL(redirectUrl, nextUrl));
@@ -54,7 +54,7 @@ export default auth((req) => {
   // This catches EVERY route (including /login, /register, /, etc.)
   if (isLoggedIn) {
     const needsOnboarding =
-      onboardingCompleted !== true || userRole === null || userRole === undefined;
+       userRole === null || userRole === undefined;
 
     if (needsOnboarding && !isOnboardingRoute) {
       return NextResponse.redirect(new URL("/onboarding/role", nextUrl));

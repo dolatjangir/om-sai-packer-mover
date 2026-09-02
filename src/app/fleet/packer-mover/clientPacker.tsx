@@ -160,7 +160,7 @@ export default function PackerMoverPage() {
     <p className="text-(--gray-500) text-xs mb-3">1 BHK to Villa shifting services</p>
     <div className="w-full aspect-[4/3] rounded-xl overflow-hidden relative">
       <img
-        src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=300&h=225&fit=crop"
+        src="/home-shifting.jfif"
         alt="Home Shifting"
         className="w-full h-full object-cover"
       />
@@ -174,7 +174,7 @@ export default function PackerMoverPage() {
     <p className="text-(--gray-500) text-xs mb-3">Safe & efficient office relocation</p>
     <div className="w-full aspect-[4/3] rounded-xl overflow-hidden relative">
       <img
-        src="https://images.unsplash.com/photo-1497366216548-37526070297c?w=300&h=225&fit=crop"
+        src="/office-relocation-packer-mover.jfif"
         alt="Office Shifting"
         className="w-full h-full object-cover"
       />
@@ -188,7 +188,7 @@ export default function PackerMoverPage() {
     <p className="text-(--gray-500) text-xs mb-3">Within city quick moves</p>
     <div className="w-full aspect-[4/3] rounded-xl overflow-hidden relative">
       <img
-        src="https://images.unsplash.com/photo-1600518464441-9154a4dea21b?w=300&h=225&fit=crop"
+        src="/local-shifting.jfif"
         alt="Local Shifting"
         className="w-full h-full object-cover"
       />
@@ -202,7 +202,7 @@ export default function PackerMoverPage() {
     <p className="text-(--gray-500) text-xs mb-3">Inter-city moving across India</p>
     <div className="w-full aspect-[4/3] rounded-xl overflow-hidden relative">
       <img
-        src="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=300&h=225&fit=crop"
+        src="/domestic-moving.jfif"
         alt="Domestic Shifting"
         className="w-full h-full object-cover"
       />
@@ -216,7 +216,7 @@ export default function PackerMoverPage() {
     <p className="text-(--gray-500) text-xs mb-3">Secure storage for your goods</p>
     <div className="w-full aspect-[4/3] rounded-xl overflow-hidden relative">
       <img
-        src="https://images.unsplash.com/photo-1558618666-fcd25c85f82e?w=300&h=225&fit=crop"
+        src="/storage-solution-packer-mover.jfif"
         alt="Storage Solution"
         className="w-full h-full object-cover"
       />
@@ -230,7 +230,7 @@ export default function PackerMoverPage() {
     <p className="text-(--gray-500) text-xs mb-3">Dismantling & reassembling</p>
     <div className="w-full aspect-4/3 rounded-xl overflow-hidden relative">
       <img
-        src="https://images.unsplash.com/photo-1600585154526-8d8c0b5c0b0c?w=300&h=225&fit=crop"
+        src="/furniture-dismental.jfif"
         alt="Furniture Dismantle"
         className="w-full h-full object-cover"
       />

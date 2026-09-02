@@ -6,10 +6,10 @@ import { prisma } from "../../../../../lib/prisma";
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
-    const { name, email, phone, password , role } = body;
+    const { name, email, phone, password  } = body;
 
     // Validation
-    if (!name || !email || !password || !role) {
+    if (!name || !email || !password ) {
       return NextResponse.json(
         { message: "Name, email, password and role are required" },
         { status: 400 }
@@ -45,9 +45,9 @@ export async function POST(req: NextRequest) {
         email: email.toLowerCase().trim(),
         phone: phone?.trim() || null,
         password: hashedPassword,
-        role: role,
+        role: null,
         status: "ACTIVE",
-         onboardingCompleted: true,
+         onboardingCompleted: false,
       },
       select: {
         id: true,

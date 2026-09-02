@@ -103,7 +103,7 @@ async jwt({ token, user, account, trigger }) {
         token.email = user.email!;
         token.role = dbUser.role; // null for new Google users
         token.status = dbUser.status;
-        token.onboardingCompleted = dbUser.onboardingCompleted; // false
+        token.onboardingCompleted = dbUser.onboardingCompleted ?? false; // false
         token.picture = dbUser.image ?? user.image;
       }
     } else {
@@ -112,7 +112,7 @@ async jwt({ token, user, account, trigger }) {
       token.email = user.email as string;
       token.role = (user as any).role;
       token.status = (user as any).status;
-      token.onboardingCompleted = (user as any).onboardingCompleted ?? true;
+      token.onboardingCompleted = (user as any).onboardingCompleted ?? false;
        token.picture = (user as any).image;
     }
   }
@@ -127,15 +127,15 @@ async jwt({ token, user, account, trigger }) {
       token.id = dbUser.id;
       token.role = dbUser.role;
       token.status = dbUser.status;
-      token.onboardingCompleted = dbUser.onboardingCompleted;
+      token.onboardingCompleted = dbUser.onboardingCompleted ?? false;
       token.picture = dbUser.image;
     }
   }
 
   // CASE 3: Subsequent requests (token already has data) — ensure defaults
-  if (token.onboardingCompleted === undefined) {
-    token.onboardingCompleted = false;
-  }
+  // if (token.onboardingCompleted === undefined) {
+  //   token.onboardingCompleted = false;
+  // }
 
   return token;
 },
