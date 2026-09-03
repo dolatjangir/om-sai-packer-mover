@@ -18,6 +18,7 @@ import {
   MessageCircle,
 } from "lucide-react";
 import Link from "next/link";
+import { useSession } from "next-auth/react";
 
 interface NavItem {
   label: string;
@@ -83,12 +84,25 @@ export default function Navbar() {
   const [openMenu, setOpenMenu] = useState<string | null>(null);
   const [mobileOpen, setMobileOpen] = useState<boolean>(false);
 const [mobileSubmenu, setMobileSubmenu] = useState<string | null>(null);
+const { data: session, status } = useSession();
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40);
     window.addEventListener("scroll", onScroll);
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+const getDashboardPath = () => {
+  switch (session?.user.role) {
+    case "ADMIN":
+      return "/admin";
 
+    case "DRIVER":
+      return "/driver";
+
+    case "USER":
+    default:
+      return "/user";
+  }
+};
   return (
     <div className="fixed top-0 left-0 right-0 z-50" style={{ fontFamily: "sans-serif" }}>
       {/* ===================== RIBBON GREETING LINE ===================== */}
@@ -290,13 +304,27 @@ const [mobileSubmenu, setMobileSubmenu] = useState<string | null>(null);
                 +91 9694666677
  </span>
               </a>
-             <Link href="/register"> <button
+           {status === "loading" ? (
+  <div>Loading...</div>
+) : session ? (
+  <Link href={getDashboardPath()}>
+   <button
+                className="text-black text-xs font-extrabold italic uppercase tracking-wide  px-5 py-2.5 rounded-full transition-colors duration-300 cursor-pointer"
+                style={{ background: "#84cc16" }}
+              >
+    your Dashboard
+    </button>
+  </Link>
+) : (
+  <Link href="/register" >
+  <button
                 className="text-black text-xs font-extrabold uppercase tracking-wide px-5 py-2.5 rounded-full transition-colors duration-300 cursor-pointer"
                 style={{ background: "#84cc16" }}
               >
-                Register
-              </button>
-              </Link>
+    Register
+    </button>
+  </Link>
+)}
             </div>
 
             {/* Mobile toggle */}
