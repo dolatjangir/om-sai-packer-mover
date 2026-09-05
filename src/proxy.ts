@@ -53,13 +53,12 @@ export default auth((req) => {
   // 5. LOGGED IN but hasn't completed onboarding → FORCE to onboarding
   // This catches EVERY route (including /login, /register, /, etc.)
   if (isLoggedIn) {
-    const needsOnboarding =
-       userRole === null || userRole === undefined;
+  const needsOnboarding = userRole === null || userRole === undefined;
 
-    if (needsOnboarding && !isOnboardingRoute) {
-      return NextResponse.redirect(new URL("/onboarding/role", nextUrl));
-    }
+  if (needsOnboarding && isProtectedRoute && !isOnboardingRoute) {
+    return NextResponse.redirect(new URL("/onboarding/role", nextUrl));
   }
+}
 
   // 6. LOGGED IN + hits login or register → redirect to their dashboard
   if (isLoggedIn && isAuthRoute) {

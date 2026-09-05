@@ -17,14 +17,13 @@ export default function RegisterPage() {
     phone: "",
     password: "",
     confirmPassword: "",
-    role:"USER"
   });
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [registerError, setRegisterError] = useState("");
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement  | HTMLSelectElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
@@ -55,7 +54,6 @@ export default function RegisterPage() {
           email: formData.email,
           phone: formData.phone,
           password: formData.password,
-            role: formData.role,
         }),
       });
 
@@ -64,12 +62,11 @@ export default function RegisterPage() {
       if (!res.ok) {
         setRegisterError(data.message || "Registration failed");
       } else {
-        // Redirect to the correct dashboard after sign-in.
-        const callbackUrl = formData.role === "DRIVER" ? "/driver" : "/user";
+        // ✅ Redirect ALL new users to onboarding to select their role
         signIn("credentials", {
           email: formData.email,
           password: formData.password,
-          callbackUrl,
+          callbackUrl: "/onboarding/role",
         });
       }
     } catch {
@@ -88,11 +85,13 @@ export default function RegisterPage() {
     <main className="relative w-full min-h-screen flex flex-row justify-around items-center-safe overflow-x-hidden font-sans select-none py-4">
       {/* Background Image Container */}
       <div className="fixed inset-0 -z-10">
-       <Link href="/"> <img
-          src="/login-bg-img.png"
-          alt="Om Sai Packers & Movers Background"
-          className="object-cover object-center w-full h-full"
-        /></Link>
+        <Link href="/">
+          <img
+            src="/login-bg-img.png"
+            alt="Om Sai Packers & Movers Background"
+            className="object-cover object-center w-full h-full"
+          />
+        </Link>
       </div>
 
       {/* LEFT CONTENT AREA */}
@@ -100,11 +99,13 @@ export default function RegisterPage() {
         {/* Top Branding Logo */}
         <div className="flex items-center gap-3 mb-12 md:mb-0">
           <div className="relative w-1/2 shrink-0 rounded-lg p-1">
-           <Link href="/"><img
-              src="/omsai-logo-white.png"
-              alt="Logo Icon"
-              className="object-contain"
-            /></Link> 
+            <Link href="/">
+              <img
+                src="/omsai-logo-white.png"
+                alt="Logo Icon"
+                className="object-contain"
+              />
+            </Link>
           </div>
         </div>
 
@@ -144,26 +145,25 @@ export default function RegisterPage() {
       </div>
 
       {/* RIGHT REGISTER CARD */}
-      <div className="w-full h-fit md:w-110 bg-transparent backdrop-blur-sm lg:bg-(--stone-100) rounded-3xl shadow-(--stone-400) p-4  z-10 flex flex-col items-start border border-slate-100 mx-2 sm:mx-4 lg:mx-0">
+      <div className="w-full h-fit md:w-110 bg-transparent backdrop-blur-sm lg:bg-(--stone-100) rounded-3xl shadow-(--stone-400) p-4 z-10 flex flex-col items-start border border-slate-100 mx-2 sm:mx-4 lg:mx-0">
         {/* User Icon Emblem */}
-       <div className="flex flex-1  justify-around gap-1">
-         <div className="w-10 h-10 sm:w-16 sm:h-16 rounded-full bg-slate-50 border border-slate-100 flex items-center justify-center shadow-inner mb-4 text-blue-900">
-          <svg className="w-4 h-4 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" />
-          </svg>
+        <div className="flex flex-1 justify-around gap-1">
+          <div className="w-10 h-10 sm:w-16 sm:h-16 rounded-full bg-slate-50 border border-slate-100 flex items-center justify-center shadow-inner mb-4 text-blue-900">
+            <svg className="w-4 h-4 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" />
+            </svg>
+          </div>
+
+          {/* Card Header */}
+          <div>
+            <h3 className="text-2xl font-black text-lime-400 lg:text-blue-950 tracking-tight pt-2 sm:pt-0">Create Account</h3>
+            <p className="hidden sm:block text-xs text-slate-300 lg:text-slate-500 font-medium text-center mt-1 mb-3">
+              Join Om Sai Packers & Movers <br /> for a seamless moving experience
+            </p>
+          </div>
         </div>
 
-        {/* Card Header */}
-        <div>     
-               <h3 className="text-2xl font-black text-lime-400 lg:text-blue-950 tracking-tight pt-2 sm:pt-0">Create Account</h3>
-        <p className="hidden sm:block text-xs text-slate-300 lg:text-slate-500 font-medium text-center mt-1 mb-3">
-          Join Om Sai Packers & Movers <br /> for a seamless moving experience
-        </p>
-        </div>
-
-</div>
         {/* Error Display */}
-        
         {(error || registerError) && (
           <div className="w-full mb-3 p-3 bg-red-50 border border-red-200 rounded-xl flex items-center gap-2 text-sm text-red-700">
             <svg className="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -185,53 +185,54 @@ export default function RegisterPage() {
 
         {/* Form Elements */}
         <form className="w-full space-y-2" onSubmit={handleRegister}>
-         <div className="flex gap-0.5"> 
-       {/* Full Name Input */}
-       
-          <div className="space-y-1.5 w-[50%]">
-            <label className="text-xs font-bold text-blue-950 tracking-wide block">Full Name</label>
-            <div className="relative">
-              <span className="absolute inset-y-0 left-0 flex items-center pl-4 text-slate-400">
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                </svg>
-              </span>
-              <input
-                type="text"
-                name="name"
-                value={formData.name}
-                onChange={handleChange}
-                placeholder="Enter your full name"
-                className="w-full pl-11 pr-4 py-3 text-(--blue-800) bg-(--stone-50) border border-(--stone-200) rounded-xl text-sm placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent transition-all"
-                required
-                disabled={isLoading}
-              />
+          <div className="flex gap-0.5">
+            {/* Full Name Input */}
+            <div className="space-y-1.5 w-[50%]">
+              <label className="text-xs font-bold text-blue-950 tracking-wide block">Full Name</label>
+              <div className="relative">
+                <span className="absolute inset-y-0 left-0 flex items-center pl-4 text-slate-400">
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                  </svg>
+                </span>
+                <input
+                  type="text"
+                  name="name"
+                  value={formData.name}
+                  onChange={handleChange}
+                  placeholder="Enter your full name"
+                  className="w-full pl-11 pr-4 py-3 text-(--blue-800) bg-(--stone-50) border border-(--stone-200) rounded-xl text-sm placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent transition-all"
+                  required
+                  disabled={isLoading}
+                />
+              </div>
+            </div>
+
+            {/* Phone Input */}
+            <div className="space-y-1.5 w-[50%]">
+              <label className="text-xs font-bold text-blue-950 tracking-wide block">Phone Number</label>
+              <div className="relative">
+                <span className="absolute inset-y-0 left-0 flex items-center pl-4 text-slate-400">
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                  </svg>
+                </span>
+                <input
+                  type="tel"
+                  name="phone"
+                  value={formData.phone}
+                  onChange={handleChange}
+                  placeholder="Enter your phone number"
+                  className="w-full pl-11 pr-4 py-3 text-(--blue-800) bg-(--stone-50) border border-(--stone-200) rounded-xl text-sm placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent transition-all"
+                  required
+                  disabled={isLoading}
+                />
+              </div>
             </div>
           </div>
-          {/* Phone Input */}
-          <div className="space-y-1.5 w-[50%]">
-            <label className="text-xs font-bold text-blue-950 tracking-wide block">Phone Number</label>
-            <div className="relative">
-              <span className="absolute inset-y-0 left-0 flex items-center pl-4 text-slate-400">
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
-                </svg>
-              </span>
-              <input
-                type="tel"
-                name="phone"
-                value={formData.phone}
-                onChange={handleChange}
-                placeholder="Enter your phone number"
-                className="w-full pl-11 pr-4 py-3 text-(--blue-800) bg-(--stone-50) border border-(--stone-200) rounded-xl text-sm placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent transition-all"
-                required
-                disabled={isLoading}
-              />
-            </div>
-          </div></div>
-            <div className="flex gap-0.5"> 
-          {/* Email Input */}
-          <div className="space-y-1.5 w-[60%]">
+
+          {/* Email Input — now full width since role selector is removed */}
+          <div className="space-y-1.5 w-full">
             <label className="text-xs font-bold text-blue-950 tracking-wide block">Email Address</label>
             <div className="relative">
               <span className="absolute inset-y-0 left-0 flex items-center pl-4 text-slate-400">
@@ -252,36 +253,6 @@ export default function RegisterPage() {
             </div>
           </div>
 
-        
-             {/* Role Selector — Only USER and DRIVER (no ADMIN) */}
-          <div className="space-y-1.5 w-[40%]">
-            <label className="text-xs font-bold text-blue-950 tracking-wide block">Account Type</label>
-            <div className="relative">
-              <span className="absolute inset-y-0 left-0 flex items-center pl-4 text-slate-400">
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                </svg>
-              </span>
-              <select
-                name="role"
-                value={formData.role}
-                onChange={handleChange}
-                className="w-full pl-11 pr-4 py-3 text-(--blue-800) bg-(--stone-50) border border-(--stone-200) rounded-xl text-sm text-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent transition-all appearance-none cursor-pointer"
-                required
-                disabled={isLoading}
-              >
-                <option value="USER">Customer</option>
-                <option value="DRIVER">Driver</option>
-              </select>
-             
-              <span className="absolute inset-y-0 right-0 flex items-center pr-4 text-slate-400 pointer-events-none">
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
-                </svg>
-              </span>
-            </div>
-          </div>
-         </div>
           {/* Password Input */}
           <div className="space-y-1.5">
             <label className="text-xs font-bold text-blue-950 tracking-wide block">Password</label>
@@ -403,35 +374,22 @@ export default function RegisterPage() {
           <div className="flex-1 h-px bg-slate-200" />
         </div>
 
-        {/* OAuth Buttons */}
-        <div className="w-full grid grid-cols-2 gap-2">
-          <button
-           onClick={() => {
-    // Send OAuth users to onboarding so new accounts can finish role setup.
-    signIn("google", { callbackUrl: "/onboarding/role" });
-  }}
-  disabled={isLoading}
-           
-            className="flex items-center justify-center gap-2 py-2.5 px-4 bg-white border border-slate-200 rounded-xl text-xs font-bold text-slate-700 hover:bg-slate-50 transition-colors cursor-pointer disabled:opacity-50"
-          >
-            <Image src="https://authjs.dev/img/providers/google.svg" alt="Google Logo" width={16} height={16} />
-            <span>Google</span>
-          </button>
+        {/* OAuth Buttons — only Google (Microsoft removed since no Azure provider in auth.ts) */}
+        <div className="w-full">
           <button
             onClick={() => {
-              setIsLoading(true);
-              window.location.href = "/api/auth/signin/azure-ad?callbackUrl=/onboarding/role";
+              signIn("google", { callbackUrl: "/onboarding/role" });
             }}
             disabled={isLoading}
-            className="flex items-center justify-center gap-2 py-2.5 px-4 bg-white border border-slate-200 rounded-xl text-xs font-bold text-slate-700 hover:bg-slate-50 transition-colors cursor-pointer disabled:opacity-50"
+            className="w-full flex items-center justify-center gap-2 py-2.5 px-4 bg-white border border-slate-200 rounded-xl text-xs font-bold text-slate-700 hover:bg-slate-50 transition-colors cursor-pointer disabled:opacity-50"
           >
-            <Image src="https://authjs.dev/img/providers/azure.svg" alt="Microsoft Logo" width={16} height={16} />
-            <span>Microsoft</span>
+            <Image src="https://authjs.dev/img/providers/google.svg" alt="Google Logo" width={16} height={16} />
+            <span>Continue with Google</span>
           </button>
         </div>
 
         {/* Login Link */}
-        <p className="text-xs text-slate-400 text-center mt-2">
+        <p className="text-xs text-slate-400 text-center mt-2 w-full">
           Already have an account?{" "}
           <Link href="/login" className="text-blue-900 font-bold hover:underline">
             Sign in
