@@ -61,7 +61,14 @@ export default auth((req) => {
 }
 
   // 6. LOGGED IN + hits login or register → redirect to their dashboard
+// 6. LOGGED IN + hits login or register → redirect to their dashboard OR onboarding
   if (isLoggedIn && isAuthRoute) {
+    // If they haven't picked a role yet, send them straight to onboarding
+    if (userRole === null || userRole === undefined) {
+      return NextResponse.redirect(new URL("/onboarding/role", nextUrl));
+    }
+    
+    // Otherwise, send to their respective dashboards
     const redirectUrl =
       userRole === "ADMIN" ? "/admin" : userRole === "DRIVER" ? "/driver" : "/user";
     return NextResponse.redirect(new URL(redirectUrl, nextUrl));
